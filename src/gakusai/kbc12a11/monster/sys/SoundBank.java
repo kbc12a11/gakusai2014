@@ -18,7 +18,7 @@ public class SoundBank {
 	/**エンダアアアアアアアアアアア*/
 	public static final int SE_ENDAAAAAAAAAAAAAAAA;
 	private static final String FILE_ENDAAAAAAAAAAAAAAAA = "res/se/Endaaaaaa.wav";
-	/**エンダアアアアアアアアアアア*/
+	/**線を引く音*/
 	public static final int SE_LINE;
 	private static final String FILE_LINE = "res/se/line.wav";
 
