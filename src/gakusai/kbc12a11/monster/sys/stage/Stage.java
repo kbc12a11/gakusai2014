@@ -1,5 +1,7 @@
 package gakusai.kbc12a11.monster.sys.stage;
 
+import gakusai.kbc12a06.monster.sys.window.StockWindow;
+import gakusai.kbc12a06.monster.sys.window.TimeWindow;
 import gakusai.kbc12a08.monster.enemy.Enemy;
 import gakusai.kbc12a08.monster.enemy.EnemyFactory;
 import gakusai.kbc12a11.monster.abst.StatusWindow;
@@ -16,6 +18,7 @@ import gakusai.kbc12a11.monster.sys.player.Player;
 import gakusai.kbc12a11.monster.sys.player.PlayerAttackBit;
 import gakusai.kbc12a11.monster.sys.window.LifeLine;
 import gakusai.kbc12a11.monster.sys.window.LineEnergyWindow;
+import gakusai.kbc12a11.monster.sys.window.ScoreWindow;
 import gakusai.kbc12a11.monster.util.XmlParse;
 
 import java.util.ArrayList;
@@ -45,6 +48,9 @@ public abstract class Stage extends BasicGameState{
 	//ウインドウ
 	protected StatusWindow leWindow;
 	protected LifeLine lifeWindow;
+	protected ScoreWindow scoreWindow;
+	protected TimeWindow timeWindow;
+	protected StockWindow stockWindow;
 
 	protected Eraser eraser;//消しゴム
 	protected SoundBank soundBank;//効果音
@@ -84,7 +90,7 @@ public abstract class Stage extends BasicGameState{
 		map = XmlParse.getMap(mapName);
 		player = new Player(this);
 		playerRespawnPoint = new Vector2f(20, 20);//リスポーン地点の設定
-		lg = new LineGroup();
+		lg = new LineGroup(this);
 		enemyGroup = new ObjectGroup(this);
 		enemyFactorys = new ArrayList<EnemyFactory>();
 		itemGroup = new ObjectGroup(this);
@@ -97,6 +103,9 @@ public abstract class Stage extends BasicGameState{
 
 		leWindow = new LineEnergyWindow(lg, null, null);
 		lifeWindow = new LifeLine(player);
+		scoreWindow = new ScoreWindow(this);
+		timeWindow = new TimeWindow();
+		stockWindow = new StockWindow(player);
 
 	}
 
@@ -173,6 +182,10 @@ public abstract class Stage extends BasicGameState{
 
 		leWindow.update(gc, delta);//線の残量ウィンドウ
 		lifeWindow.update(gc, delta);//体力ウインドウ
+		scoreWindow.update(gc, delta);//スコア
+		timeWindow.update(gc, delta);//タイム
+		stockWindow.update(gc, delta);//残機
+		
 
 		//プレイヤーが死んだときの処理
 		if (!player.isLive()) {
@@ -211,12 +224,9 @@ public abstract class Stage extends BasicGameState{
 
 		leWindow.render(gc, g);
 		lifeWindow.render(gc, g);
-
-		///デバッグ用
-		g.setColor(Color.black);
-		g.fillRect(0, 0, 100, 50);
-		g.setColor(Color.black);
-		g.drawString("score:" + score, 100, 20);
+		scoreWindow.render(gc, g);
+		timeWindow.render(gc, g);
+		stockWindow.render(gc, g);
 	}
 
 

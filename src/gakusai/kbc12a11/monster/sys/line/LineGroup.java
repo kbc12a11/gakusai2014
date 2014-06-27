@@ -1,6 +1,8 @@
 package gakusai.kbc12a11.monster.sys.line;
 
 import gakusai.kbc12a11.monster.sys.Camera;
+import gakusai.kbc12a11.monster.sys.SoundBank;
+import gakusai.kbc12a11.monster.sys.stage.Stage;
 
 import java.util.ArrayList;
 
@@ -21,13 +23,16 @@ public class LineGroup {
 	private float lineDrawEnergy_recovery = 5;
 	//新しくラインを書き始めるためのラインエネルギーの下限値
 	private final float lineDrawEnergy_minLimit = lineDrawEnergy_Max * 0.2f;
+	
+	private final Stage stg;
 
 
 	/**デフォルトのhp*/
 	private int defLineHp = 200;
 
-	public LineGroup() {
+	public LineGroup(Stage stg) {
 		lines = new ArrayList<Line>();
+		this.stg = stg;
 	}
 
 	public void update(GameContainer gc, StateBasedGame sbg, int delta, Camera camera){
@@ -68,6 +73,10 @@ public class LineGroup {
 		int index = lines.size()-1;
 		Line l = lines.get(index);
 		lineDrawEnergy_Now -= l.lineDraw(mx, my, lineDrawEnergy_Now);
+		
+		if(lineCreateFlag){
+			stg.soundRequest(SoundBank.SE_LINE);
+		}
 	}
 
 	private void updateLine(GameContainer gc, StateBasedGame sbg, int delta) {

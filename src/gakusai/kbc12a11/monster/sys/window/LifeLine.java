@@ -15,14 +15,13 @@ public class LifeLine extends StatusWindow{
 	private Player player;
 	private float defaultLifePoint;
 	private float nowLifePoint;
-	private final float leftSpace = 3;
+	private final float leftSpace = 2;
 
 	private final float redZorn = 1;
-	private static final String text = "LIFE";
 
 	public LifeLine(Player player) {
-		this.p = new Vector2f(230, 14);
-		this.size = new Vector2f(5, 15);
+		this.p = new Vector2f(100, 70);
+		this.size = new Vector2f(15, 35);
 		this.player = player;
 		this.defaultLifePoint = player.getDefaultLifePoint();
 		this.nowLifePoint = this.defaultLifePoint;
@@ -40,7 +39,6 @@ public class LifeLine extends StatusWindow{
 		float sx = p.x;
 		float sy = p.y;
 		float ex = p.x + size.x;
-		float ey = p.y + size.y;
 
 		if(sx != ex) {
 			if(this.nowLifePoint <= redZorn) {
@@ -49,10 +47,8 @@ public class LifeLine extends StatusWindow{
 				g.setColor(Color.black);
 			}
 			for(int a = 0; a < this.nowLifePoint; a ++) {
-				g.drawRect(leftSpace * a * size.x + sx, sy, size.x, size.y);
+				g.fillRect(leftSpace * a * size.x + sx, sy, size.x, size.y);
 			}
-			g.drawString(text, 160, 15);
-
 		}
 	}
 

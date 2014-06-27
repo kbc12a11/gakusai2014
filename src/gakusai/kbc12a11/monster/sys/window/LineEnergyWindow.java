@@ -1,7 +1,6 @@
 package gakusai.kbc12a11.monster.sys.window;
 
 import gakusai.kbc12a11.monster.abst.StatusWindow;
-import gakusai.kbc12a11.monster.sys.Main;
 import gakusai.kbc12a11.monster.sys.line.LineGroup;
 
 import org.newdawn.slick.Color;
@@ -23,8 +22,8 @@ public class LineEnergyWindow extends StatusWindow {
 
 	public LineEnergyWindow(LineGroup lg, Vector2f p, Vector2f size) {
 		this.lg = lg;
-		this.p = p != null ? p : new Vector2f(Main.W_WIDTH/2, Main.W_HEIGHT*(float)0.95);
-		this.size = size != null ? size : new Vector2f(Main.W_WIDTH*(float)0.8, 5);
+		this.p = p != null ? p : new Vector2f(700, 20);
+		this.size = size != null ? size : new Vector2f(600, 5);
 		ratio = 1;
 		limRatio = lg.getLineDrawEnergyMinLimit() / lg.getLineDrawEnergyMax();
 
@@ -36,7 +35,7 @@ public class LineEnergyWindow extends StatusWindow {
 
 		penSize = 24;
 		penY = 12;
-		penX = 5;
+		penX = 350;
 
 	}
 
@@ -49,7 +48,7 @@ public class LineEnergyWindow extends StatusWindow {
 
 		g.setColor(Color.black);
 		g.setLineWidth(30);
-		g.drawLine(0, p.y, sx + size.x, p.y);
+		g.drawLine(350, p.y, sx + size.x, p.y);
 
 		g.setColor(ratio > limRatio ? Color.white : Color.red);
 		g.setLineWidth(size.y);

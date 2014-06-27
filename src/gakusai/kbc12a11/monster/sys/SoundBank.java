@@ -18,9 +18,10 @@ public class SoundBank {
 	/**エンダアアアアアアアアアアア*/
 	public static final int SE_ENDAAAAAAAAAAAAAAAA;
 	private static final String FILE_ENDAAAAAAAAAAAAAAAA = "res/se/Endaaaaaa.wav";
+	/**エンダアアアアアアアアアアア*/
+	public static final int SE_LINE;
+	private static final String FILE_LINE = "res/se/line.wav";
 
-	//githubTest
-	//private static final int SE_PLAYER_DEAD = 5;
 	/**効果音の数*/
 	private static int SE_SIZE;
 	//IDの設定
@@ -30,6 +31,7 @@ public class SoundBank {
 		SE_BOMB = SE_SIZE++;
 		SE_CAT = SE_SIZE++;
 		SE_ENDAAAAAAAAAAAAAAAA = SE_SIZE++;
+		SE_LINE = SE_SIZE ++;
 	}
 
 	private Sound[] soundList;
@@ -50,6 +52,7 @@ public class SoundBank {
 		files[SE_BOMB] = FILE_BOMB;
 		files[SE_CAT] = FILE_CAT;
 		files[SE_ENDAAAAAAAAAAAAAAAA] = FILE_ENDAAAAAAAAAAAAAAAA;
+		files[SE_LINE] = FILE_LINE;
 
 		for (int i = 0; i < SE_SIZE; i++) {
 			pitch[i] = DEFAULT_PITCH;
