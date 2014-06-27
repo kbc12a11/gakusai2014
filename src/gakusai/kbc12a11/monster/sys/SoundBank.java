@@ -18,6 +18,8 @@ public class SoundBank {
 	/**エンダアアアアアアアアアアア*/
 	public static final int SE_ENDAAAAAAAAAAAAAAAA;
 	private static final String FILE_ENDAAAAAAAAAAAAAAAA = "res/se/Endaaaaaa.wav";
+	
+	//githubTest
 
 	/**効果音の数*/
 	private static int SE_SIZE;
