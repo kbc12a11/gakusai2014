@@ -20,7 +20,7 @@ public class SoundBank {
 	private static final String FILE_ENDAAAAAAAAAAAAAAAA = "res/se/Endaaaaaa.wav";
 	
 	//githubTest
-
+	private static final int SE_PLAYER_DEAD = 5;
 	/**効果音の数*/
 	private static int SE_SIZE;
 	//IDの設定
