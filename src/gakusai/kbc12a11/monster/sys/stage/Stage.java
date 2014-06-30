@@ -58,8 +58,9 @@ public abstract class Stage extends BasicGameState{
 
 	protected Player player;
 	protected LineGroup lg;
-	protected ObjectGroup enemyGroup;
-	protected ObjectGroup itemGroup;
+	protected ObjectGroup enemyGroup;//敵
+	protected ObjectGroup itemGroup;//アイテム
+	protected ObjectGroup backgroundObjectGroup;//背景オブジェクト
 	/**固定位置に敵を生成する*/
 	protected ArrayList<EnemyFactory> enemyFactorys;
 
@@ -94,6 +95,7 @@ public abstract class Stage extends BasicGameState{
 		enemyGroup = new ObjectGroup(this);
 		enemyFactorys = new ArrayList<EnemyFactory>();
 		itemGroup = new ObjectGroup(this);
+		backgroundObjectGroup = new ObjectGroup(this);
 
 		camera = new Camera(map.getMapWidth(), map.getMapHeight());
 		camera.setFocus(player);
@@ -185,7 +187,7 @@ public abstract class Stage extends BasicGameState{
 		scoreWindow.update(gc, delta);//スコア
 		timeWindow.update(gc, delta);//タイム
 		stockWindow.update(gc, delta);//残機
-		
+
 
 		//プレイヤーが死んだときの処理
 		if (!player.isLive()) {
