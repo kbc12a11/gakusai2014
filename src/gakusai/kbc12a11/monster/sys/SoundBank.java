@@ -94,9 +94,9 @@ public class SoundBank {
 
 			if (playFlag[i]) {
 				if (soundList[i] != null) {
-//					if (soundList[i].playing()) {
-//						soundList[i].stop();
-//					}
+					//					if (soundList[i].playing()) {
+					//						soundList[i].stop();
+					//					}
 					soundList[i].play(pitch[i], volume[i]);
 					waitTime[i] = baseWaitTime;
 					pitch[i] = DEFAULT_PITCH;
@@ -121,9 +121,13 @@ public class SoundBank {
 	 * @param volume 0~1の範囲のフロート
 	 */
 	public void soundRequest(int id, float pitch, float volume) {
-		playFlag[id] = true;
-		this.pitch[id] = pitch;
-		this.volume[id] = volume;
+		if (!playFlag[id]){
+			playFlag[id] = true;
+			this.pitch[id] = pitch;
+			this.volume[id] = volume;
+		}else {
+			this.volume[id] = this.volume[id] < volume ? volume : this.volume[id];
+		}
 	}
 
 	/**再生中のすべてのサウンドを停止する*/

@@ -1,6 +1,7 @@
 package gakusai.kbc12a11.monster.sys.decorate;
 
 import gakusai.kbc12a11.monster.sys.stage.Stage;
+import gakusai.kbc12a11.monster.util.Util;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
@@ -14,26 +15,17 @@ public class SimpleImageView extends BackgroundObject{
 
 	private int viewOption;
 
-	/**Pを画像の左上に設定*/
-	public static int P_TOP_LEFT = 0;
-	/**Pを画像の中央上に設定*/
-	public static int P_TOP_CENTER = 1;
-	/**Pを画像の右上に設定*/
-	public static int P_TOP_RIGHT = 2;
-
-	/**Pを画像の中央左に設定*/
-	public static int P_CENTER_LEFT = 3;
-	/**Pを画像の中心に設定*/
-	public static int P_CENTER_CENTER = 4;
-	/**Pを画像の中央右に設定*/
-	public static int P_CENTER_RIGHT = 5;
-
-	/**Pを画像の左下に設定*/
-	public static int P_BOTTOM_LEFT = 6;
-
-	public SimpleImageView(Stage stg, Image image) {
+	public SimpleImageView(Stage stg, Image image, float x, float y) {
 		super(stg);
 		this.image = image;
+		viewOption = Util.DRAWIMAGE_CENTER_CENTER;
+		p.set(x, y);
+		size.set(image.getWidth(), image.getHeight());
+	}
+
+	/**UtilのDRAWIMAGEオプションを設定する*/
+	public void setViewOption(int option) {
+		this.viewOption = option;
 	}
 
 	@Override
@@ -42,6 +34,6 @@ public class SimpleImageView extends BackgroundObject{
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) {
-		g.drawImage(image, p.x-size.x/2, p.y-size.y/2);
+		Util.drawImage(g, image, p, size, viewOption);
 	}
 }

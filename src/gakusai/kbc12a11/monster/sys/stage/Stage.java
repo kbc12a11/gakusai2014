@@ -12,6 +12,7 @@ import gakusai.kbc12a11.monster.sys.Main;
 import gakusai.kbc12a11.monster.sys.Map;
 import gakusai.kbc12a11.monster.sys.SoundBank;
 import gakusai.kbc12a11.monster.sys.StageBackground;
+import gakusai.kbc12a11.monster.sys.decorate.BackgroundObject;
 import gakusai.kbc12a11.monster.sys.eraser.Eraser;
 import gakusai.kbc12a11.monster.sys.line.LineGroup;
 import gakusai.kbc12a11.monster.sys.player.Player;
@@ -130,8 +131,10 @@ public abstract class Stage extends BasicGameState{
 		enemyGroup.clear();
 		enemyFactorys.clear();//エネミーファクトリーのクリア
 		itemGroup.clear();//アイテムグループのクリア
+		backgroundObjectGroup.clear();
 		setEnemys();
 		setItems();
+		setBackgroundObject();
 		map.setEnemysAndItems(this);
 		//エネミーファクトリーの初期化
 		for (EnemyFactory ef : enemyFactorys) {
@@ -165,6 +168,7 @@ public abstract class Stage extends BasicGameState{
 		stUpdate(gc, sbg, delta);//各ステージ
 		enemyGroup.update(gc, sbg, delta);//敵
 		itemGroup.update(gc, sbg, delta);//アイテム
+		backgroundObjectGroup.update(gc, sbg, delta);
 
 		player.update(gc, sbg, delta);//プレイヤー
 		camera.update();
@@ -212,6 +216,9 @@ public abstract class Stage extends BasicGameState{
 		if (bg != null) {
 			bg.render(gc, sbg, g);
 		}
+		g.translate(camera.getTranslateX(), camera.getTranslateY());
+		backgroundObjectGroup.render(gc, sbg, g);
+		g.resetTransform();
 
 		eraser.render(gc, sbg, g);
 
@@ -298,6 +305,26 @@ public abstract class Stage extends BasicGameState{
 	/**ステージ上のアイテムをセットする*/
 	public abstract void setItems() throws SlickException;
 	////アイテムグループに関するメソッドここまで
+
+	//背景オブジェクトに関連するメソッド
+		public ObjectGroup getBackgroundObjectGroup() {
+			return backgroundObjectGroup;
+		}
+
+		public void addBackgroundObject(BackgroundObject bgobj) {
+			backgroundObjectGroup.add(bgobj);
+		}
+		public void addBackgroundObject(BackgroundObject[] bgobj) {
+			backgroundObjectGroup.add(bgobj);
+		}
+
+		/**背景オブジェクトの数*/
+		public int getBackgroundObjectsNums() {
+			return backgroundObjectGroup.getSize();
+		}
+		/**背景オブジェクトをセットする*/
+		public void setBackgroundObject() throws SlickException{}
+		////背景オブジェクトに関するメソッドここまで
 
 	/**得点を取得*/
 	public int getScore() {

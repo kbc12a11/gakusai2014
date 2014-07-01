@@ -81,6 +81,12 @@ public class ImageBank {
 	public static final int ENEMY_UFO_2;
 	private static final String FILE_ENEMY_UFO_2 = "res/image/enemy/UFO/UFO2.gif";
 
+
+	////////////////////////////////////////背景素材
+	/**へのへのもへじ*/
+	public static final int BG_HENOHENO;
+	private static final String FILE_BG_HENOHENO = "res/image/background/henoheno.png";
+
 	/**イメージの数*/
 	private static int IMAGE_SIZE;
 
@@ -91,6 +97,7 @@ public class ImageBank {
 		PLAYER_2 = IMAGE_SIZE++;
 		PLAYER_DAMAGED = IMAGE_SIZE++;
 
+		//enemy
 		ENEMY_BOMB_1 = IMAGE_SIZE++;
 		ENEMY_BOMB_2 = IMAGE_SIZE++;
 
@@ -114,6 +121,11 @@ public class ImageBank {
 
 		ENEMY_UFO_1 = IMAGE_SIZE++;
 		ENEMY_UFO_2 = IMAGE_SIZE++;
+
+
+
+		//background
+		BG_HENOHENO = IMAGE_SIZE++;
 	}
 
 	private Image[] imageList;
@@ -140,6 +152,8 @@ public class ImageBank {
 
 		files[PLAYER_1] = FILE_PLAYER_1;
 		files[PLAYER_2] = FILE_PLAYER_2;
+
+		//enemy
 		files[PLAYER_DAMAGED] = FILE_PLAYER_DAMAGED;
 		files[ENEMY_BOMB_1] = FILE_ENEMY_BOMB_1;
 		files[ENEMY_BOMB_2] = FILE_ENEMY_BOMB_2;
@@ -157,6 +171,9 @@ public class ImageBank {
 		files[ENEMY_MOL_5] = FILE_ENEMY_MOL_5;
 		files[ENEMY_UFO_1] = FILE_ENEMY_UFO_1;
 		files[ENEMY_UFO_2] = FILE_ENEMY_UFO_2;
+
+		//background
+		files[BG_HENOHENO] = FILE_BG_HENOHENO;
 
 		for (int i = 0; i < IMAGE_SIZE; i++) {
 			try {
