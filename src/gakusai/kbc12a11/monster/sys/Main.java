@@ -3,11 +3,15 @@ package gakusai.kbc12a11.monster.sys;
 import gakusai.kbc12a11.monster.sampleStage.SampleStage2;
 import gakusai.kbc12a11.monster.st1.Stage_1;
 import gakusai.kbc12a11.monster.sys.stage.BeforeStartStage;
+import gakusai.kbc12a11.monster.sys.wiiremote.WiimoteRistener;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
+
+import wiiusej.WiiUseApiManager;
+import wiiusej.Wiimote;
 
 public class Main extends StateBasedGame {
 	/* 1. Main クラスまたはオブジェクトに所属するメンバー変数の宣言を書く所 */
@@ -36,17 +40,31 @@ public class Main extends StateBasedGame {
 	public static final int Stage_12a11_SampleStage2 = 1211003;
 	///ステージIDの登録ここまで
 
-	//Stage st;
+	private WiimoteRistener wiimoteRistener;
 
 	public Main(String title) {
 		/* 2. コンストラクター */
 		super(title);
+		setWiimoteRistener();
+	}
+
+	public void setWiimoteRistener() {
+		wiimoteRistener = new WiimoteRistener();
+
+		Wiimote[] wiimotes = WiiUseApiManager.getWiimotes(1, true);
+        Wiimote wiimote = wiimotes[0];
+        wiimote.activateIRTRacking();
+        wiimote.activateMotionSensing();
+        wiimote.addWiiMoteEventListeners(wiimoteRistener);
+	}
+
+	public WiimoteRistener getWiimoteRistener() {
+		return wiimoteRistener;
 	}
 
 	@Override
 	/**作ったステージをここで追加する*/
 	public void initStatesList(GameContainer gc) throws SlickException {
-		// TODO 自動生成されたメソッド・スタブ
 		//最初に追加されたステージが実行される
 		addState(new SampleStage2());
 
@@ -55,24 +73,6 @@ public class Main extends StateBasedGame {
 		addState(new BeforeStartStage());
 
 	}
-
-//	@Override
-//	public void init(GameContainer gc) throws SlickException {
-//		st = new Stage_1();
-//		Music openingMenuMusic = new Music("map/st1/st1.ogg");
-//		openingMenuMusic.loop();
-//	}
-//
-//	@SuppressWarnings("static-access")
-//	@Override
-//	public void update(GameContainer gc, int delta) throws SlickException {
-//		st.update(gc, delta);
-//	}
-//	@Override
-//	public void render(GameContainer gc, Graphics g) throws SlickException {
-//		g.setAntiAlias(true);
-//		st.render(gc, g);
-//	}
 
 	public static void main(String[] args) throws SlickException {
 		/* 6. JVM 側がこの Main クラスを実体化するための、

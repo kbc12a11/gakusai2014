@@ -152,6 +152,8 @@ public abstract class Stage extends BasicGameState{
 	//更新
 	@Override
 	public final void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
+		float x = ((Main)sbg).getWiimoteRistener().getX();
+
 		stageStateCheck();
 		if (bg != null) {
 			bg.update(gc, sbg, delta);//背景
