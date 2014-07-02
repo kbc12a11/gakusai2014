@@ -14,7 +14,7 @@ import wiiusej.wiiusejevents.wiiuseapievents.NunchukInsertedEvent;
 import wiiusej.wiiusejevents.wiiuseapievents.NunchukRemovedEvent;
 import wiiusej.wiiusejevents.wiiuseapievents.StatusEvent;
 
-public class WiimoteRistener implements WiimoteListener{
+public class WiimoteInputListener implements WiimoteListener{
 
 
 	@Override
@@ -26,6 +26,7 @@ public class WiimoteRistener implements WiimoteListener{
 	public void onIrEvent(IREvent arg0) {
 		x = arg0.getX();
 		y = arg0.getY();
+		System.out.println("x : " + x + "  y : " + y);
 	}
 
 	private float x, y;

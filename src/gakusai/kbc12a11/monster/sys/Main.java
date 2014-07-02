@@ -3,17 +3,14 @@ package gakusai.kbc12a11.monster.sys;
 import gakusai.kbc12a11.monster.sampleStage.SampleStage2;
 import gakusai.kbc12a11.monster.st1.Stage_1;
 import gakusai.kbc12a11.monster.sys.stage.BeforeStartStage;
-import gakusai.kbc12a11.monster.sys.wiimote.WiimoteRistener;
-
-import java.util.Properties;
+import gakusai.kbc12a11.monster.sys.wiimote.WiimoteTest;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
 
-import wiiusej.WiiUseApiManager;
-import wiiusej.Wiimote;
+import wiiusej.wiiusejevents.utils.WiimoteListener;
 
 public class Main extends StateBasedGame {
 	/* 1. Main クラスまたはオブジェクトに所属するメンバー変数の宣言を書く所 */
@@ -42,7 +39,7 @@ public class Main extends StateBasedGame {
 	public static final int Stage_12a11_SampleStage2 = 1211003;
 	///ステージIDの登録ここまで
 
-	private static WiimoteRistener wiimoteRistener;
+	private static WiimoteListener wiimoteListener;
 
 	public Main(String title) {
 		/* 2. コンストラクター */
@@ -50,22 +47,11 @@ public class Main extends StateBasedGame {
 	}
 
 	public static void setWiimoteRistener() {
-		wiimoteRistener = new WiimoteRistener();
-
-		Wiimote[] wiimotes = WiiUseApiManager.getWiimotes(1, true);
-		if (wiimotes.length == 0) {
-			System.out.println("Wiimote is not connected.");
-			return;
-		}
-        Wiimote wiimote = wiimotes[0];
-        wiimote.activateIRTRacking();
-        wiimote.activateMotionSensing();
-        wiimote.addWiiMoteEventListeners(wiimoteRistener);
-        System.out.println("Success connected to wiimote.");
+		wiimoteListener = new WiimoteTest();
 	}
 
-	public static WiimoteRistener getWiimoteRistener() {
-		return wiimoteRistener;
+	public static WiimoteListener getWiimoteRistener() {
+		return wiimoteListener;
 	}
 
 	@Override
@@ -81,11 +67,6 @@ public class Main extends StateBasedGame {
 	}
 
 	public static void main(String[] args) throws SlickException {
-		/* 6. JVM 側がこの Main クラスを実体化するための、
-		いわば着火メソッド。便宜上、このクラスに埋め込まれているだけで、
-		ゲームプログラム本体とは基本的に関係がない部分 */
-		Properties props = System.getProperties();
-	    props.list(System.out);
 		Main main = new Main(GAMETITLE);
 		setWiimoteRistener();
 

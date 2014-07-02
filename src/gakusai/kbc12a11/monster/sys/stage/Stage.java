@@ -17,7 +17,7 @@ import gakusai.kbc12a11.monster.sys.eraser.Eraser;
 import gakusai.kbc12a11.monster.sys.line.LineGroup;
 import gakusai.kbc12a11.monster.sys.player.Player;
 import gakusai.kbc12a11.monster.sys.player.PlayerAttackBit;
-import gakusai.kbc12a11.monster.sys.wiimote.WiimoteInput;
+import gakusai.kbc12a11.monster.sys.wiimote.WiimoteTest;
 import gakusai.kbc12a11.monster.sys.window.LifeLine;
 import gakusai.kbc12a11.monster.sys.window.LineEnergyWindow;
 import gakusai.kbc12a11.monster.sys.window.ScoreWindow;
@@ -86,7 +86,7 @@ public abstract class Stage extends BasicGameState{
 	///////////////////////
 
 	//wiiリモコン
-	WiimoteInput wiiInput;
+	WiimoteTest wiiInput;
 
 
 	public Stage (String mapName) throws SlickException {
@@ -114,7 +114,7 @@ public abstract class Stage extends BasicGameState{
 		timeWindow = new TimeWindow();
 		stockWindow = new StockWindow(player);
 
-		wiiInput = new WiimoteInput();
+		wiiInput = (WiimoteTest)Main.getWiimoteRistener();
 	}
 
 	/**初期化*/
@@ -157,7 +157,7 @@ public abstract class Stage extends BasicGameState{
 	//更新
 	@Override
 	public final void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
-		wiiInput.update();//同期をとる
+		//wiiInput.update();//同期をとる
 
 		stageStateCheck();
 		if (bg != null) {
@@ -228,7 +228,7 @@ public abstract class Stage extends BasicGameState{
 		g.resetTransform();
 
 		eraser.render(gc, sbg, g);
-
+		g.drawOval(wiiInput.getX()-5, wiiInput.getY()-5, 10, 10);
 		g.translate(camera.getTranslateX(), camera.getTranslateY());
 		map.render(gc, sbg, g);
 		stRender(gc, sbg, g);
@@ -406,5 +406,9 @@ public abstract class Stage extends BasicGameState{
 	}
 	public void setBackground(StageBackground background) {
 		this.bg = background;
+	}
+
+	public WiimoteTest getWiimoteInput() {
+		return wiiInput;
 	}
 }
