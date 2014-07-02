@@ -3,7 +3,9 @@ package gakusai.kbc12a11.monster.sys;
 import gakusai.kbc12a11.monster.sampleStage.SampleStage2;
 import gakusai.kbc12a11.monster.st1.Stage_1;
 import gakusai.kbc12a11.monster.sys.stage.BeforeStartStage;
-import gakusai.kbc12a11.monster.sys.wiiremote.WiimoteRistener;
+import gakusai.kbc12a11.monster.sys.wiimote.WiimoteRistener;
+
+import java.util.Properties;
 
 import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
@@ -40,15 +42,14 @@ public class Main extends StateBasedGame {
 	public static final int Stage_12a11_SampleStage2 = 1211003;
 	///ステージIDの登録ここまで
 
-	private WiimoteRistener wiimoteRistener;
+	private static WiimoteRistener wiimoteRistener;
 
 	public Main(String title) {
 		/* 2. コンストラクター */
 		super(title);
-		setWiimoteRistener();
 	}
 
-	public void setWiimoteRistener() {
+	public static void setWiimoteRistener() {
 		wiimoteRistener = new WiimoteRistener();
 
 		Wiimote[] wiimotes = WiiUseApiManager.getWiimotes(1, true);
@@ -58,7 +59,7 @@ public class Main extends StateBasedGame {
         wiimote.addWiiMoteEventListeners(wiimoteRistener);
 	}
 
-	public WiimoteRistener getWiimoteRistener() {
+	public static WiimoteRistener getWiimoteRistener() {
 		return wiimoteRistener;
 	}
 
@@ -78,13 +79,19 @@ public class Main extends StateBasedGame {
 		/* 6. JVM 側がこの Main クラスを実体化するための、
 		いわば着火メソッド。便宜上、このクラスに埋め込まれているだけで、
 		ゲームプログラム本体とは基本的に関係がない部分 */
-		AppGameContainer app = new AppGameContainer(new Main(GAMETITLE));
+		Properties props = System.getProperties();
+	    props.list(System.out);
+		Main main = new Main(GAMETITLE);
+		setWiimoteRistener();
+
+		AppGameContainer app = new AppGameContainer(main);
 		app.setDisplayMode(W_WIDTH, W_HEIGHT, false);
 		app.setTargetFrameRate(FPS);
 		app.setVSync(FLG_VSYNC);
 		app.setFullscreen(FLG_FULLSCREEN);
 		app.setShowFPS(false);
 		app.start();
+
 	}
 
 }

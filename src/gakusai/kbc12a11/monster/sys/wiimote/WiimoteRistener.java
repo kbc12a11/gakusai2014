@@ -1,4 +1,4 @@
-package gakusai.kbc12a11.monster.sys.wiiremote;
+package gakusai.kbc12a11.monster.sys.wiimote;
 
 import wiiusej.wiiusejevents.physicalevents.ExpansionEvent;
 import wiiusej.wiiusejevents.physicalevents.IREvent;
