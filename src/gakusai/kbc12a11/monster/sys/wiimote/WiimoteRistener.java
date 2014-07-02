@@ -16,6 +16,7 @@ import wiiusej.wiiusejevents.wiiuseapievents.StatusEvent;
 
 public class WiimoteRistener implements WiimoteListener{
 
+
 	@Override
 	public void onButtonsEvent(WiimoteButtonsEvent arg0) {
 		button_A = arg0.isButtonAHeld();

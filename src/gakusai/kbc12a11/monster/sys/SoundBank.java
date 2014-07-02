@@ -59,8 +59,8 @@ public class SoundBank {
 			volume[i] = DEFAULT_VALUME;
 			try {
 				soundList[i] = new Sound(files[i]);
-			} catch (SlickException e) {
-				e.printStackTrace();
+			} catch (SlickException | RuntimeException e) {
+				System.out.println("Failed to load \"" + files[i]+"\"");
 			}
 		}
 	}
@@ -102,7 +102,7 @@ public class SoundBank {
 					pitch[i] = DEFAULT_PITCH;
 					volume[i] = DEFAULT_VALUME;
 				}else {
-					System.out.println("Sound is Null!");
+					System.out.println("Failed to sound ID " + i + ".");
 				}
 				playFlag[i] = false;
 			}

@@ -17,6 +17,7 @@ import gakusai.kbc12a11.monster.sys.eraser.Eraser;
 import gakusai.kbc12a11.monster.sys.line.LineGroup;
 import gakusai.kbc12a11.monster.sys.player.Player;
 import gakusai.kbc12a11.monster.sys.player.PlayerAttackBit;
+import gakusai.kbc12a11.monster.sys.wiimote.WiimoteInput;
 import gakusai.kbc12a11.monster.sys.window.LifeLine;
 import gakusai.kbc12a11.monster.sys.window.LineEnergyWindow;
 import gakusai.kbc12a11.monster.sys.window.ScoreWindow;
@@ -84,6 +85,9 @@ public abstract class Stage extends BasicGameState{
 	protected int score;
 	///////////////////////
 
+	//wiiリモコン
+	WiimoteInput wiiInput;
+
 
 	public Stage (String mapName) throws SlickException {
 		soundBank = SoundBank.getSoundBank();
@@ -110,6 +114,7 @@ public abstract class Stage extends BasicGameState{
 		timeWindow = new TimeWindow();
 		stockWindow = new StockWindow(player);
 
+		wiiInput = new WiimoteInput();
 	}
 
 	/**初期化*/
@@ -152,7 +157,7 @@ public abstract class Stage extends BasicGameState{
 	//更新
 	@Override
 	public final void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
-		float x = Main.getWiimoteRistener().getX();
+		wiiInput.update();//同期をとる
 
 		stageStateCheck();
 		if (bg != null) {
