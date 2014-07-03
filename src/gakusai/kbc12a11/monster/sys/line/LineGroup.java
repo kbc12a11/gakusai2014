@@ -1,15 +1,15 @@
 package gakusai.kbc12a11.monster.sys.line;
 
 import gakusai.kbc12a11.monster.sys.Camera;
+import gakusai.kbc12a11.monster.sys.GameInput;
 import gakusai.kbc12a11.monster.sys.SoundBank;
 import gakusai.kbc12a11.monster.sys.stage.Stage;
-import gakusai.kbc12a11.monster.sys.wiimote.WiimoteTest;
+import gakusai.kbc12a11.monster.util.Util;
 
 import java.util.ArrayList;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class LineGroup {
@@ -52,17 +52,13 @@ public class LineGroup {
 
 	private void createLine(GameContainer gc, int delta, Camera camera) {
 		if (lineDrawEnergy_Now <= 0) return;
-		Input in = gc.getInput();
 //		boolean isClick = in.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON);
 //		float mx = in.getMouseX() - camera.getTranslateX();
 //		float my = in.getMouseY() - camera.getTranslateY();
-		WiimoteTest win = stg.getWiimoteInput();
-		boolean isClick = win.isBtn_a();
-		float mx = win.getX() - camera.getTranslateX();
-		float my = win.getY() - camera.getTranslateY();
-		System.out.println("A : " + (isClick?"clicked":"not click"));
-		System.out.println("x : " + mx);
-		System.out.println("y : " + my);
+		GameInput in = Util.getGameInput(stg, gc);
+		boolean isClick = in.isA();
+		float mx = in.getX() - camera.getTranslateX();
+		float my = in.getY() - camera.getTranslateY();
 
 		if (!isClick) {
 			lineCreateFlag = false;

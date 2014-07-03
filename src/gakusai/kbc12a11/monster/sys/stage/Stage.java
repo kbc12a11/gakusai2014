@@ -7,6 +7,7 @@ import gakusai.kbc12a08.monster.enemy.EnemyFactory;
 import gakusai.kbc12a11.monster.abst.StatusWindow;
 import gakusai.kbc12a11.monster.item.Item;
 import gakusai.kbc12a11.monster.sys.Camera;
+import gakusai.kbc12a11.monster.sys.GameInput;
 import gakusai.kbc12a11.monster.sys.ImageBank;
 import gakusai.kbc12a11.monster.sys.Main;
 import gakusai.kbc12a11.monster.sys.Map;
@@ -17,10 +18,10 @@ import gakusai.kbc12a11.monster.sys.eraser.Eraser;
 import gakusai.kbc12a11.monster.sys.line.LineGroup;
 import gakusai.kbc12a11.monster.sys.player.Player;
 import gakusai.kbc12a11.monster.sys.player.PlayerAttackBit;
-import gakusai.kbc12a11.monster.sys.wiimote.WiimoteTest;
 import gakusai.kbc12a11.monster.sys.window.LifeLine;
 import gakusai.kbc12a11.monster.sys.window.LineEnergyWindow;
 import gakusai.kbc12a11.monster.sys.window.ScoreWindow;
+import gakusai.kbc12a11.monster.util.Util;
 import gakusai.kbc12a11.monster.util.XmlParse;
 
 import java.util.ArrayList;
@@ -85,9 +86,6 @@ public abstract class Stage extends BasicGameState{
 	protected int score;
 	///////////////////////
 
-	//wiiリモコン
-	WiimoteTest wiiInput;
-
 
 	public Stage (String mapName) throws SlickException {
 		soundBank = SoundBank.getSoundBank();
@@ -113,8 +111,6 @@ public abstract class Stage extends BasicGameState{
 		scoreWindow = new ScoreWindow(this);
 		timeWindow = new TimeWindow();
 		stockWindow = new StockWindow(player);
-
-		wiiInput = (WiimoteTest)Main.getWiimoteRistener();
 	}
 
 	/**初期化*/
@@ -157,8 +153,6 @@ public abstract class Stage extends BasicGameState{
 	//更新
 	@Override
 	public final void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
-		//wiiInput.update();//同期をとる
-
 		stageStateCheck();
 		if (bg != null) {
 			bg.update(gc, sbg, delta);//背景
@@ -228,7 +222,10 @@ public abstract class Stage extends BasicGameState{
 		g.resetTransform();
 
 		eraser.render(gc, sbg, g);
-		g.drawOval(wiiInput.getX()-5, wiiInput.getY()-5, 10, 10);
+		//Wiiリモコン確認用
+		GameInput in = Util.getGameInput(this, gc);
+		g.drawOval(in.getX()-5, in.getY()-5, 10, 10);
+
 		g.translate(camera.getTranslateX(), camera.getTranslateY());
 		map.render(gc, sbg, g);
 		stRender(gc, sbg, g);
@@ -406,9 +403,5 @@ public abstract class Stage extends BasicGameState{
 	}
 	public void setBackground(StageBackground background) {
 		this.bg = background;
-	}
-
-	public WiimoteTest getWiimoteInput() {
-		return wiiInput;
 	}
 }

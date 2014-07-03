@@ -1,5 +1,6 @@
 package gakusai.kbc12a11.monster.sys;
 
+import gakusai.kbc12a10.monster.stage.HinoStage;
 import gakusai.kbc12a11.monster.sampleStage.SampleStage2;
 import gakusai.kbc12a11.monster.st1.Stage_1;
 import gakusai.kbc12a11.monster.sys.stage.BeforeStartStage;
@@ -9,8 +10,6 @@ import org.newdawn.slick.AppGameContainer;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.StateBasedGame;
-
-import wiiusej.wiiusejevents.utils.WiimoteListener;
 
 public class Main extends StateBasedGame {
 	/* 1. Main クラスまたはオブジェクトに所属するメンバー変数の宣言を書く所 */
@@ -37,9 +36,11 @@ public class Main extends StateBasedGame {
 	public static final int Stage_SampleStage = 1211001;
 	public static final int Stage_12a11_TestStage = 1211002;
 	public static final int Stage_12a11_SampleStage2 = 1211003;
+
+	public static final int Stage_12a10_HinoStage = 1210001;
 	///ステージIDの登録ここまで
 
-	private static WiimoteListener wiimoteListener;
+	private static WiimoteTest wiimoteListener;
 
 	public Main(String title) {
 		/* 2. コンストラクター */
@@ -50,7 +51,7 @@ public class Main extends StateBasedGame {
 		wiimoteListener = new WiimoteTest();
 	}
 
-	public static WiimoteListener getWiimoteRistener() {
+	public static WiimoteTest getWiimoteRistener() {
 		return wiimoteListener;
 	}
 
@@ -58,6 +59,7 @@ public class Main extends StateBasedGame {
 	/**作ったステージをここで追加する*/
 	public void initStatesList(GameContainer gc) throws SlickException {
 		//最初に追加されたステージが実行される
+		addState(new HinoStage());
 		addState(new SampleStage2());
 
 		addState(new Stage_1());

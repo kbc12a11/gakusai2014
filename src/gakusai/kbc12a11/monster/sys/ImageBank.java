@@ -25,6 +25,15 @@ public class ImageBank {
 	public static final int ENEMY_BOMB_2;
 	private static final String FILE_ENEMY_BOMB_2 = "res/image/enemy/bomb/bomb2.gif";
 
+	/**爆弾の画像3*/
+	public static final int ENEMY_BOMB_3;
+	private static final String FILE_ENEMY_BOMB_3 = "res/image/enemy/bomb/bomb3.gif";
+
+	/**爆弾の画像3*/
+	public static final int ENEMY_BOMB_4;
+	private static final String FILE_ENEMY_BOMB_4 = "res/image/enemy/bomb/bomb4.gif";
+
+
 	/**蟹の画像1*/
 	public static final int ENEMY_CRAB_1;
 	private static final String FILE_ENEMY_CRAB_1 = "res/image/enemy/crab/crab1.gif";
@@ -100,6 +109,8 @@ public class ImageBank {
 		//enemy
 		ENEMY_BOMB_1 = IMAGE_SIZE++;
 		ENEMY_BOMB_2 = IMAGE_SIZE++;
+		ENEMY_BOMB_3 = IMAGE_SIZE++;
+		ENEMY_BOMB_4 = IMAGE_SIZE++;
 
 		ENEMY_CRAB_1 = IMAGE_SIZE++;
 
@@ -152,23 +163,32 @@ public class ImageBank {
 
 		files[PLAYER_1] = FILE_PLAYER_1;
 		files[PLAYER_2] = FILE_PLAYER_2;
+		files[PLAYER_DAMAGED] = FILE_PLAYER_DAMAGED;
 
 		//enemy
-		files[PLAYER_DAMAGED] = FILE_PLAYER_DAMAGED;
 		files[ENEMY_BOMB_1] = FILE_ENEMY_BOMB_1;
 		files[ENEMY_BOMB_2] = FILE_ENEMY_BOMB_2;
+		files[ENEMY_BOMB_3] = FILE_ENEMY_BOMB_3;
+		files[ENEMY_BOMB_4] = FILE_ENEMY_BOMB_4;
+
 		files[ENEMY_CRAB_1] = FILE_ENEMY_CRAB_1;
+
 		files[ENEMY_DOSSUN_1] = FILE_ENEMY_DOSSUN_1;
+
 		files[ENEMY_GHOST_1] = FILE_ENEMY_GHOST_1;
 		files[ENEMY_GHOST_2] = FILE_ENEMY_GHOST_2;
+
 		files[ENEMY_MAGICAN_1] = FILE_ENEMY_MAGICAN_1;
 		files[ENEMY_MAGICAN_2] = FILE_ENEMY_MAGICAN_2;
+
 		files[ENEMY_MISSILE_1] = FILE_ENEMY_MISSILE_1;
+
 		files[ENEMY_MOL_1] = FILE_ENEMY_MOL_1;
 		files[ENEMY_MOL_2] = FILE_ENEMY_MOL_2;
 		files[ENEMY_MOL_3] = FILE_ENEMY_MOL_3;
 		files[ENEMY_MOL_4] = FILE_ENEMY_MOL_4;
 		files[ENEMY_MOL_5] = FILE_ENEMY_MOL_5;
+
 		files[ENEMY_UFO_1] = FILE_ENEMY_UFO_1;
 		files[ENEMY_UFO_2] = FILE_ENEMY_UFO_2;
 

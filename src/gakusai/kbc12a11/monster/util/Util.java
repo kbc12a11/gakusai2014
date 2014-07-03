@@ -1,7 +1,14 @@
 package gakusai.kbc12a11.monster.util;
 
+import gakusai.kbc12a11.monster.sys.GameInput;
+import gakusai.kbc12a11.monster.sys.Main;
+import gakusai.kbc12a11.monster.sys.stage.Stage;
+import gakusai.kbc12a11.monster.sys.wiimote.WiimoteTest;
+
+import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Vector2f;
 
 public class Util {
@@ -85,5 +92,25 @@ public class Util {
 		}
 
 		g.drawImage(image, p.x-x0, p.y-y0);
+	}
+
+	public static GameInput getGameInput(Stage stg, GameContainer gc) {
+		WiimoteTest wii = Main.getWiimoteRistener();
+		boolean flag = wii.isConnected();
+		GameInput in = new GameInput();
+		if (flag) {
+			in.setX(wii.getPointingX());
+			in.setY(wii.getPointingY());
+			in.setA(wii.isBtn_a());
+			in.setB(wii.isBtn_b());
+		}else {
+			Input mouse = gc.getInput();
+			in.setX(mouse.getMouseX());
+			in.setY(mouse.getMouseY());
+			in.setA(mouse.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON));
+			in.setB(mouse.isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON));
+		}
+
+		return in;
 	}
 }
