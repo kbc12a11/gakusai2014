@@ -8,7 +8,10 @@ import wiiusej.WiiUseApiManager;
 import wiiusej.Wiimote;
 import wiiusej.wiiusejevents.physicalevents.ExpansionEvent;
 import wiiusej.wiiusejevents.physicalevents.IREvent;
+import wiiusej.wiiusejevents.physicalevents.JoystickEvent;
 import wiiusej.wiiusejevents.physicalevents.MotionSensingEvent;
+import wiiusej.wiiusejevents.physicalevents.NunchukButtonsEvent;
+import wiiusej.wiiusejevents.physicalevents.NunchukEvent;
 import wiiusej.wiiusejevents.physicalevents.WiimoteButtonsEvent;
 import wiiusej.wiiusejevents.utils.WiimoteListener;
 import wiiusej.wiiusejevents.wiiuseapievents.ClassicControllerInsertedEvent;
@@ -26,10 +29,25 @@ public class WiimoteTest implements WiimoteListener{
 	private float pointingX, pointingY;
 	private boolean btn_a, btn_b;
 
+	//ヌンチャク関係
+	/**傾ける強さ(0-1)*/
+	private float magnitude;
+	/**傾けた角度(0-360(上が0,たまにNaN))*/
+	private float angle;
+	private boolean btn_c, btn_z;
+
 	/**wiiリモコンが接続されているか*/
 	private boolean isConnected;
 
 	private float scale = 2;
+
+	public boolean isBtnCPressed() {
+		return btn_c;
+	}
+	public boolean isBtnZPressed() {
+		return btn_z;
+	}
+
 
 	Wiimote wiimote;
 	Vector2f centerPoint;
@@ -77,11 +95,11 @@ public class WiimoteTest implements WiimoteListener{
 		return pointingY - virtualScreenSize.y/2 + realScreenSize.y/2;
 	}
 
-	public boolean isBtn_a() {
+	public boolean isBtnAPushed() {
 		return btn_a;
 	}
 
-	public boolean isBtn_b() {
+	public boolean isBtnBPushed() {
 		return btn_b;
 	}
 
@@ -113,6 +131,37 @@ public class WiimoteTest implements WiimoteListener{
 		wiimote = null;
 	}
 
+	/**ヌンチャクのイベント*/
+	@Override
+	public void onExpansionEvent(ExpansionEvent arg0) {
+		//ヌンチャクのjoystickeventのパラメータ
+		//Max[0] = 225, [1] = 225
+		//Min[0] = 30 , [1] = 32
+		//Center[0] = 127, [1] = 131
+		if (arg0 instanceof NunchukEvent) {
+			NunchukEvent nunchuk = (NunchukEvent)arg0;
+			JoystickEvent joystick = nunchuk.getNunchukJoystickEvent();
+			NunchukButtonsEvent buttons = nunchuk.getButtonsEvent();
+			btn_c = buttons.isButtonCHeld();
+			btn_z = buttons.isButtonZeHeld();
+			angle = joystick.getAngle();
+			magnitude = joystick.getMagnitude();
+		}
+	}
+
+	/**ヌンチャクのジョイスティックの入力値をベクトルに変換して返す*/
+	public Vector2f getJoystickInput() {
+		Vector2f d = new Vector2f();
+		double a = Double.isNaN(angle) ? 0 : angle;
+		float m = magnitude;
+
+		a = (a+90)*Math.PI/180;//ラジアンに変換+90度右に回転
+		float x = (float)Math.cos(a)*m;
+		float y = (float)Math.sin(a)*m;
+		d.set(-x, -y);//右,下を正にする
+		return d;
+	}
+
 	@Override
 	public void onClassicControllerInsertedEvent(ClassicControllerInsertedEvent arg0) {
 		// TODO 自動生成されたメソッド・スタブ
@@ -126,11 +175,6 @@ public class WiimoteTest implements WiimoteListener{
 	}
 
 
-	@Override
-	public void onExpansionEvent(ExpansionEvent arg0) {
-		// TODO 自動生成されたメソッド・スタブ
-
-	}
 
 	@Override
 	public void onGuitarHeroInsertedEvent(GuitarHeroInsertedEvent arg0) {

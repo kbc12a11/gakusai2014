@@ -101,8 +101,8 @@ public class Util {
 		if (flag) {
 			in.setX(wii.getPointingX());
 			in.setY(wii.getPointingY());
-			in.setA(wii.isBtn_a());
-			in.setB(wii.isBtn_b());
+			in.setA(wii.isBtnAPushed());
+			in.setB(wii.isBtnBPushed());
 		}else {
 			Input mouse = gc.getInput();
 			in.setX(mouse.getMouseX());

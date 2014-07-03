@@ -32,83 +32,6 @@ public class Collide {
 
 	/**キャラクターとMapのあたり判定を行い、キャラクターの移動量を制御する。
 	 * @return 当たっていればtrue*/
-	//	public static boolean decideCheckOnMap(Character ch, Map map){
-	//		float px = ch.getP().x, py = ch.getP().y;
-	//		float dx = ch.getD().x, dy = ch.getD().y;
-	//		float sx = ch.getSize().x/2, sy = ch.getSize().y/2;
-	//		int mlw = map.getMapData().length;
-	//		int mlh = map.getMapData()[0].length;
-	//		float chipX = map.chipSizeOnScreen.x;
-	//		float chipY = map.chipSizeOnScreen.y;
-	//		if (dx == 0 && dy == 0) return false;
-	//
-	//		int effx = 0, effy = 0;//係数
-	//		if (dx < 0) effx = -1;
-	//		if (dx > 0) effx = 1;
-	//		if (dy < 0) effy = -1;
-	//		if (dy > 0) effy = 1;
-	//
-	//		float x0 = px + dx, y0 = py + dy;
-	//		int tx, ty;
-	//
-	//		//X方向のチェック
-	//		tx = (x0 + sx*effx) >= 0 ? (int)((x0 + (sx*effx))/chipX) : -1;
-	//		boolean flagx = true;
-	//		if (tx < 0 || mlw <= tx) {
-	//			flagx = false;
-	//		}
-	//		for (int i = 0; i < 3; i++) {
-	//			float ty0 = (py + sy*(i-1));
-	//			ty = (ty0 >= 0 || map.getMapHeight() >= ty0) ?
-	//					(int)(ty0/chipY) : -1;
-	//			if (ty < 0 || mlh <= ty) {
-	//				flagx = false;
-	//			}
-	//			if (flagx && map.getMapData()[tx][ty] != 0) {
-	//				flagx = false;
-	//			}
-	//			if (!flagx) break;
-	//		}
-	//		if (!flagx){
-	//			dx = (tx + (effx<0 ? 1 : 0))*chipX - (px + sx*effx) - effx;
-	//			x0 = px + dx;
-	//		}
-	//
-	//		//Y方向のチェック
-	//		ty = (y0 + sy*effy) >= 0 ? (int)((y0 + (sy*effy))/chipY) : -1;
-	//		boolean flagy = true;
-	//		if (ty < 0 || mlh <= ty) {
-	//			flagy = false;
-	//		}
-	//		for (int i = 0; i < 3; i++) {
-	//			float tx0 = (x0 + sx*(i-1));
-	//			tx = (tx0 >= 0 || map.getMapWidth() >= tx0) ?
-	//					(int)(tx0/chipX) : -1;
-	//			if (tx < 0 || mlw <= tx) {
-	//				flagy = false;
-	//			}
-	//			if (flagy && map.getMapData()[tx][ty] != 0) {
-	//				flagy = false;
-	//			}
-	//			if (!flagy) break;
-	//		}
-	//		if (!flagy) {
-	//			dy = (ty + (effy<0 ? 1 : 0))*chipY - (py + sy*effy)-effy;
-	//		}
-	//
-	//		if (!flagx && !flagy) {
-	//
-	//		}
-	//		ch.getD().set(dx, dy);
-	//		if (!flagx || !flagy) {
-	//			return true;
-	//		}else {
-	//			return false;
-	//		}
-	//	}
-
-	/**キャラクターとMapのあたり判定を行い、キャラクターの移動量を制御する。
-	 * @return 当たっていればtrue*/
 	public static int decideCheckOnMap(Character ch, Map map) {
 		float px = ch.getP().x, py = ch.getP().y;
 		float dx = ch.getD().x, dy = ch.getD().y;
@@ -160,14 +83,14 @@ public class Collide {
 						break;
 					}
 					if (flagx && map.getMapData()[tx][ty] != 0) {
-						if (dx < 0) {
-							res = res|COL_MAP_BLOCK_LEFT;
-
-						}else {
-							res = res|COL_MAP_BLOCK_RIGHT;
-						}
 						Block b = Block.getBlock(map.getMapBlockId(tx, ty));
 						if (!b.isPassedBlock()){
+							if (dx < 0) {
+								res = res|COL_MAP_BLOCK_LEFT;
+
+							}else {
+								res = res|COL_MAP_BLOCK_RIGHT;
+							}
 							flagx = false;
 						}
 						if (hitxx != tx || hitxy != ty) {
@@ -210,13 +133,13 @@ public class Collide {
 							flagy = false;
 						}
 						if (flagy && map.getMapData()[tx][ty] != 0) {
-							if (dy < 0) {
-								res = res|COL_MAP_BLOCK_UP;
-							}else {
-								res = res|COL_MAP_BLOCK_DOWN;
-							}
 							Block b = Block.getBlock(map.getMapBlockId(tx, ty));
 							if (!b.isPassedBlock()){
+								if (dy < 0) {
+									res = res|COL_MAP_BLOCK_UP;
+								}else {
+									res = res|COL_MAP_BLOCK_DOWN;
+								}
 								flagy = false;
 							}
 							if (hityx != tx || hityy != ty) {
@@ -373,116 +296,25 @@ public class Collide {
 		}
 	}
 
-	//	public static void decideCheckY(Character ch, Map map){
-	//		float px = ch.getP().x, py = ch.getP().y;
-	//		float dx = ch.getD().x, dy = ch.getD().y;
-	//		float sx = ch.getSize().x/2, sy = ch.getSize().y/2;
-	//		int mlw = map.getMapData().length;
-	//		int mlh = map.getMapData()[0].length;
-	//		float chipX = map.chipSizeOnScreen.x;
-	//		float chipY = map.chipSizeOnScreen.y;
-	//		if (dx == 0 && dy == 0) return;
-	//
-	//		int effy = 0;//係数
-	//		if (dy < 0) effy = -1;
-	//		if (dy > 0) effy = 1;
-	//
-	//		float x0 = px + dx, y0 = py + dy;
-	//		int tx, ty;
-	//
-	//		//Y方向のチェック
-	//		ty = (y0 + sy*effy) >= 0 ? (int)((y0 + (sy*effy))/chipY) : -1;
-	//		boolean flagy = true;
-	//		if (ty < 0 || mlh <= ty) {
-	//			flagy = false;
-	//		}
-	//		for (int i = 0; i < 3; i++) {
-	//			float tx0 = (x0 + sx*(i-1));
-	//			tx = (tx0 >= 0 || map.getMapWidth() >= tx0) ? (int)(tx0/chipX) : -1;
-	//			if (tx < 0 || mlw <= tx) {
-	//				flagy = false;
-	//			}
-	//			if (flagy && map.getMapData()[tx][ty] != 0) {
-	//				flagy = false;
-	//			}
-	//			if (!flagy) break;
-	//		}
-	//		if (flagy) return;
-	//		else {
-	//			float s = (ty + (effy<0 ? 1 : 0))*chipY - (py + sy*effy)-effy;
-	//			ch.getD().y = s;
-	//		}
-	//	}
-
-	/**キャラクターとMapのあたり判定を行い、キャラクターの移動量を制御する。
-	 * @return 当たっていればtrue*/
-	public static int decideCheckOnMap_Test(Character ch, Map map) {
+	/**キャラクターがジャンプ可能か(キャラクターの足元にブロックが存在するか)*/
+	public static boolean canJump(Character ch, Map map) {
 		float px = ch.getP().x, py = ch.getP().y;
 		float dx = ch.getD().x, dy = ch.getD().y;
 		float sx = ch.getSize().x/2, sy = ch.getSize().y/2;
-		int[][] mapData = map.getMapData();
-		int mlw = mapData.length;
-		int mlh = mapData[0].length;
+		int mlw = map.getMapData().length;
+		int mlh = map.getMapData()[0].length;
 		float chipX = map.chipSizeOnScreen.x;
 		float chipY = map.chipSizeOnScreen.y;
 
-
-		return 0;
-	}
-	/**X軸方向のMapとのあたり判定*/
-	public static int __dicideCheckOnMap(Character ch, Map map) {
-		float px = ch.getP().x, py = ch.getP().y;
-		float dx = ch.getD().x, dy = ch.getD().y;
-		float sx = ch.getSize().x/2, sy = ch.getSize().y/2;
-		int[][] mapData = map.getMapData();
-		int mlw = mapData.length;
-		int mlh = mapData[0].length;
-		float chipX = map.chipSizeOnScreen.x;
-		float chipY = map.chipSizeOnScreen.y;
-
-		int bsx = (int)((px+dx-sx)/chipX);
-		int bex = (int)((px+dx+sx)/chipX);
-		int bsy = (int)((py+dy-sy)/chipY);
-		int bey = (int)((py+dy+sy)/chipY);
-
-
-		//上下
-		for (int x = (int)((px+dx-sx)/chipX); x <= (int)((px+dx+sx)/chipX); x++) {
-			int y = 0;
-			if (dy == 0) break;
-			if (dy > 0) y = (int)((py+dy+sy)/chipY);
-			if (dy < 0) y = (int)((py+dy-sy)/chipY);
-
-			Block b = Block.getBlock(map.getMapBlockId(x, y));
-			if (!b.isPassedBlock()) {
-				if (dy > 0) {
-					py = (y)*chipY-sy+1;
-				}else {
-					py = (y+1)*chipY+sy-1;
-				}
-				break;
+		int tx = (int)((px+sx)/chipX);
+		int ty = (int)((py+sy)/chipY);
+		boolean res = false;
+		if (ty+1 < mlh){
+			int[][] md = map.getMapData();
+			if (!Block.getBlock(md[tx][ty+1]).isPassedBlock()) {
+				res = true;
 			}
 		}
-
-		//左右
-		for (int y = (int)((py+dy-sy)/chipY); y <= (int)((py+dy+sy)/chipY); y++) {
-			int x = 0;
-			if (dx == 0) break;
-			if (dx > 0) x = (int)((px+dx+sx)/chipX);
-			if (dx < 0) x = (int)((px+dx-sx)/chipX);
-
-			Block b = Block.getBlock(map.getMapBlockId(x, y));
-			if (!b.isPassedBlock()) {
-				if (dx > 0) {
-					px = (x)*chipX-sx-1;
-				}else {
-					px = (x+1)*chipX+sx+1;
-				}
-				break;
-			}
-		}
-
-		ch.getP().set(px, py);
-		return 0;
+		return res;
 	}
 }
