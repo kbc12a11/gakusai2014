@@ -33,19 +33,23 @@ public enum Block {
 	/**鉛筆ブロック*/
 	ENPITSU(Map.MAP_ENPITSU) {
 		int[] blockList = {Map.MAP_EMPTY};
+		Color c = new Color(0, 0, 0, 10);
 		@Override
 		public void render(Graphics g, Map map, int x, int y) {
 			renderFrame(g, map, x, y, 1, 0, Color.black,
 					blockList, false);
+			fillRect(g, x, y, map, c);
 		}
 	},
 	/**ボールペン*/
 	BOLLPEN(Map.MAP_BOLLPEN) {
 		int[] blockList = {Map.MAP_EMPTY};
+		Color c = new Color(0, 0, 0, 100);
 		@Override
 		public void render(Graphics g, Map map, int x, int y) {
 			renderFrame(g, map, x, y, 3, 0, Color.black,
 					blockList, false);
+			fillRect(g, x, y, map, c);
 		}
 	},
 	/**黄色*/
@@ -60,10 +64,13 @@ public enum Block {
 	/**赤*/
 	RED(Map.MAP_RED) {
 		int[] blockList = {Map.MAP_RED};
+		Color c = new Color(255, 0, 0, 100);
 		@Override
 		public void render(Graphics g, Map map, int x, int y) {
 			renderFrame(g, map, x, y, 3, 0, Color.red,
 					blockList, true);
+
+			fillRect(g, x, y, map, c);
 
 			if (map.getMapBlockId(x, y-1) == Map.MAP_EMPTY) {
 				Vector2f[] p = new Vector2f[(int)map.chipSizeOnScreen.x+1];
@@ -98,11 +105,15 @@ public enum Block {
 	/**青*/
 	BLUE(Map.MAP_BLUE) {
 		int[] blockList = {Map.MAP_BLUE};
+		Color c = new Color(0, 0, 255, 10);
 		@Override
 		public void render(Graphics g, Map map, int x, int y) {
 			renderFrame(g, map, x, y, 1, 0, Color.blue,
 					blockList, true);
+			fillRect(g, x, y, map, c);
 		}
+
+
 
 		@Override
 		public boolean isPassedBlock() {//通り抜け可能ブロック
@@ -285,6 +296,13 @@ public enum Block {
 		if (bottom)//下端
 			g.drawLine(x*chip.x+padding, (y+1)*chip.y-padding,
 					(x+1)*chip.x-padding, (y+1)*chip.y-padding);
+	}
+
+	private static void fillRect(Graphics g, int x, int y, Map map, Color c) {
+		float sx = map.chipSizeOnScreen.x;
+		float sy = map.chipSizeOnScreen.y;
+		g.setColor(c);
+		g.fillRect(x*sx, y*sy, sx, sy);
 	}
 
 	/**タイマー*/

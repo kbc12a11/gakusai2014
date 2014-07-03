@@ -124,6 +124,7 @@ public class Player extends Character{
 		flg_in_water = false;
 		if (getState() != STATE_CLEAR) {
 			a.set(Stage.GRAVITY);
+			//ライン
 			for (Line l : stg.getLineGroup().getLines()) {
 				ArrayList<LineBit> arr = l.getPoints();
 				for (int i = 0; i < arr.size() - 1; i++) {
@@ -140,6 +141,14 @@ public class Player extends Character{
 					}
 				}
 			}
+
+			Block[] blocks = new Block[6];
+			Collide.getOnBlock(p, size, stg.getMap(), blocks);
+			for (int i = 0; i < blocks.length; i++) {
+				if (blocks[i] != null) {
+					onBlock(blocks[i]);
+				}
+			}
 			//joystickの入力
 			Vector2f joyInput = Main.getWiimoteRistener().getJoystickInput();
 			if (joyInput.x < -0.05 || 0.05 < joyInput.x) {
@@ -147,23 +156,35 @@ public class Player extends Character{
 			}else {
 				d.x = 0;
 			}
-			if (flg_jump && Main.getWiimoteRistener().isBtnCPressed()) {
+			if (flg_in_water) {
+				if (joyInput.y < -0.05 || 0.05 < joyInput.y) {
+					d.y = joyInput.y*delta;
+				}
+			}
+			if ((flg_jump)
+					&& Main.getWiimoteRistener().isBtnCPressed()) {
 				d.y = -5;
 				flg_jump = false;
 			}
 			d.add(a);
+			//速度調整
 			if (d.x > maxSpeed) d.x = maxSpeed;
 			if (d.x < -maxSpeed) d.x = -maxSpeed;
 			if (d.y > maxSpeed) d.y = maxSpeed;
 			if (d.y < -maxSpeed) d.y = -maxSpeed;
-			int r = Collide.decideCheckOnMap(this, stg.getMap());
-//			int r = Collide.__dicideCheckOnMap(this, stg.getMap());
+
+			if (flg_in_water) {
+				d.x = d.x * 0.7f;
+				d.y = d.y * 0.7f;
+			}
+			Vector2f nextp = new Vector2f();
+			Vector2f nextd = new Vector2f();
+			int r = Collide.decideCheckOnMap(this, stg.getMap(), nextp, nextd, blocks);
+			//int r = Collide.decideCheckOnMap(this, stg.getMap());
+			p.set(nextp);
+			d.set(nextd);
 			if ((r&Collide.COL_OUT_OF_MAP_RIGHT) == Collide.COL_OUT_OF_MAP_RIGHT) {
 				setState(STATE_CLEAR);
-			}
-			if (flg_in_water) {
-				d.x = d.x * 0.9f;
-				d.y = d.y * 0.9f;
 			}
 			if ((r&Collide.COL_MAP_BLOCK_DOWN) != 0) {
 				flg_jump = true;

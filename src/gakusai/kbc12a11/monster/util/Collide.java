@@ -33,6 +33,45 @@ public class Collide {
 	/**キャラクターとMapのあたり判定を行い、キャラクターの移動量を制御する。
 	 * @return 当たっていればtrue*/
 	public static int decideCheckOnMap(Character ch, Map map) {
+		Vector2f p = new Vector2f(ch.getP());
+		Vector2f d = new Vector2f(ch.getD());
+		Block[] blocks = new Block[6];
+		int res = decideCheckOnMap(ch, map, p, d, blocks);
+		ch.getD().set(d);
+		ch.getP().set(p);
+
+		//		//ブロックに当たった時のエフェクト
+		//		if ((res & (COL_MAP_BLOCK_DOWN | COL_MAP_BLOCK_UP)) != 0) {
+		//			Block b = Block.getBlock(map.getMapBlockId(hityx, hityy));
+		//			b.effect(ch);
+		//			ch.onBlock(b);
+		//		}
+		//
+		//		if ((res & (COL_MAP_BLOCK_LEFT | COL_MAP_BLOCK_RIGHT)) != 0) {
+		//			Block b = Block.getBlock(map.getMapBlockId(hitxx, hitxy));
+		//			b.effect(ch);
+		//			ch.onBlock(b);
+		//		}
+		for (Block b : blocks) {
+			if (b != null){
+				b.effect(ch);
+				ch.onBlock(b);
+			}
+		}
+		return res;
+	}
+
+	/**キャラクターとMapのあたり判定を行い、キャラクターの移動量を制御する
+	 *
+	 * @param ch
+	 * @param map
+	 * @param resP 移動判定後のP座標への参照
+	 * @param resD 移動判定後のDベクトルへの参照
+	 * @param resBlocks 接触しているブロックたちへの参照（6個）
+	 * @return
+	 */
+	public static int decideCheckOnMap(Character ch, Map map,
+			Vector2f resP, Vector2f resD, Block[] resBlocks) {
 		float px = ch.getP().x, py = ch.getP().y;
 		float dx = ch.getD().x, dy = ch.getD().y;
 		float sx = ch.getSize().x/2, sy = ch.getSize().y/2;
@@ -54,7 +93,6 @@ public class Collide {
 		int tx, ty;
 		int hitxx = -1, hitxy = -1, hityx = -1, hityy = -1;
 
-		Block[] hitBlocks = new Block[6];
 		int blocksIndex = 0;
 
 		//X方向のチェック
@@ -94,7 +132,7 @@ public class Collide {
 							flagx = false;
 						}
 						if (hitxx != tx || hitxy != ty) {
-							hitBlocks[blocksIndex++] = b;
+							resBlocks[blocksIndex++] = b;
 						}
 						hitxx = tx;
 						hitxy = ty;
@@ -143,7 +181,7 @@ public class Collide {
 								flagy = false;
 							}
 							if (hityx != tx || hityy != ty) {
-								hitBlocks[blocksIndex++] = b;
+								resBlocks[blocksIndex++] = b;
 							}
 							hityx = tx;
 							hityy = ty;
@@ -158,27 +196,8 @@ public class Collide {
 			dy = 0;
 		}
 
-		ch.getD().set(dx, dy);
-		ch.getP().set(px, py);
-
-		//		//ブロックに当たった時のエフェクト
-		//		if ((res & (COL_MAP_BLOCK_DOWN | COL_MAP_BLOCK_UP)) != 0) {
-		//			Block b = Block.getBlock(map.getMapBlockId(hityx, hityy));
-		//			b.effect(ch);
-		//			ch.onBlock(b);
-		//		}
-		//
-		//		if ((res & (COL_MAP_BLOCK_LEFT | COL_MAP_BLOCK_RIGHT)) != 0) {
-		//			Block b = Block.getBlock(map.getMapBlockId(hitxx, hitxy));
-		//			b.effect(ch);
-		//			ch.onBlock(b);
-		//		}
-		for (Block b : hitBlocks) {
-			if (b != null){
-				b.effect(ch);
-				ch.onBlock(b);
-			}
-		}
+		resD.set(dx, dy);
+		resP.set(px, py);
 		return res;
 	}
 
@@ -299,22 +318,31 @@ public class Collide {
 	/**キャラクターがジャンプ可能か(キャラクターの足元にブロックが存在するか)*/
 	public static boolean canJump(Character ch, Map map) {
 		float px = ch.getP().x, py = ch.getP().y;
-		float dx = ch.getD().x, dy = ch.getD().y;
-		float sx = ch.getSize().x/2, sy = ch.getSize().y/2;
-		int mlw = map.getMapData().length;
-		int mlh = map.getMapData()[0].length;
+		float sx = ch.getSize().x/2, sy = ch.getSize().y;
 		float chipX = map.chipSizeOnScreen.x;
 		float chipY = map.chipSizeOnScreen.y;
 
 		int tx = (int)((px+sx)/chipX);
 		int ty = (int)((py+sy)/chipY);
 		boolean res = false;
-		if (ty+1 < mlh){
-			int[][] md = map.getMapData();
-			if (!Block.getBlock(md[tx][ty+1]).isPassedBlock()) {
-				res = true;
-			}
+		if (!Block.getBlock(map.getMapBlockId(tx, ty)).isPassedBlock()) {
+			res = true;
 		}
 		return res;
+	}
+
+	/**接触しているブロックを返す*/
+	public static void getOnBlock(Vector2f p, Vector2f sz, Map map, Block[] resBlock) {
+		float cx = map.chipSizeOnScreen.x;
+		float cy = map.chipSizeOnScreen.y;
+		resBlock[0] = Block.getBlock(map.getMapBlockId(
+				(int)((p.x-sz.x/2-1)/cx), (int)((p.y-sz.y/2-1)/cy)));
+		resBlock[1] = Block.getBlock(map.getMapBlockId(
+				(int)((p.x+sz.x/2+1)/cx), (int)((p.y-sz.y/2-1)/cy)));
+		resBlock[2] = Block.getBlock(map.getMapBlockId(
+				(int)((p.x-sz.x/2-1)/cx), (int)((p.y+sz.y/2+1)/cy)));
+		resBlock[3] = Block.getBlock(map.getMapBlockId(
+				(int)((p.x+sz.x/2+1)/cx), (int)((p.y+sz.y/2+1)/cy)));
+
 	}
 }

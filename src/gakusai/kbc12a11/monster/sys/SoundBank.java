@@ -6,9 +6,6 @@ import org.newdawn.slick.Sound;
 /**ＢＧＭ，ＳＥ管理クラス*/
 public class SoundBank {
 	//曲のIDを登録
-	/**プレイヤーが死亡した時の効果音*/
-	public static final int SE_PLAYER_DEAD;
-	private static final String FILE_PLAYER_DEAD = "res/se/thiunthiun.wma";
 	/**爆発音*/
 	public static final int SE_BOMB;
 	private static final String FILE_BOMB = "res/se/bomb.wav";
@@ -20,23 +17,32 @@ public class SoundBank {
 	private static final String FILE_ENDAAAAAAAAAAAAAAAA = "res/se/Endaaaaaa.wav";
 	/**線を引く音*/
 	public static final int SE_LINE;
-	private static final String FILE_LINE = "res/se/line.wav";
+	private static final String FILE_LINE = "res/se/ta_ta_warekie02.wav";
+
+	/**お化けの登場音*/
+	public static final int SE_OBAKE;
+	private static final String FILE_OBAKE = "res/se/ta_ta_obake01.wav";
+
+	/**魔法発射音*/
+	public static final int SE_MAGIC;
+	private static final String FILE_MAGIC = "res/se/ta_ta_maho12.wav";
 
 	/**効果音の数*/
 	private static int SE_SIZE;
 	//IDの設定
 	static {
 		SE_SIZE = 0;
-		SE_PLAYER_DEAD = SE_SIZE++;
 		SE_BOMB = SE_SIZE++;
 		SE_CAT = SE_SIZE++;
 		SE_ENDAAAAAAAAAAAAAAAA = SE_SIZE++;
 		SE_LINE = SE_SIZE ++;
+		SE_OBAKE = SE_SIZE++;
+		SE_MAGIC = SE_SIZE++;
 	}
 
 	private Sound[] soundList;
 	private boolean[] playFlag;
-	private int baseWaitTime = 0;
+	private int baseWaitTime = 4;//待ち時間
 	private int[] waitTime;
 	private float[] pitch;//ピッチ
 	private float[] volume;//ボリューム
@@ -48,11 +54,12 @@ public class SoundBank {
 	//効果音の設定
 	private void setSE(){
 		String[] files = new String[SE_SIZE];
-		files[SE_PLAYER_DEAD] = FILE_PLAYER_DEAD;
 		files[SE_BOMB] = FILE_BOMB;
 		files[SE_CAT] = FILE_CAT;
 		files[SE_ENDAAAAAAAAAAAAAAAA] = FILE_ENDAAAAAAAAAAAAAAAA;
 		files[SE_LINE] = FILE_LINE;
+		files[SE_OBAKE] = FILE_OBAKE;
+		files[SE_MAGIC] = FILE_MAGIC;
 
 		for (int i = 0; i < SE_SIZE; i++) {
 			pitch[i] = DEFAULT_PITCH;
@@ -94,9 +101,9 @@ public class SoundBank {
 
 			if (playFlag[i]) {
 				if (soundList[i] != null) {
-					//					if (soundList[i].playing()) {
-					//						soundList[i].stop();
-					//					}
+					if (soundList[i].playing()) {
+						soundList[i].stop();
+					}
 					soundList[i].play(pitch[i], volume[i]);
 					waitTime[i] = baseWaitTime;
 					pitch[i] = DEFAULT_PITCH;
@@ -129,6 +136,7 @@ public class SoundBank {
 			this.volume[id] = this.volume[id] < volume ? volume : this.volume[id];
 		}
 	}
+
 
 	/**再生中のすべてのサウンドを停止する*/
 	public void stopAllSound() {

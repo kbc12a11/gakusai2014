@@ -1,11 +1,10 @@
 package gakusai.kbc12a10.monster.stage;
 
-import gakusai.kbc12a08.monster.enemy.Enemy;
 import gakusai.kbc12a08.monster.enemy.EnemyFactory;
 import gakusai.kbc12a11.monster.enemy.Bomb;
 import gakusai.kbc12a11.monster.enemy.Ghost;
+import gakusai.kbc12a11.monster.enemy.Magican;
 import gakusai.kbc12a11.monster.enemy.Missile;
-import gakusai.kbc12a11.monster.sampleStage.SampleEnemy1;
 import gakusai.kbc12a11.monster.sys.Main;
 import gakusai.kbc12a11.monster.sys.StageBackground;
 import gakusai.kbc12a11.monster.sys.stage.NoteBackground;
@@ -41,9 +40,8 @@ public class HinoStage extends Stage {
 	@Override
 	public void setEnemys() throws SlickException {
 		// TODO 自動生成されたメソッド・スタブ
-		Enemy sampleEnemy1 = new SampleEnemy1(this, 200, 335);
 		//敵の追加
-		addEnemy(sampleEnemy1);
+		addEnemyFactory(new EnemyFactory(this, Magican.class, 200, 505));
 
 		EnemyFactory[] bomb = {
 				new EnemyFactory(this, Bomb.class, 2200, 600),

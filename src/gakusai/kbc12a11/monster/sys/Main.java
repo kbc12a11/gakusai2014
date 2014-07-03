@@ -1,8 +1,8 @@
 package gakusai.kbc12a11.monster.sys;
 
-import gakusai.kbc12a10.monster.stage.HinoStage;
 import gakusai.kbc12a11.monster.sampleStage.SampleStage2;
 import gakusai.kbc12a11.monster.st1.Stage_1;
+import gakusai.kbc12a11.monster.stage.mario.MarioStage;
 import gakusai.kbc12a11.monster.sys.stage.BeforeStartStage;
 import gakusai.kbc12a11.monster.sys.wiimote.WiimoteTest;
 
@@ -36,6 +36,7 @@ public class Main extends StateBasedGame {
 	public static final int Stage_SampleStage = 1211001;
 	public static final int Stage_12a11_TestStage = 1211002;
 	public static final int Stage_12a11_SampleStage2 = 1211003;
+	public static final int Stage_12a11_MarioStage = 1211004;
 
 	public static final int Stage_12a10_HinoStage = 1210001;
 	///ステージIDの登録ここまで
@@ -59,7 +60,7 @@ public class Main extends StateBasedGame {
 	/**作ったステージをここで追加する*/
 	public void initStatesList(GameContainer gc) throws SlickException {
 		//最初に追加されたステージが実行される
-		addState(new HinoStage());
+		addState(new MarioStage());
 		addState(new SampleStage2());
 
 		addState(new Stage_1());

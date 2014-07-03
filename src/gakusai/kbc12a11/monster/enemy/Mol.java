@@ -43,6 +43,8 @@ public class Mol extends Enemy{
 		int res = Collide.decideCheckOnMap(this, stg.getMap());
 		p.add(d);
 
+//		stg.soundRequest(SoundBank.SE_LINE);
+
 	}
 
 	@Override

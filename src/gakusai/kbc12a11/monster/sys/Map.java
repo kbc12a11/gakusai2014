@@ -216,6 +216,7 @@ public class Map {
 				case ENEMY_CRAB:
 					stg.addEnemyFactory(new EnemyFactory(stg,
 							Crab.class, calcLocateX(x), calcLocateY(y)));
+
 					break;
 				case ENEMY_DOSSUN:
 					stg.addEnemyFactory(new EnemyFactory(stg,

@@ -29,6 +29,10 @@ public class WiimoteTest implements WiimoteListener{
 	private float pointingX, pointingY;
 	private boolean btn_a, btn_b;
 
+	//ハイパスフィルター用
+	private float rate = 0.9f;
+
+
 	//ヌンチャク関係
 	/**傾ける強さ(0-1)*/
 	private float magnitude;
@@ -75,6 +79,7 @@ public class WiimoteTest implements WiimoteListener{
 			wiimote.setVirtualResolution((int)virtualScreenSize.x, (int)virtualScreenSize.y);
 			wiimote.activateSmoothing();
 			wiimote.setAlphaSmoothingValue(0.001f);
+			wiimote.setSensorBarBelowScreen();
 			wiimote.setOrientationThreshold((float)(1.0*Math.PI));
 			wiimote.addWiiMoteEventListeners(this);
 			System.out.println("Success!");
@@ -129,6 +134,12 @@ public class WiimoteTest implements WiimoteListener{
 	public void onDisconnectionEvent(DisconnectionEvent arg0) {
 		isConnected = false;
 		wiimote = null;
+	}
+
+	@Override
+	public void onIrEvent(IREvent arg0) {
+		pointingX = arg0.getX() * rate + pointingX*(1-rate);
+		pointingY = arg0.getY() * rate + pointingY*(1-rate);;
 	}
 
 	/**ヌンチャクのイベント*/
@@ -188,11 +199,6 @@ public class WiimoteTest implements WiimoteListener{
 
 	}
 
-	@Override
-	public void onIrEvent(IREvent arg0) {
-		pointingX = arg0.getX();
-		pointingY = arg0.getY();
-	}
 
 	@Override
 	public void onMotionSensingEvent(MotionSensingEvent arg0) {
