@@ -27,6 +27,9 @@ public class SoundBank {
 	public static final int SE_MAGIC;
 	private static final String FILE_MAGIC = "res/se/ta_ta_maho12.wav";
 
+	public static final int SE_GET_COIN;
+	private static final String FILE_GET_COIN = "res/se/crrect_answer3.wav";
+
 	/**効果音の数*/
 	private static int SE_SIZE;
 	//IDの設定
@@ -38,6 +41,7 @@ public class SoundBank {
 		SE_LINE = SE_SIZE ++;
 		SE_OBAKE = SE_SIZE++;
 		SE_MAGIC = SE_SIZE++;
+		SE_GET_COIN = SE_SIZE++;
 	}
 
 	private Sound[] soundList;
@@ -60,6 +64,7 @@ public class SoundBank {
 		files[SE_LINE] = FILE_LINE;
 		files[SE_OBAKE] = FILE_OBAKE;
 		files[SE_MAGIC] = FILE_MAGIC;
+		files[SE_GET_COIN] = FILE_GET_COIN;
 
 		for (int i = 0; i < SE_SIZE; i++) {
 			pitch[i] = DEFAULT_PITCH;
@@ -144,6 +149,7 @@ public class SoundBank {
 			if (soundList[i] != null &&
 					soundList[i].playing()) {
 				soundList[i].stop();
+				playFlag[i] = false;
 			}
 		}
 	}

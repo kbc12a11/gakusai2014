@@ -45,7 +45,7 @@ public class Bomb extends Enemy {
 	//表示する用の画像
 	Image [] img = new Image[4];
 
-	Image  burst = new Image("res/image/burst.png");
+	Image  burst = stg.getImage(ImageBank.EF_BOMB_BURST);
 
 
 

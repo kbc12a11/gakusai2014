@@ -66,6 +66,7 @@ public abstract class Stage extends BasicGameState{
 	protected ObjectGroup backgroundObjectGroup;//背景オブジェクト
 	/**固定位置に敵を生成する*/
 	protected ArrayList<EnemyFactory> enemyFactorys;
+	protected GameInput gameInput;//入力
 
 	protected StageBackground bg;
 
@@ -111,6 +112,8 @@ public abstract class Stage extends BasicGameState{
 		scoreWindow = new ScoreWindow(this);
 		timeWindow = new TimeWindow();
 		stockWindow = new StockWindow(player);
+
+		gameInput = new GameInput();
 	}
 
 	/**初期化*/
@@ -137,6 +140,7 @@ public abstract class Stage extends BasicGameState{
 		setItems();
 		setBackgroundObject();
 		map.setEnemysAndItems(this);
+		map.resetMapData();
 		//エネミーファクトリーの初期化
 		for (EnemyFactory ef : enemyFactorys) {
 			ef.init();
@@ -153,6 +157,7 @@ public abstract class Stage extends BasicGameState{
 	//更新
 	@Override
 	public final void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
+		gameInput = Util.getGameInput(gameInput, gc);
 		stageStateCheck();
 		if (bg != null) {
 			bg.update(gc, sbg, delta);//背景
@@ -223,8 +228,7 @@ public abstract class Stage extends BasicGameState{
 
 		eraser.render(gc, sbg, g);
 		//Wiiリモコン確認用
-		GameInput in = Util.getGameInput(this, gc);
-		g.drawOval(in.getX()-5, in.getY()-5, 10, 10);
+		g.drawOval(gameInput.getX()-5, gameInput.getY()-5, 10, 10);
 
 		g.translate(camera.getTranslateX(), camera.getTranslateY());
 		map.render(gc, sbg, g);
@@ -403,5 +407,14 @@ public abstract class Stage extends BasicGameState{
 	}
 	public void setBackground(StageBackground background) {
 		this.bg = background;
+	}
+
+	public GameInput getGameInput() {
+		return gameInput;
+	}
+
+	@Override
+	public String toString() {
+		return "Stage " + getID();
 	}
 }

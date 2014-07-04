@@ -1,6 +1,8 @@
 package gakusai.kbc12a11.monster.item;
 
 import gakusai.kbc12a11.monster.abst.Object;
+import gakusai.kbc12a11.monster.sys.SoundBank;
+import gakusai.kbc12a11.monster.sys.player.Player;
 import gakusai.kbc12a11.monster.sys.stage.Stage;
 
 import org.newdawn.slick.Color;
@@ -41,5 +43,13 @@ public class Coin extends Item{
 		g.setColor(Color.black);
 		g.drawOval(p.x - a, p.y - size.y/2, a*2, size.y);
 		g.drawLine(p.x, p.y - size.y/4, p.x, p.y + size.y/4);
+	}
+
+	@Override
+	public void hit(Object obj) {
+		if (obj instanceof Player) {
+			stg.soundRequest(SoundBank.SE_GET_COIN);
+		}
+		super.hit(obj);
 	}
 }

@@ -4,8 +4,8 @@ import gakusai.kbc12a08.monster.enemy.Enemy;
 import gakusai.kbc12a11.monster.abst.Character;
 import gakusai.kbc12a11.monster.abst.Object;
 import gakusai.kbc12a11.monster.item.Item;
+import gakusai.kbc12a11.monster.sys.GameInput;
 import gakusai.kbc12a11.monster.sys.ImageBank;
-import gakusai.kbc12a11.monster.sys.Main;
 import gakusai.kbc12a11.monster.sys.SoundBank;
 import gakusai.kbc12a11.monster.sys.block.Block;
 import gakusai.kbc12a11.monster.sys.effects.Effect;
@@ -150,7 +150,8 @@ public class Player extends Character{
 				}
 			}
 			//joystickの入力
-			Vector2f joyInput = Main.getWiimoteRistener().getJoystickInput();
+			GameInput in = stg.getGameInput();
+			Vector2f joyInput = in.getJoyInput();
 			if (joyInput.x < -0.05 || 0.05 < joyInput.x) {
 				d.x = joyInput.x*delta;
 			}else {
@@ -162,7 +163,7 @@ public class Player extends Character{
 				}
 			}
 			if ((flg_jump)
-					&& Main.getWiimoteRistener().isBtnCPressed()) {
+					&& in.isC()) {
 				d.y = -5;
 				flg_jump = false;
 			}
@@ -177,8 +178,8 @@ public class Player extends Character{
 				d.x = d.x * 0.7f;
 				d.y = d.y * 0.7f;
 			}
-			Vector2f nextp = new Vector2f();
-			Vector2f nextd = new Vector2f();
+			Vector2f nextp = new Vector2f(p);
+			Vector2f nextd = new Vector2f(d);
 			int r = Collide.decideCheckOnMap(this, stg.getMap(), nextp, nextd, blocks);
 			//int r = Collide.decideCheckOnMap(this, stg.getMap());
 			p.set(nextp);

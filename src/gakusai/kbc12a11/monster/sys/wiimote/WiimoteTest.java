@@ -63,7 +63,6 @@ public class WiimoteTest implements WiimoteListener{
 		virtualScreenSize = new Vector2f((int)(Main.W_WIDTH*scale), (int)(Main.W_HEIGHT*scale));
 		createConnection();
 	}
-
 	/**wiiリモコンとの接続を確立する*/
 	public void createConnection() {
 		System.out.print("Connect to Wii remote\t:");
@@ -223,5 +222,6 @@ public class WiimoteTest implements WiimoteListener{
 		// TODO 自動生成されたメソッド・スタブ
 
 	}
+
 
 }

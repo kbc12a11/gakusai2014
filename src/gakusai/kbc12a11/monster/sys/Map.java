@@ -54,6 +54,17 @@ public class Map {
 			for (int x = 0; x < chipNum.x; x++) {
 				int id = mapData[x+y*(int)chipNum.x];
 				this.originalMapData[x][y] = id;
+			}
+		}
+
+		resetMapData();
+
+	}
+	/**マップの状態を初期化する*/
+	public void resetMapData() {
+		for (int x = 0; x < mapData.length; x++) {
+			for (int y = 0; y < mapData[x].length; y++) {
+				int id = originalMapData[x][y];
 
 				if (id == MAP_ENPITSU || id == MAP_BOLLPEN
 						|| id == MAP_BLUE || id == MAP_GREEN
@@ -78,14 +89,15 @@ public class Map {
 		}
 	}
 
+
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException{
-//		//デバッグ用
-//		Input in = gc.getInput();
-//		if (in.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-//			int x = in.getMouseX();
-//			int y = in.getMouseY();
-//			System.out.println("Map[" + (int)(x/chipSize.x) + ", " + (int)(y/chipSize.y) + "]");
-//		}
+		//		//デバッグ用
+		//		Input in = gc.getInput();
+		//		if (in.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+		//			int x = in.getMouseX();
+		//			int y = in.getMouseY();
+		//			System.out.println("Map[" + (int)(x/chipSize.x) + ", " + (int)(y/chipSize.y) + "]");
+		//		}
 
 		Block.staticUpdate();
 
@@ -306,8 +318,8 @@ public class Map {
 
 		for (int x0 = stx; x0 < enx; x0++) {
 			for (int y0 = sty; y0 < eny; y0++) {
-				if (mapData[x0][y0] == 1) {
-					mapData[x0][y0] = 0;
+				if (mapData[x0][y0] == MAP_ENPITSU) {
+					mapData[x0][y0] = MAP_EMPTY;
 				}
 			}
 		}
