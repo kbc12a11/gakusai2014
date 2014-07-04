@@ -1,7 +1,14 @@
 package gakusai.kbc12a11.monster.sys;
 
 import gakusai.kbc12a08.monster.enemy.EnemyFactory;
+import gakusai.kbc12a11.monster.enemy.Bomb;
+import gakusai.kbc12a11.monster.enemy.Crab;
+import gakusai.kbc12a11.monster.enemy.Dossun;
+import gakusai.kbc12a11.monster.enemy.Ghost;
 import gakusai.kbc12a11.monster.enemy.Magican;
+import gakusai.kbc12a11.monster.enemy.Missile;
+import gakusai.kbc12a11.monster.enemy.Mol;
+import gakusai.kbc12a11.monster.enemy.UFO;
 import gakusai.kbc12a11.monster.item.Coin;
 import gakusai.kbc12a11.monster.sys.block.Block;
 import gakusai.kbc12a11.monster.sys.stage.Stage;
@@ -10,7 +17,6 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.SpriteSheet;
 import org.newdawn.slick.geom.Rectangle;
@@ -73,13 +79,13 @@ public class Map {
 	}
 
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException{
-		//デバッグ用
-		Input in = gc.getInput();
-		if (in.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-			int x = in.getMouseX();
-			int y = in.getMouseY();
-			System.out.println("Map[" + (int)(x/chipSize.x) + ", " + (int)(y/chipSize.y) + "]");
-		}
+//		//デバッグ用
+//		Input in = gc.getInput();
+//		if (in.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
+//			int x = in.getMouseX();
+//			int y = in.getMouseY();
+//			System.out.println("Map[" + (int)(x/chipSize.x) + ", " + (int)(y/chipSize.y) + "]");
+//		}
 
 		Block.staticUpdate();
 
@@ -204,22 +210,37 @@ public class Map {
 				int id = originalMapData[x][y];
 				switch(id) {
 				case ENEMY_BOMB:
+					stg.addEnemyFactory(new EnemyFactory(stg,
+							Bomb.class, calcLocateX(x), calcLocateY(y)));
 					break;
 				case ENEMY_CRAB:
+					stg.addEnemyFactory(new EnemyFactory(stg,
+							Crab.class, calcLocateX(x), calcLocateY(y)));
+
 					break;
 				case ENEMY_DOSSUN:
+					stg.addEnemyFactory(new EnemyFactory(stg,
+							Dossun.class, calcLocateX(x), calcLocateY(y)));
 					break;
 				case ENEMY_GHOST:
+					stg.addEnemyFactory(new EnemyFactory(stg,
+							Ghost.class, calcLocateX(x), calcLocateY(y)));
 					break;
 				case ENEMY_MAGICAN:
 					stg.addEnemyFactory(new EnemyFactory(stg,
 							Magican.class, calcLocateX(x), calcLocateY(y)));
 					break;
 				case ENEMY_MISSILE:
+					stg.addEnemyFactory(new EnemyFactory(stg,
+							Missile.class, calcLocateX(x), calcLocateY(y)));
 					break;
 				case ENEMY_MOL:
+					stg.addEnemyFactory(new EnemyFactory(stg,
+							Mol.class, calcLocateX(x), calcLocateY(y)));
 					break;
 				case ENEMY_UFO:
+					stg.addEnemyFactory(new EnemyFactory(stg,
+							UFO.class, calcLocateX(x), calcLocateY(y)));
 					break;
 				case ITEM_COIN:
 					stg.addItem(new Coin(stg, calcLocateX(x), calcLocateY(y)));

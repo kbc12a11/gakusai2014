@@ -25,9 +25,26 @@ public class ImageBank {
 	public static final int ENEMY_BOMB_2;
 	private static final String FILE_ENEMY_BOMB_2 = "res/image/enemy/bomb/bomb2.gif";
 
+	/**爆弾の画像3*/
+	public static final int ENEMY_BOMB_3;
+	private static final String FILE_ENEMY_BOMB_3 = "res/image/enemy/bomb/bomb3.gif";
+
+	/**爆弾の画像3*/
+	public static final int ENEMY_BOMB_4;
+	private static final String FILE_ENEMY_BOMB_4 = "res/image/enemy/bomb/bomb4.gif";
+
+
 	/**蟹の画像1*/
 	public static final int ENEMY_CRAB_1;
 	private static final String FILE_ENEMY_CRAB_1 = "res/image/enemy/crab/crab1.gif";
+
+	/**蟹の画像2*/
+	public static final int ENEMY_CRAB_2;
+	private static final String FILE_ENEMY_CRAB_2 = "res/image/enemy/crab/crab2.gif";
+
+	/**蟹の画像3*/
+	public static final int ENEMY_CRAB_3;
+	private static final String FILE_ENEMY_CRAB_3 = "res/image/enemy/crab/crab3.gif";
 
 	/**どっすんの画像1*/
 	public static final int ENEMY_DOSSUN_1;
@@ -81,6 +98,21 @@ public class ImageBank {
 	public static final int ENEMY_UFO_2;
 	private static final String FILE_ENEMY_UFO_2 = "res/image/enemy/UFO/UFO2.gif";
 
+
+	////////////////////////////////////////背景素材
+	/**へのへのもへじ*/
+	public static final int BG_HENOHENO;
+	private static final String FILE_BG_HENOHENO = "res/image/background/henoheno.png";
+
+
+	///////////////////////////////////////エフェクト素材
+	/**爆発*/
+	public static final int EF_BOMB_BURST;
+	private static final String FILE_EF_BOMB_BURST = "res/image/enemy/bomb/burst.png";
+
+
+
+
 	/**イメージの数*/
 	private static int IMAGE_SIZE;
 
@@ -91,10 +123,15 @@ public class ImageBank {
 		PLAYER_2 = IMAGE_SIZE++;
 		PLAYER_DAMAGED = IMAGE_SIZE++;
 
+		//enemy
 		ENEMY_BOMB_1 = IMAGE_SIZE++;
 		ENEMY_BOMB_2 = IMAGE_SIZE++;
+		ENEMY_BOMB_3 = IMAGE_SIZE++;
+		ENEMY_BOMB_4 = IMAGE_SIZE++;
 
 		ENEMY_CRAB_1 = IMAGE_SIZE++;
+		ENEMY_CRAB_2 = IMAGE_SIZE++;
+		ENEMY_CRAB_3 = IMAGE_SIZE++;
 
 		ENEMY_DOSSUN_1 = IMAGE_SIZE++;
 
@@ -114,6 +151,13 @@ public class ImageBank {
 
 		ENEMY_UFO_1 = IMAGE_SIZE++;
 		ENEMY_UFO_2 = IMAGE_SIZE++;
+
+
+		//background
+		BG_HENOHENO = IMAGE_SIZE++;
+
+		//effect
+		EF_BOMB_BURST = IMAGE_SIZE++;
 	}
 
 	private Image[] imageList;
@@ -141,22 +185,41 @@ public class ImageBank {
 		files[PLAYER_1] = FILE_PLAYER_1;
 		files[PLAYER_2] = FILE_PLAYER_2;
 		files[PLAYER_DAMAGED] = FILE_PLAYER_DAMAGED;
+
+		//enemy
 		files[ENEMY_BOMB_1] = FILE_ENEMY_BOMB_1;
 		files[ENEMY_BOMB_2] = FILE_ENEMY_BOMB_2;
+		files[ENEMY_BOMB_3] = FILE_ENEMY_BOMB_3;
+		files[ENEMY_BOMB_4] = FILE_ENEMY_BOMB_4;
+
 		files[ENEMY_CRAB_1] = FILE_ENEMY_CRAB_1;
+		files[ENEMY_CRAB_2] = FILE_ENEMY_CRAB_2;
+		files[ENEMY_CRAB_3] = FILE_ENEMY_CRAB_3;
+
 		files[ENEMY_DOSSUN_1] = FILE_ENEMY_DOSSUN_1;
+
 		files[ENEMY_GHOST_1] = FILE_ENEMY_GHOST_1;
 		files[ENEMY_GHOST_2] = FILE_ENEMY_GHOST_2;
+
 		files[ENEMY_MAGICAN_1] = FILE_ENEMY_MAGICAN_1;
 		files[ENEMY_MAGICAN_2] = FILE_ENEMY_MAGICAN_2;
+
 		files[ENEMY_MISSILE_1] = FILE_ENEMY_MISSILE_1;
+
 		files[ENEMY_MOL_1] = FILE_ENEMY_MOL_1;
 		files[ENEMY_MOL_2] = FILE_ENEMY_MOL_2;
 		files[ENEMY_MOL_3] = FILE_ENEMY_MOL_3;
 		files[ENEMY_MOL_4] = FILE_ENEMY_MOL_4;
 		files[ENEMY_MOL_5] = FILE_ENEMY_MOL_5;
+
 		files[ENEMY_UFO_1] = FILE_ENEMY_UFO_1;
 		files[ENEMY_UFO_2] = FILE_ENEMY_UFO_2;
+
+		//background
+		files[BG_HENOHENO] = FILE_BG_HENOHENO;
+
+		//effect
+		files[EF_BOMB_BURST] = FILE_EF_BOMB_BURST;
 
 		for (int i = 0; i < IMAGE_SIZE; i++) {
 			try {

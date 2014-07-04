@@ -7,11 +7,13 @@ import gakusai.kbc12a08.monster.enemy.EnemyFactory;
 import gakusai.kbc12a11.monster.abst.StatusWindow;
 import gakusai.kbc12a11.monster.item.Item;
 import gakusai.kbc12a11.monster.sys.Camera;
+import gakusai.kbc12a11.monster.sys.GameInput;
 import gakusai.kbc12a11.monster.sys.ImageBank;
 import gakusai.kbc12a11.monster.sys.Main;
 import gakusai.kbc12a11.monster.sys.Map;
 import gakusai.kbc12a11.monster.sys.SoundBank;
 import gakusai.kbc12a11.monster.sys.StageBackground;
+import gakusai.kbc12a11.monster.sys.decorate.BackgroundObject;
 import gakusai.kbc12a11.monster.sys.eraser.Eraser;
 import gakusai.kbc12a11.monster.sys.line.LineGroup;
 import gakusai.kbc12a11.monster.sys.player.Player;
@@ -19,6 +21,7 @@ import gakusai.kbc12a11.monster.sys.player.PlayerAttackBit;
 import gakusai.kbc12a11.monster.sys.window.LifeLine;
 import gakusai.kbc12a11.monster.sys.window.LineEnergyWindow;
 import gakusai.kbc12a11.monster.sys.window.ScoreWindow;
+import gakusai.kbc12a11.monster.util.Util;
 import gakusai.kbc12a11.monster.util.XmlParse;
 
 import java.util.ArrayList;
@@ -58,8 +61,9 @@ public abstract class Stage extends BasicGameState{
 
 	protected Player player;
 	protected LineGroup lg;
-	protected ObjectGroup enemyGroup;
-	protected ObjectGroup itemGroup;
+	protected ObjectGroup enemyGroup;//敵
+	protected ObjectGroup itemGroup;//アイテム
+	protected ObjectGroup backgroundObjectGroup;//背景オブジェクト
 	/**固定位置に敵を生成する*/
 	protected ArrayList<EnemyFactory> enemyFactorys;
 
@@ -94,6 +98,7 @@ public abstract class Stage extends BasicGameState{
 		enemyGroup = new ObjectGroup(this);
 		enemyFactorys = new ArrayList<EnemyFactory>();
 		itemGroup = new ObjectGroup(this);
+		backgroundObjectGroup = new ObjectGroup(this);
 
 		camera = new Camera(map.getMapWidth(), map.getMapHeight());
 		camera.setFocus(player);
@@ -106,7 +111,6 @@ public abstract class Stage extends BasicGameState{
 		scoreWindow = new ScoreWindow(this);
 		timeWindow = new TimeWindow();
 		stockWindow = new StockWindow(player);
-
 	}
 
 	/**初期化*/
@@ -128,8 +132,10 @@ public abstract class Stage extends BasicGameState{
 		enemyGroup.clear();
 		enemyFactorys.clear();//エネミーファクトリーのクリア
 		itemGroup.clear();//アイテムグループのクリア
+		backgroundObjectGroup.clear();
 		setEnemys();
 		setItems();
+		setBackgroundObject();
 		map.setEnemysAndItems(this);
 		//エネミーファクトリーの初期化
 		for (EnemyFactory ef : enemyFactorys) {
@@ -163,6 +169,7 @@ public abstract class Stage extends BasicGameState{
 		stUpdate(gc, sbg, delta);//各ステージ
 		enemyGroup.update(gc, sbg, delta);//敵
 		itemGroup.update(gc, sbg, delta);//アイテム
+		backgroundObjectGroup.update(gc, sbg, delta);
 
 		player.update(gc, sbg, delta);//プレイヤー
 		camera.update();
@@ -185,7 +192,7 @@ public abstract class Stage extends BasicGameState{
 		scoreWindow.update(gc, delta);//スコア
 		timeWindow.update(gc, delta);//タイム
 		stockWindow.update(gc, delta);//残機
-		
+
 
 		//プレイヤーが死んだときの処理
 		if (!player.isLive()) {
@@ -210,8 +217,14 @@ public abstract class Stage extends BasicGameState{
 		if (bg != null) {
 			bg.render(gc, sbg, g);
 		}
+		g.translate(camera.getTranslateX(), camera.getTranslateY());
+		backgroundObjectGroup.render(gc, sbg, g);
+		g.resetTransform();
 
 		eraser.render(gc, sbg, g);
+		//Wiiリモコン確認用
+		GameInput in = Util.getGameInput(this, gc);
+		g.drawOval(in.getX()-5, in.getY()-5, 10, 10);
 
 		g.translate(camera.getTranslateX(), camera.getTranslateY());
 		map.render(gc, sbg, g);
@@ -296,6 +309,26 @@ public abstract class Stage extends BasicGameState{
 	/**ステージ上のアイテムをセットする*/
 	public abstract void setItems() throws SlickException;
 	////アイテムグループに関するメソッドここまで
+
+	//背景オブジェクトに関連するメソッド
+		public ObjectGroup getBackgroundObjectGroup() {
+			return backgroundObjectGroup;
+		}
+
+		public void addBackgroundObject(BackgroundObject bgobj) {
+			backgroundObjectGroup.add(bgobj);
+		}
+		public void addBackgroundObject(BackgroundObject[] bgobj) {
+			backgroundObjectGroup.add(bgobj);
+		}
+
+		/**背景オブジェクトの数*/
+		public int getBackgroundObjectsNums() {
+			return backgroundObjectGroup.getSize();
+		}
+		/**背景オブジェクトをセットする*/
+		public void setBackgroundObject() throws SlickException{}
+		////背景オブジェクトに関するメソッドここまで
 
 	/**得点を取得*/
 	public int getScore() {

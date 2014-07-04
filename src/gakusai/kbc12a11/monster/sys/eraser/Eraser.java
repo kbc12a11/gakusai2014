@@ -1,12 +1,13 @@
 package gakusai.kbc12a11.monster.sys.eraser;
 
 import gakusai.kbc12a11.monster.abst.Object;
+import gakusai.kbc12a11.monster.sys.GameInput;
 import gakusai.kbc12a11.monster.sys.stage.Stage;
+import gakusai.kbc12a11.monster.util.Util;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
@@ -24,10 +25,10 @@ public class Eraser extends Object{
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
-		Input in = gc.getInput();
+		GameInput in = Util.getGameInput(stg, gc);
 		isErase = false;
-		if (in.isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON)) {
-			p.set(in.getMouseX(), in.getMouseY());
+		if (in.isB()) {
+			p.set(in.getX(), in.getY());
 			float x = p.x - stg.getCamera().getTranslateX();
 			float y = p.y- stg.getCamera().getTranslateY();
 			float sizex = size.x;

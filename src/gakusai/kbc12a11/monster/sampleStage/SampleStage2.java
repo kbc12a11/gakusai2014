@@ -2,8 +2,10 @@ package gakusai.kbc12a11.monster.sampleStage;
 
 import gakusai.kbc12a08.monster.enemy.EnemyFactory;
 import gakusai.kbc12a11.monster.item.Coin;
+import gakusai.kbc12a11.monster.sys.ImageBank;
 import gakusai.kbc12a11.monster.sys.Main;
 import gakusai.kbc12a11.monster.sys.StageBackground;
+import gakusai.kbc12a11.monster.sys.decorate.SimpleImageView;
 import gakusai.kbc12a11.monster.sys.stage.NoteBackground;
 import gakusai.kbc12a11.monster.sys.stage.Stage;
 
@@ -56,6 +58,15 @@ public class SampleStage2 extends Stage{
 		for (int i = 0; i < 17; i++) {
 			addItem(new Coin(this, map.calcLocateX(38+i), map.calcLocateY(27)));
 		}
+	}
+
+	@Override
+	public void setBackgroundObject() throws SlickException {
+		addBackgroundObject(
+				new SimpleImageView(this,
+						ImageBank.getInstance().
+						getImage(ImageBank.BG_HENOHENO),
+						map.calcLocateX(10), map.calcLocateY(10)));
 	}
 
 	@Override

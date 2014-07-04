@@ -13,7 +13,6 @@ import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Circle;
-import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
@@ -23,7 +22,11 @@ public class Magican extends Enemy{
 	//タイマー
 	private int timer = 0;
 	private int at_interval = 120;//攻撃間隔
-	private int at_view = 40;//攻撃ポーズをとる時間
+	private int at_view = 60;//攻撃ポーズをとる時間
+
+	private int state;
+	public static final int ST_NORMAL = 0;
+	public static final int ST_ATTACK = 1;
 
 	private Image img1, img2;
 
@@ -34,32 +37,60 @@ public class Magican extends Enemy{
 		img1 = stg.getImage(ImageBank.ENEMY_MAGICAN_1);
 		img2 = stg.getImage(ImageBank.ENEMY_MAGICAN_2);
 		timer = (int)(Math.random()*60);//攻撃タイミングずらし
+		state = ST_NORMAL;
 	}
 
 	@Override
 	public void chUpdate(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
 		timer++;
 
-		if (timer%at_interval == at_interval/2) {
-			Vector2f pl = stg.getPlayerPos();
-			double rad = Math.atan2(pl.y - p.y, pl.x - p.x);
-			int n = 1;
-			for (int i = 0; i < n; i++) {
-//				double r = rad + 0.25*(i-n/2)*Math.PI/n;
-				double dx = Math.cos(rad)*2;
-				double dy = Math.sin(rad)*2;
-				//magicGroup.add(new Magic(stg, p.x, p.y, (float)dx, (float)dy));
-				stg.addEnemy(new Magic(stg, p.x, p.y, (float)dx, (float)dy));
+		if (state == ST_NORMAL) {
+			p.add(d);
+			if (timer > 100) {
+				setState(ST_ATTACK);
+			}
+		}else if (state == ST_ATTACK) {
+			if (timer == 100) {
+				Vector2f pl = stg.getPlayerPos();
+				double rad = Math.atan2(pl.y - p.y, pl.x - p.x);
+				int n = 1;
+				for (int i = 0; i < n; i++) {
+//					double r = rad + 0.25*(i-n/2)*Math.PI/n;
+					double dx = Math.cos(rad)*2;
+					double dy = Math.sin(rad)*2;
+					//magicGroup.add(new Magic(stg, p.x, p.y, (float)dx, (float)dy));
+					stg.addEnemy(new Magic(stg, p.x, p.y, (float)dx, (float)dy));
+				}
+			}
+			if (timer > 250) {
+				setState(ST_NORMAL);
 			}
 		}
 
-		if (timer%180 == 0) {
-			Rectangle r = stg.getCamera().getView();
-			float x = (float)Math.random()*1 - 0.5f;
-			float y = (float)Math.random()*1 - 0.5f;
-			d.set(x, y);
-		}
-		p.add(d);
+//		if (timer%at_interval == at_interval/2) {
+//			Vector2f pl = stg.getPlayerPos();
+//			double rad = Math.atan2(pl.y - p.y, pl.x - p.x);
+//			int n = 1;
+//			for (int i = 0; i < n; i++) {
+////				double r = rad + 0.25*(i-n/2)*Math.PI/n;
+//				double dx = Math.cos(rad)*2;
+//				double dy = Math.sin(rad)*2;
+//				//magicGroup.add(new Magic(stg, p.x, p.y, (float)dx, (float)dy));
+//				stg.addEnemy(new Magic(stg, p.x, p.y, (float)dx, (float)dy));
+//			}
+//		}
+//
+//		if (timer % at_interval == at_interval/2 - at_view) {
+//			stg.soundRequest(SoundBank.SE_MAGIC);
+//		}
+//
+//		if (timer%180 == 0) {
+//			Rectangle r = stg.getCamera().getView();
+//			float x = (float)Math.random()*1 - 0.5f;
+//			float y = (float)Math.random()*1 - 0.5f;
+//			d.set(x, y);
+//		}
+//		p.add(d);
 
 	}
 
@@ -67,8 +98,7 @@ public class Magican extends Enemy{
 	public void chRender(GameContainer gc, StateBasedGame sbg, Graphics g) {
 		Image i = null;
 
-		if (timer % at_interval > at_interval/2 - at_view &&
-				timer % at_interval < at_interval/2 + at_view/2) {
+		if (state == ST_ATTACK) {
 			i = img1;
 		}else {
 			i = img2;
@@ -86,6 +116,21 @@ public class Magican extends Enemy{
 	public boolean isHit(Object obj) {
 		boolean flg = super.isHit(obj);
 		return flg;
+	}
+
+	public void setState(int id) {
+		switch(id) {
+		case ST_ATTACK:
+			timer = 0;
+			stg.soundRequest(SoundBank.SE_MAGIC);
+			state = ST_ATTACK;
+			break;
+
+		default:
+		case ST_NORMAL:
+			timer = 0;
+			state = ST_NORMAL;
+		}
 	}
 
 	private class Magic extends Enemy{
