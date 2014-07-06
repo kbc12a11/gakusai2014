@@ -40,7 +40,7 @@ public class NoteBackground extends StageBackground{
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) {
 		 for (int i = 0; i <= Main.W_WIDTH/width+1; i++) {
 			 for (int j = 0; j <= Main.W_HEIGHT/height+1; j++) {
-				 g.drawImage(backGroundImage, i*width, j*height+offset_y, new Color(255, 255, 255, 100));
+				 g.drawImage(backGroundImage, i*width, j*height+offset_y, new Color(255, 255, 255, 255));
 			 }
 		 }
 	}

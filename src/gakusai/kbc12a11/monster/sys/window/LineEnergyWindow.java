@@ -56,6 +56,7 @@ public class LineEnergyWindow extends StatusWindow {
 
 		g.drawImage(img, penX, p.y - penY, penX + penSize, p.y -penY + penSize, 0, 0, 323, 323);
 
+
 	}
 
 	@Override

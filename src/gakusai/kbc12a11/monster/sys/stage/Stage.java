@@ -244,6 +244,8 @@ public abstract class Stage extends BasicGameState{
 		scoreWindow.render(gc, g);
 		timeWindow.render(gc, g);
 		stockWindow.render(gc, g);
+
+
 	}
 
 
