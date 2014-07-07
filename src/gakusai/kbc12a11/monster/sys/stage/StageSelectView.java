@@ -1,13 +1,11 @@
 package gakusai.kbc12a11.monster.sys.stage;
 
 import gakusai.kbc12a11.monster.sys.GameInput;
-import gakusai.kbc12a11.monster.sys.ImageBank;
 import gakusai.kbc12a11.monster.sys.Main;
 import gakusai.kbc12a11.monster.util.Util;
 
 import java.util.ArrayList;
 
-import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
@@ -37,7 +35,7 @@ public class StageSelectView extends BasicGameState{
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
-		g.setColor(Color.white);
+//		g.setColor(Color.white);
 //
 //		for (int i = 0; i < stageList.size(); i++) {
 //			if (nowSelectIndex != i)
@@ -51,7 +49,6 @@ public class StageSelectView extends BasicGameState{
 		int     depth = 100;
 
 		SGL gl = Renderer.get();
-		gl.glEnable(SGL.GL_TEXTURE_2D);
 
 		//  次に指定する４つの座標を、描く四角形の頂点として認識させる
 		gl.glBegin(SGL.GL_QUADS);
@@ -74,18 +71,19 @@ public class StageSelectView extends BasicGameState{
 		gl.glVertex3f(width - 50, 50, 1);        //    4 つめの座標を指定する
 
 		gl.glEnd();
+		gl.glEnable(SGL.GL_TEXTURE_2D);
 		//g.drawString("Stage Select.", 100, 550);
 //		g.drawImage(ImageBank.getImage(ImageBank.ENEMY_BOMB_1).dr, 100, 500);
-		ImageBank.getImage(ImageBank.ENEMY_BOMB_1).draw(100, 100, new Color(255, 255, 255,255));
-		float x = 100, y = 100;
-		float angle = 0;
-		gl.glTranslatef(x, y, 0);
-
-        gl.glBegin(SGL.GL_QUADS);
-            drawEmbedded(0,0,width,height);
-        gl.glEnd();
-
-        gl.glTranslatef(-x, -y, 0);
+//		ImageBank.getImage(ImageBank.ENEMY_BOMB_1).draw(100, 100, new Color(255, 255, 255,255));
+//		float x = 100, y = 100;
+//		float angle = 0;
+//		gl.glTranslatef(x, y, 0);
+//
+//        gl.glBegin(SGL.GL_QUADS);
+//         //   drawEmbedded(0,0,width,height);
+//        gl.glEnd();
+//
+//        gl.glTranslatef(-x, -y, 0);
 
 	}
 

@@ -227,8 +227,7 @@ public abstract class Stage extends BasicGameState{
 		g.resetTransform();
 
 		eraser.render(gc, sbg, g);
-		//Wiiリモコン確認用
-		g.drawOval(gameInput.getX()-5, gameInput.getY()-5, 10, 10);
+
 
 		g.translate(camera.getTranslateX(), camera.getTranslateY());
 		map.render(gc, sbg, g);
@@ -238,6 +237,13 @@ public abstract class Stage extends BasicGameState{
 		enemyGroup.render(gc, sbg, g);
 		player.render(gc, sbg, g);
 		g.resetTransform();
+
+		//Wiiリモコン確認用
+		g.setColor(Color.white);
+		g.fillOval(gameInput.getX()-5, gameInput.getY()-5, 10, 10);
+		g.setLineWidth(1);
+		g.setColor(Color.black);
+		g.drawOval(gameInput.getX()-5, gameInput.getY()-5, 10, 10);
 
 		leWindow.render(gc, g);
 		lifeWindow.render(gc, g);
@@ -317,24 +323,24 @@ public abstract class Stage extends BasicGameState{
 	////アイテムグループに関するメソッドここまで
 
 	//背景オブジェクトに関連するメソッド
-		public ObjectGroup getBackgroundObjectGroup() {
-			return backgroundObjectGroup;
-		}
+	public ObjectGroup getBackgroundObjectGroup() {
+		return backgroundObjectGroup;
+	}
 
-		public void addBackgroundObject(BackgroundObject bgobj) {
-			backgroundObjectGroup.add(bgobj);
-		}
-		public void addBackgroundObject(BackgroundObject[] bgobj) {
-			backgroundObjectGroup.add(bgobj);
-		}
+	public void addBackgroundObject(BackgroundObject bgobj) {
+		backgroundObjectGroup.add(bgobj);
+	}
+	public void addBackgroundObject(BackgroundObject[] bgobj) {
+		backgroundObjectGroup.add(bgobj);
+	}
 
-		/**背景オブジェクトの数*/
-		public int getBackgroundObjectsNums() {
-			return backgroundObjectGroup.getSize();
-		}
-		/**背景オブジェクトをセットする*/
-		public void setBackgroundObject() throws SlickException{}
-		////背景オブジェクトに関するメソッドここまで
+	/**背景オブジェクトの数*/
+	public int getBackgroundObjectsNums() {
+		return backgroundObjectGroup.getSize();
+	}
+	/**背景オブジェクトをセットする*/
+	public void setBackgroundObject() throws SlickException{}
+	////背景オブジェクトに関するメソッドここまで
 
 	/**得点を取得*/
 	public int getScore() {

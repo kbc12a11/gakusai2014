@@ -318,7 +318,7 @@ public class Map {
 
 		for (int x0 = stx; x0 < enx; x0++) {
 			for (int y0 = sty; y0 < eny; y0++) {
-				if (mapData[x0][y0] == MAP_ENPITSU) {
+				if (Block.getBlock(mapData[x0][y0]).isErasedBlock()) {
 					mapData[x0][y0] = MAP_EMPTY;
 				}
 			}

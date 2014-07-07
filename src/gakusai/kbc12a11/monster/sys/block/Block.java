@@ -7,10 +7,8 @@ import gakusai.kbc12a11.monster.sys.Map;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Rectangle;
-import org.newdawn.slick.geom.Shape;
 import org.newdawn.slick.geom.Vector2f;
 
 public enum Block {
@@ -43,7 +41,13 @@ public enum Block {
 //			renderFrame(g, map, x, y, 1, 0, Color.black,
 //					blockList, false);
 			//fillRect(g, x, y, map, c);
-			renderTexture(g, x, y, map, c, ImageBank.getImage(ImageBank.TX_BOLLPEN));
+			renderTexture(g, x, y, map, c, ImageBank.TX_BOLLPEN, 0, 0);
+		}
+
+		@Override
+		public boolean isErasedBlock() {
+			// TODO 自動生成されたメソッド・スタブ
+			return true;
 		}
 	},
 	/**ボールペン*/
@@ -52,7 +56,8 @@ public enum Block {
 		Color c = new Color(0, 0, 0, 255);
 		@Override
 		public void render(Graphics g, Map map, int x, int y) {
-			renderTexture(g, x, y, map, c, ImageBank.getImage(ImageBank.TX_BOLLPEN));
+
+			renderTexture(g, x, y, map, c, ImageBank.TX_BOLLPEN, 0, 0);
 		}
 	},
 	/**黄色*/
@@ -74,7 +79,7 @@ public enum Block {
 //					blockList, true);
 
 			//fillRect(g, x, y, map, c);
-			renderTexture(g, x, y, map, c, ImageBank.getImage(ImageBank.TX_BOLLPEN));
+			renderTexture(g, x, y, map, c, ImageBank.TX_BOLLPEN, 0, -(timer/10)%100);
 
 			if (map.getMapBlockId(x, y-1) == Map.MAP_EMPTY) {
 				Vector2f[] p = new Vector2f[(int)map.chipSizeOnScreen.x+1];
@@ -109,15 +114,14 @@ public enum Block {
 	/**青*/
 	BLUE(Map.MAP_BLUE) {
 		int[] blockList = {Map.MAP_BLUE};
-		Color c = new Color(0, 0, 255, 10);
+		Color c = new Color(0, 0, 255, 255);
 		@Override
 		public void render(Graphics g, Map map, int x, int y) {
-			renderFrame(g, map, x, y, 1, 0, Color.blue,
-					blockList, true);
-			fillRect(g, x, y, map, c);
+//			renderFrame(g, map, x, y, 1, 0, Color.blue,
+//					blockList, true);
+//			fillRect(g, x, y, map, c);
+			renderTexture(g, x, y, map, c, ImageBank.TX_WATER_1, 0, (timer/1)%100);
 		}
-
-
 
 		@Override
 		public boolean isPassedBlock() {//通り抜け可能ブロック
@@ -126,11 +130,11 @@ public enum Block {
 
 		@Override
 		public void update(GameContainer gc, Map map, int x, int y) throws SlickException {
-			if (timer%120 == 0) {
+			if (timer%60 == 0) {
 				int underIndex = map.getMapBlockId(x, y+1);
 				switch (underIndex) {
 				case Map.MAP_EMPTY :
-					map.getMapData()[x][y+1] = Map.MAP_BLUE;
+					map.getMapData()[x][y+1] = Map.MAP_LIGHT_BLUE;
 					break;
 				case Map.MAP_RED :
 					map.getMapData()[x][y+1] = Map.MAP_EMPTY;
@@ -150,10 +154,40 @@ public enum Block {
 	},
 	LITE_BLUE(Map.MAP_LIGHT_BLUE) {
 
+		int[] blockList = {Map.MAP_BLUE};
+		Color c = new Color(0, 0, 255, 100);
 		@Override
 		public void render(Graphics g, Map map, int x, int y) {
-			// TODO 自動生成されたメソッド・スタブ
+//			renderFrame(g, map, x, y, 1, 0, Color.blue,
+//					blockList, true);
+//			fillRect(g, x, y, map, c);
+			renderTexture(g, x, y, map, c, ImageBank.TX_WATER_1, 0, (timer/1)%100);
+		}
 
+		@Override
+		public boolean isPassedBlock() {//通り抜け可能ブロック
+			return true;
+		}
+
+		@Override
+		public void update(GameContainer gc, Map map, int x, int y) throws SlickException {
+			if (timer%60 == 0) {
+				int underIndex = map.getMapBlockId(x, y+1);
+				switch (underIndex) {
+				case Map.MAP_EMPTY :
+					map.getMapData()[x][y+1] = Map.MAP_LIGHT_BLUE;
+					break;
+				case Map.MAP_RED :
+					map.getMapData()[x][y+1] = Map.MAP_EMPTY;
+					break;
+				}
+			}
+		}
+
+		@Override
+		public boolean isErasedBlock() {
+			// TODO 自動生成されたメソッド・スタブ
+			return true;
 		}
 	}
 	;
@@ -324,6 +358,11 @@ public enum Block {
 		return false;//デフォルトでは通り抜けできない
 	}
 
+	/**ブロックを消すことができるかの判定*/
+	public boolean isErasedBlock() {
+		return false;
+	}
+
 	/***
 	 * テクスチャを張る<br>
 	 * テクスチャのサイズは縦横2^nピクセルにすること
@@ -332,29 +371,28 @@ public enum Block {
 	 * @param y
 	 * @param map
 	 * @param c
+	 * @param offsetX
+	 * @param offsetY
 	 */
-	public static void renderTexture(Graphics g, int x, int y, Map map, Color c, Image texture) {
+	public static void renderTexture(Graphics g, int x, int y,
+			Map map, Color c, int imageId, float offsetX, float offsetY) {
 		Vector2f cp = map.chipSizeOnScreen;
 		Rectangle r = new Rectangle(
-				x*cp.x,
-				y*cp.y, cp.x,cp.y);
+				x*cp.x - offsetX,
+				y*cp.y - offsetY, cp.x,cp.y);
 		g.setDrawMode(Graphics.MODE_NORMAL);
+
+		g.pushTransform();
+		g.translate(offsetX, offsetY);
+
 		g.setColor(new Color(255, 255, 255, c.a));
-		g.texture(r, texture);
+		g.texture(r, ImageBank.getImage(imageId));
+
 		g.setDrawMode(Graphics.MODE_SCREEN);
 		g.setColor(c);
 		g.fill(r);
 		g.setDrawMode(Graphics.MODE_NORMAL);
-	}
 
-	public static void renderTexture(Shape s, Graphics g, int x, int y, Map map,
-			Color c, Image texture) {
-		g.setDrawMode(Graphics.MODE_NORMAL);
-		g.setColor(new Color(255, 255, 255, c.a));
-		g.texture(s, texture);
-		g.setDrawMode(Graphics.MODE_SCREEN);
-		g.setColor(c);
-		g.fill(s);
-		g.setDrawMode(Graphics.MODE_NORMAL);
+		g.popTransform();
 	}
 }

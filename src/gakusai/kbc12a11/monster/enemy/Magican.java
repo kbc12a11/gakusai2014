@@ -124,12 +124,16 @@ public class Magican extends Enemy{
 			timer = 0;
 			stg.soundRequest(SoundBank.SE_MAGIC);
 			state = ST_ATTACK;
+			d.set(0, 0);
 			break;
 
 		default:
 		case ST_NORMAL:
 			timer = 0;
 			state = ST_NORMAL;
+			float x = (float)Math.random()*1 - 0.5f;
+			float y = (float)Math.random()*1 - 0.5f;
+			d.set(x, y);
 		}
 	}
 

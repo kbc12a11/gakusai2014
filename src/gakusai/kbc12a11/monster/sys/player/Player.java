@@ -435,6 +435,7 @@ public class Player extends Character{
 			}
 			break;
 		case BLUE:
+		case LITE_BLUE:
 			flg_in_water = true;
 			break;
 

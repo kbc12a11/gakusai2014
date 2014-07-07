@@ -112,8 +112,13 @@ public class ImageBank {
 
 
 	//テクスチャ
+	/**ペンで書いてるテクスチャ*/
 	public static final int TX_BOLLPEN;
 	private static final String FILE_TX_BOLLPEN = "res/image/texture/BallpointPen003s.gif";
+
+	/**水の流れるテクスチャ1*/
+	public static final int TX_WATER_1;
+	private static final String FILE_TX_WATER_1 = "res/image/texture/water/tx_water1.gif";
 
 
 	/**イメージの数*/
@@ -164,6 +169,8 @@ public class ImageBank {
 
 		//texture
 		TX_BOLLPEN = IMAGE_SIZE++;
+
+		TX_WATER_1 = IMAGE_SIZE++;
 	}
 
 	private Image[] imageList;
@@ -229,6 +236,8 @@ public class ImageBank {
 
 		//texture
 		files[TX_BOLLPEN] = FILE_TX_BOLLPEN;
+
+		files[TX_WATER_1] = FILE_TX_WATER_1;
 
 		for (int i = 0; i < IMAGE_SIZE; i++) {
 			try {
