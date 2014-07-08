@@ -1,6 +1,7 @@
 package gakusai.kbc12a11.monster.sys.window;
 
 import gakusai.kbc12a11.monster.abst.StatusWindow;
+import gakusai.kbc12a11.monster.sys.Main;
 import gakusai.kbc12a11.monster.sys.line.LineGroup;
 
 import org.newdawn.slick.Color;
@@ -15,15 +16,15 @@ public class LineEnergyWindow extends StatusWindow {
 	private LineGroup lg;
 	private float ratio;
 	private final float limRatio;
-	private Vector2f p, size;
+	private Vector2f p, size, pen, penSize;
 	private Image img;
-	private float penSize;
-	private float penX, penY;
 
 	public LineEnergyWindow(LineGroup lg, Vector2f p, Vector2f size) {
 		this.lg = lg;
-		this.p = p != null ? p : new Vector2f(700, 20);
-		this.size = size != null ? size : new Vector2f(600, 5);
+		this.p = p != null ? p : new Vector2f(Main.W_WIDTH / 3, 20);
+		this.size = size != null ? size : new Vector2f(Main.W_WIDTH / 3, 5);
+		this.pen = new Vector2f(Main.W_WIDTH * 2 / 7, Main.W_HEIGHT / 70);
+		this.penSize = new Vector2f(25, 11);
 		ratio = 1;
 		limRatio = lg.getLineDrawEnergyMinLimit() / lg.getLineDrawEnergyMax();
 
@@ -33,28 +34,26 @@ public class LineEnergyWindow extends StatusWindow {
 			e.printStackTrace();
 		}
 
-		penSize = 24;
-		penY = 12;
-		penX = 350;
-
+		
 	}
 
 	@Override
 	public void render(GameContainer gc, Graphics g) {
-		float sx = p.x -size.x/2;
+		float sx = pen.x + penSize.x + 15;
 		float sy = p.y;
-		float ex = sx + (ratio > 0 ? size.x * ratio : 0);
+		float ex = (ratio > 0 ? sx + size.x * ratio : sx);
 		float ey = p.y;
 
 		g.setColor(Color.black);
-		g.setLineWidth(30);
-		g.drawLine(350, p.y, sx + size.x, p.y);
+		g.setLineWidth(28);
+		g.drawLine(pen.x - 1, p.y, pen.x + size.x + 40, p.y);
 
 		g.setColor(ratio > limRatio ? Color.white : Color.red);
 		g.setLineWidth(size.y);
 		g.drawLine(sx, sy, ex, ey);
+		
 
-		g.drawImage(img, penX, p.y - penY, penX + penSize, p.y -penY + penSize, 0, 0, 323, 323);
+		g.drawImage(img, pen.x, pen.y + 2, pen.x + penSize.x, p.y + penSize.y, 0, 0, 323, 323);
 
 	}
 
