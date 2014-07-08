@@ -4,7 +4,6 @@ import gakusai.kbc12a11.monster.sys.Camera;
 import gakusai.kbc12a11.monster.sys.GameInput;
 import gakusai.kbc12a11.monster.sys.SoundBank;
 import gakusai.kbc12a11.monster.sys.stage.Stage;
-import gakusai.kbc12a11.monster.util.Util;
 
 import java.util.ArrayList;
 
@@ -55,7 +54,7 @@ public class LineGroup {
 //		boolean isClick = in.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON);
 //		float mx = in.getMouseX() - camera.getTranslateX();
 //		float my = in.getMouseY() - camera.getTranslateY();
-		GameInput in = Util.getGameInput(stg, gc);
+		GameInput in = stg.getGameInput();
 		boolean isClick = in.isA();
 		float mx = in.getX() - camera.getTranslateX();
 		float my = in.getY() - camera.getTranslateY();

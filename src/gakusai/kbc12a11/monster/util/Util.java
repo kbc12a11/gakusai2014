@@ -2,7 +2,6 @@ package gakusai.kbc12a11.monster.util;
 
 import gakusai.kbc12a11.monster.sys.GameInput;
 import gakusai.kbc12a11.monster.sys.Main;
-import gakusai.kbc12a11.monster.sys.stage.Stage;
 import gakusai.kbc12a11.monster.sys.wiimote.WiimoteTest;
 
 import org.newdawn.slick.GameContainer;
@@ -94,21 +93,44 @@ public class Util {
 		g.drawImage(image, p.x-x0, p.y-y0);
 	}
 
-	public static GameInput getGameInput(Stage stg, GameContainer gc) {
+	public static GameInput getGameInput(GameInput in, GameContainer gc) {
 		WiimoteTest wii = Main.getWiimoteRistener();
 		boolean flag = wii.isConnected();
-		GameInput in = new GameInput();
+		if (in == null) {
+			in = new GameInput();
+		}
 		if (flag) {
 			in.setX(wii.getPointingX());
 			in.setY(wii.getPointingY());
 			in.setA(wii.isBtnAPushed());
 			in.setB(wii.isBtnBPushed());
+			in.setC(wii.isBtnCPressed());
+			in.setZ(wii.isBtnZPressed());
+			in.setJoyInput(wii.getJoystickInput());
 		}else {
 			Input mouse = gc.getInput();
 			in.setX(mouse.getMouseX());
 			in.setY(mouse.getMouseY());
 			in.setA(mouse.isMouseButtonDown(Input.MOUSE_LEFT_BUTTON));
 			in.setB(mouse.isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON));
+			in.setC(mouse.isKeyDown(Input.KEY_SPACE));
+			in.setZ(mouse.isKeyDown(Input.KEY_Z));
+			Vector2f v = new Vector2f();
+
+			if (mouse.isKeyDown(Input.KEY_UP)) {
+				v.y = -1;
+			}
+			if (mouse.isKeyDown(Input.KEY_DOWN)) {
+				v.y = 1;
+			}
+			if (mouse.isKeyDown(Input.KEY_LEFT)) {
+				v.x = -1;
+			}
+			if (mouse.isKeyDown(Input.KEY_RIGHT)) {
+				v.x = 1;
+			}
+
+			in.setJoyInput(v);
 		}
 
 		return in;

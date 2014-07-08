@@ -1,12 +1,14 @@
 package gakusai.kbc12a11.monster.sys.block;
 
 import gakusai.kbc12a11.monster.abst.Character;
+import gakusai.kbc12a11.monster.sys.ImageBank;
 import gakusai.kbc12a11.monster.sys.Map;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 
 public enum Block {
@@ -33,23 +35,29 @@ public enum Block {
 	/**鉛筆ブロック*/
 	ENPITSU(Map.MAP_ENPITSU) {
 		int[] blockList = {Map.MAP_EMPTY};
-		Color c = new Color(0, 0, 0, 10);
+		Color c = new Color(0, 0, 0, 100);
 		@Override
 		public void render(Graphics g, Map map, int x, int y) {
-			renderFrame(g, map, x, y, 1, 0, Color.black,
-					blockList, false);
-			fillRect(g, x, y, map, c);
+//			renderFrame(g, map, x, y, 1, 0, Color.black,
+//					blockList, false);
+			//fillRect(g, x, y, map, c);
+			renderTexture(g, x, y, map, c, ImageBank.TX_BOLLPEN, 0, 0);
+		}
+
+		@Override
+		public boolean isErasedBlock() {
+			// TODO 自動生成されたメソッド・スタブ
+			return true;
 		}
 	},
 	/**ボールペン*/
 	BOLLPEN(Map.MAP_BOLLPEN) {
 		int[] blockList = {Map.MAP_EMPTY};
-		Color c = new Color(0, 0, 0, 100);
+		Color c = new Color(0, 0, 0, 255);
 		@Override
 		public void render(Graphics g, Map map, int x, int y) {
-			renderFrame(g, map, x, y, 3, 0, Color.black,
-					blockList, false);
-			fillRect(g, x, y, map, c);
+
+			renderTexture(g, x, y, map, c, ImageBank.TX_BOLLPEN, 0, 0);
 		}
 	},
 	/**黄色*/
@@ -64,13 +72,14 @@ public enum Block {
 	/**赤*/
 	RED(Map.MAP_RED) {
 		int[] blockList = {Map.MAP_RED};
-		Color c = new Color(255, 0, 0, 100);
+		Color c = new Color(255, 0, 0, 255);
 		@Override
 		public void render(Graphics g, Map map, int x, int y) {
-			renderFrame(g, map, x, y, 3, 0, Color.red,
-					blockList, true);
+//			renderFrame(g, map, x, y, 3, 0, Color.red,
+//					blockList, true);
 
-			fillRect(g, x, y, map, c);
+			//fillRect(g, x, y, map, c);
+			renderTexture(g, x, y, map, c, ImageBank.TX_BOLLPEN, 0, -(timer/10)%100);
 
 			if (map.getMapBlockId(x, y-1) == Map.MAP_EMPTY) {
 				Vector2f[] p = new Vector2f[(int)map.chipSizeOnScreen.x+1];
@@ -85,7 +94,7 @@ public enum Block {
 
 				if (map.getMapBlockId(x-1, y) != Map.MAP_RED) p[0].y = 0;
 				if (map.getMapBlockId(x+1, y) != Map.MAP_RED) p[p.length-1].y = 0;
-				g.setLineWidth(2);
+				g.setLineWidth(3);
 				g.setColor(Color.red);
 				for (int i = 1; i < p.length; i++) {
 					g.drawLine(p[i].x+x*cx, p[i].y+y*cy, p[i-1].x+x*cx, p[i-1].y+y*cy);
@@ -105,15 +114,14 @@ public enum Block {
 	/**青*/
 	BLUE(Map.MAP_BLUE) {
 		int[] blockList = {Map.MAP_BLUE};
-		Color c = new Color(0, 0, 255, 10);
+		Color c = new Color(0, 0, 255, 255);
 		@Override
 		public void render(Graphics g, Map map, int x, int y) {
-			renderFrame(g, map, x, y, 1, 0, Color.blue,
-					blockList, true);
-			fillRect(g, x, y, map, c);
+//			renderFrame(g, map, x, y, 1, 0, Color.blue,
+//					blockList, true);
+//			fillRect(g, x, y, map, c);
+			renderTexture(g, x, y, map, c, ImageBank.TX_WATER_1, 0, (timer/1)%100);
 		}
-
-
 
 		@Override
 		public boolean isPassedBlock() {//通り抜け可能ブロック
@@ -122,11 +130,11 @@ public enum Block {
 
 		@Override
 		public void update(GameContainer gc, Map map, int x, int y) throws SlickException {
-			if (timer%120 == 0) {
+			if (timer%60 == 0) {
 				int underIndex = map.getMapBlockId(x, y+1);
 				switch (underIndex) {
 				case Map.MAP_EMPTY :
-					map.getMapData()[x][y+1] = Map.MAP_BLUE;
+					map.getMapData()[x][y+1] = Map.MAP_LIGHT_BLUE;
 					break;
 				case Map.MAP_RED :
 					map.getMapData()[x][y+1] = Map.MAP_EMPTY;
@@ -146,10 +154,40 @@ public enum Block {
 	},
 	LITE_BLUE(Map.MAP_LIGHT_BLUE) {
 
+		int[] blockList = {Map.MAP_BLUE};
+		Color c = new Color(0, 0, 255, 100);
 		@Override
 		public void render(Graphics g, Map map, int x, int y) {
-			// TODO 自動生成されたメソッド・スタブ
+//			renderFrame(g, map, x, y, 1, 0, Color.blue,
+//					blockList, true);
+//			fillRect(g, x, y, map, c);
+			renderTexture(g, x, y, map, c, ImageBank.TX_WATER_1, 0, (timer/1)%100);
+		}
 
+		@Override
+		public boolean isPassedBlock() {//通り抜け可能ブロック
+			return true;
+		}
+
+		@Override
+		public void update(GameContainer gc, Map map, int x, int y) throws SlickException {
+			if (timer%60 == 0) {
+				int underIndex = map.getMapBlockId(x, y+1);
+				switch (underIndex) {
+				case Map.MAP_EMPTY :
+					map.getMapData()[x][y+1] = Map.MAP_LIGHT_BLUE;
+					break;
+				case Map.MAP_RED :
+					map.getMapData()[x][y+1] = Map.MAP_EMPTY;
+					break;
+				}
+			}
+		}
+
+		@Override
+		public boolean isErasedBlock() {
+			// TODO 自動生成されたメソッド・スタブ
+			return true;
 		}
 	}
 	;
@@ -318,5 +356,43 @@ public enum Block {
 	/**ブロックを通り抜けることができるかの判定*/
 	public boolean isPassedBlock() {
 		return false;//デフォルトでは通り抜けできない
+	}
+
+	/**ブロックを消すことができるかの判定*/
+	public boolean isErasedBlock() {
+		return false;
+	}
+
+	/***
+	 * テクスチャを張る<br>
+	 * テクスチャのサイズは縦横2^nピクセルにすること
+	 * @param g
+	 * @param x
+	 * @param y
+	 * @param map
+	 * @param c
+	 * @param offsetX
+	 * @param offsetY
+	 */
+	public static void renderTexture(Graphics g, int x, int y,
+			Map map, Color c, int imageId, float offsetX, float offsetY) {
+		Vector2f cp = map.chipSizeOnScreen;
+		Rectangle r = new Rectangle(
+				x*cp.x - offsetX,
+				y*cp.y - offsetY, cp.x,cp.y);
+		g.setDrawMode(Graphics.MODE_NORMAL);
+
+		g.pushTransform();
+		g.translate(offsetX, offsetY);
+
+		g.setColor(new Color(255, 255, 255, c.a));
+		g.texture(r, ImageBank.getImage(imageId));
+
+		g.setDrawMode(Graphics.MODE_SCREEN);
+		g.setColor(c);
+		g.fill(r);
+		g.setDrawMode(Graphics.MODE_NORMAL);
+
+		g.popTransform();
 	}
 }

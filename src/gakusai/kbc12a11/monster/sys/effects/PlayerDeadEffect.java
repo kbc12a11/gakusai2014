@@ -33,7 +33,7 @@ public class PlayerDeadEffect extends Effect{
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) {
 		int num = 12;
 		g.setLineWidth(2);
-		g.setColor(Color.black);
+		Color[] c = {Color.white, new Color(100, 100, 255)};
 		for (int i = 0; i < num; i++) {
 			float px = p.x;
 			float py = p.y;
@@ -41,10 +41,13 @@ public class PlayerDeadEffect extends Effect{
 			double sin = Math.sin(2*Math.PI*i/num);
 
 			for (int j = 0; j < 2; j++) {
-				px = px + (float)cos*((300-time)/(j+1));
-				py = py + (float)sin*((300-time)/(j+1));
+				px = px + (float)cos*((300-time)/(j+1))*1.5f;
+				py = py + (float)sin*((300-time)/(j+1))*1.5f;
 
-				g.drawOval(px - size/2, py - size/2, size, size);
+				g.setColor(c[(time/2)%2]);
+				g.fillOval(px - size/2, py - size/2, size, size);
+				g.setColor(c[((time/2)+1)%2]);
+				g.fillOval(px - size/3, py - size/3, size*2/3, size*2/3);
 			}
 		}
 	}

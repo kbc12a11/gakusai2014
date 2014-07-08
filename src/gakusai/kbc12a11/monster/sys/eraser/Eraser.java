@@ -3,7 +3,6 @@ package gakusai.kbc12a11.monster.sys.eraser;
 import gakusai.kbc12a11.monster.abst.Object;
 import gakusai.kbc12a11.monster.sys.GameInput;
 import gakusai.kbc12a11.monster.sys.stage.Stage;
-import gakusai.kbc12a11.monster.util.Util;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -25,7 +24,7 @@ public class Eraser extends Object{
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
-		GameInput in = Util.getGameInput(stg, gc);
+		GameInput in = stg.getGameInput();
 		isErase = false;
 		if (in.isB()) {
 			p.set(in.getX(), in.getY());

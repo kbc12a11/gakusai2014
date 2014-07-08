@@ -1,9 +1,12 @@
 package gakusai.kbc12a11.monster.sys;
 
+import gakusai.kbc12a10.monster.stage.HinoStage;
 import gakusai.kbc12a11.monster.sampleStage.SampleStage2;
 import gakusai.kbc12a11.monster.st1.Stage_1;
 import gakusai.kbc12a11.monster.stage.mario.MarioStage;
 import gakusai.kbc12a11.monster.sys.stage.BeforeStartStage;
+import gakusai.kbc12a11.monster.sys.stage.StageSelectView;
+import gakusai.kbc12a11.monster.sys.stage.TitleView;
 import gakusai.kbc12a11.monster.sys.wiimote.WiimoteTest;
 
 import org.newdawn.slick.AppGameContainer;
@@ -22,6 +25,8 @@ public class Main extends StateBasedGame {
 	private static final boolean FLG_VSYNC = true;
 	public static final boolean FLG_ANTI_ALIAS = false;
 
+	public static boolean FLG_MOUSEHIDE = false;
+
 	//
 	//ステージIDの登録
 	//他のステージと重複しないような数字を付けてください
@@ -32,6 +37,7 @@ public class Main extends StateBasedGame {
 	public static final int Stage_BeforeStartStage = 1;
 	public static final int Stage_Stage_1 = 2;
 	public static final int Stage_TestStage = 3;
+	public static final int Stage_StageSelectView = 4;
 	/**サンプルのステージ*/
 	public static final int Stage_SampleStage = 1211001;
 	public static final int Stage_12a11_TestStage = 1211002;
@@ -50,6 +56,9 @@ public class Main extends StateBasedGame {
 
 	public static void setWiimoteRistener() {
 		wiimoteListener = new WiimoteTest();
+		if (!wiimoteListener.isConnected()) {
+			FLG_MOUSEHIDE = true;
+		}
 	}
 
 	public static WiimoteTest getWiimoteRistener() {
@@ -60,6 +69,9 @@ public class Main extends StateBasedGame {
 	/**作ったステージをここで追加する*/
 	public void initStatesList(GameContainer gc) throws SlickException {
 		//最初に追加されたステージが実行される
+		addState(new HinoStage());
+		addState(new TitleView());
+		addState(new StageSelectView());
 		addState(new MarioStage());
 		addState(new SampleStage2());
 
@@ -79,6 +91,7 @@ public class Main extends StateBasedGame {
 		app.setVSync(FLG_VSYNC);
 		app.setFullscreen(FLG_FULLSCREEN);
 		app.setShowFPS(false);
+		app.setMouseGrabbed(FLG_MOUSEHIDE);
 		app.start();
 
 	}

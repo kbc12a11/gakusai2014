@@ -63,7 +63,6 @@ public class WiimoteTest implements WiimoteListener{
 		virtualScreenSize = new Vector2f((int)(Main.W_WIDTH*scale), (int)(Main.W_HEIGHT*scale));
 		createConnection();
 	}
-
 	/**wiiリモコンとの接続を確立する*/
 	public void createConnection() {
 		System.out.print("Connect to Wii remote\t:");
@@ -139,7 +138,7 @@ public class WiimoteTest implements WiimoteListener{
 	@Override
 	public void onIrEvent(IREvent arg0) {
 		pointingX = arg0.getX() * rate + pointingX*(1-rate);
-		pointingY = arg0.getY() * rate + pointingY*(1-rate);;
+		pointingY = arg0.getY() * rate + pointingY*(1-rate);
 	}
 
 	/**ヌンチャクのイベント*/
@@ -222,6 +221,10 @@ public class WiimoteTest implements WiimoteListener{
 	public void onStatusEvent(StatusEvent arg0) {
 		// TODO 自動生成されたメソッド・スタブ
 
+	}
+
+	public Wiimote getWiimote() {
+		return wiimote;
 	}
 
 }

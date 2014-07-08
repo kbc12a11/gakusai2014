@@ -111,6 +111,14 @@ public class ImageBank {
 	private static final String FILE_EF_BOMB_BURST = "res/image/enemy/bomb/burst.png";
 
 
+	//テクスチャ
+	/**ペンで書いてるテクスチャ*/
+	public static final int TX_BOLLPEN;
+	private static final String FILE_TX_BOLLPEN = "res/image/texture/BallpointPen003s.gif";
+
+	/**水の流れるテクスチャ1*/
+	public static final int TX_WATER_1;
+	private static final String FILE_TX_WATER_1 = "res/image/texture/water/tx_water1.gif";
 
 
 	/**イメージの数*/
@@ -158,6 +166,11 @@ public class ImageBank {
 
 		//effect
 		EF_BOMB_BURST = IMAGE_SIZE++;
+
+		//texture
+		TX_BOLLPEN = IMAGE_SIZE++;
+
+		TX_WATER_1 = IMAGE_SIZE++;
 	}
 
 	private Image[] imageList;
@@ -175,8 +188,8 @@ public class ImageBank {
 	}
 
 	/**イメージを取得する*/
-	public Image getImage(int id) {
-		return imageList[id];
+	public static Image getImage(int id) {
+		return getInstance().imageList[id];
 	}
 
 	private void setImages() {
@@ -220,6 +233,11 @@ public class ImageBank {
 
 		//effect
 		files[EF_BOMB_BURST] = FILE_EF_BOMB_BURST;
+
+		//texture
+		files[TX_BOLLPEN] = FILE_TX_BOLLPEN;
+
+		files[TX_WATER_1] = FILE_TX_WATER_1;
 
 		for (int i = 0; i < IMAGE_SIZE; i++) {
 			try {
