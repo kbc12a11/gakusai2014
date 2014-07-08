@@ -106,6 +106,12 @@ public class Util {
 			in.setB(wii.isBtnBPushed());
 			in.setC(wii.isBtnCPressed());
 			in.setZ(wii.isBtnZPressed());
+
+			in.setUp(wii.isUp());
+			in.setDown(wii.isDown());
+			in.setLeft(wii.isLeft());
+			in.setRight(wii.isRight());
+
 			in.setJoyInput(wii.getJoystickInput());
 		}else {
 			Input mouse = gc.getInput();
@@ -115,18 +121,24 @@ public class Util {
 			in.setB(mouse.isMouseButtonDown(Input.MOUSE_RIGHT_BUTTON));
 			in.setC(mouse.isKeyDown(Input.KEY_SPACE));
 			in.setZ(mouse.isKeyDown(Input.KEY_Z));
+
+			in.setUp(mouse.isKeyDown(Input.KEY_UP));
+			in.setDown(mouse.isKeyDown(Input.KEY_DOWN));
+			in.setLeft(mouse.isKeyDown(Input.KEY_LEFT));
+			in.setRight(mouse.isKeyDown(Input.KEY_RIGHT));
+
 			Vector2f v = new Vector2f();
 
-			if (mouse.isKeyDown(Input.KEY_UP)) {
+			if (mouse.isKeyDown(Input.KEY_W)) {
 				v.y = -1;
 			}
-			if (mouse.isKeyDown(Input.KEY_DOWN)) {
+			if (mouse.isKeyDown(Input.KEY_S)) {
 				v.y = 1;
 			}
-			if (mouse.isKeyDown(Input.KEY_LEFT)) {
+			if (mouse.isKeyDown(Input.KEY_A)) {
 				v.x = -1;
 			}
-			if (mouse.isKeyDown(Input.KEY_RIGHT)) {
+			if (mouse.isKeyDown(Input.KEY_D)) {
 				v.x = 1;
 			}
 

@@ -25,7 +25,7 @@ public class Main extends StateBasedGame {
 	private static final boolean FLG_VSYNC = true;
 	public static final boolean FLG_ANTI_ALIAS = false;
 
-	public static boolean FLG_MOUSEHIDE = false;
+	public static boolean FLG_MOUSEHIDE = true;
 
 	//
 	//ステージIDの登録
@@ -69,9 +69,9 @@ public class Main extends StateBasedGame {
 	/**作ったステージをここで追加する*/
 	public void initStatesList(GameContainer gc) throws SlickException {
 		//最初に追加されたステージが実行される
-		addState(new HinoStage());
 		addState(new TitleView());
 		addState(new StageSelectView());
+		addState(new HinoStage());
 		addState(new MarioStage());
 		addState(new SampleStage2());
 

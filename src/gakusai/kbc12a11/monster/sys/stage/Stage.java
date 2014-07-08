@@ -6,6 +6,7 @@ import gakusai.kbc12a08.monster.enemy.Enemy;
 import gakusai.kbc12a08.monster.enemy.EnemyFactory;
 import gakusai.kbc12a11.monster.abst.StatusWindow;
 import gakusai.kbc12a11.monster.item.Item;
+import gakusai.kbc12a11.monster.sys.BgmBank;
 import gakusai.kbc12a11.monster.sys.Camera;
 import gakusai.kbc12a11.monster.sys.GameInput;
 import gakusai.kbc12a11.monster.sys.ImageBank;
@@ -131,6 +132,7 @@ public abstract class Stage extends BasicGameState{
 		lg.getLines().clear();
 		gc.getGraphics().setBackground(Color.white);
 		setStageState(STATE_NORMAL);
+		BgmBank.stopAllBGM();
 		soundBank.stopAllSound();
 		enemyGroup.clear();
 		enemyFactorys.clear();//エネミーファクトリーのクリア
@@ -212,6 +214,7 @@ public abstract class Stage extends BasicGameState{
 			sbg.enterState(gbs.getID(), new FadeOutTransition(Color.black, 120), new FadeInTransition(Color.black, 120) );
 		}
 
+		BgmBank.update();
 		soundBank.update();//効果音
 	}
 
@@ -400,6 +403,7 @@ public abstract class Stage extends BasicGameState{
 	public void soundRequest(int id, float pitch, float volume) {
 		soundBank.soundRequest(id, pitch, volume);
 	}
+
 	/**イメージバンクから画像を取得する*/
 	public Image getImage(int id) {
 		return imageBank.getImage(id);

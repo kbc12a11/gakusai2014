@@ -1,6 +1,8 @@
 package gakusai.kbc12a11.monster.sys.stage;
 
+import gakusai.kbc12a11.monster.sys.BgmBank;
 import gakusai.kbc12a11.monster.sys.Main;
+import gakusai.kbc12a11.monster.sys.SoundBank;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
@@ -49,6 +51,8 @@ public class BeforeStartStage extends BasicGameState{
 
 	@Override
 	public void leave(GameContainer container, StateBasedGame game) throws SlickException {
+		BgmBank.stopAllBGM();
+		SoundBank.stopAllSound();
 	}
 
 	@Override
@@ -98,7 +102,7 @@ public class BeforeStartStage extends BasicGameState{
 			if (timer < 0) {
 				Input in = gc.getInput();
 				if (in.isMousePressed(Input.MOUSE_LEFT_BUTTON)) {
-					sbg.enterState(nextStage,
+					sbg.enterState(Main.Stage_TitleView,
 							new FadeOutTransition(Color.black, fadeTime),
 							new FadeInTransition(Color.black, fadeTime) );
 				}

@@ -57,6 +57,7 @@ public class SoundBank {
 
 	//効果音の設定
 	private void setSE(){
+		System.out.println("SE loading...");
 		String[] files = new String[SE_SIZE];
 		files[SE_BOMB] = FILE_BOMB;
 		files[SE_CAT] = FILE_CAT;
@@ -75,6 +76,7 @@ public class SoundBank {
 				System.out.println("Failed to load \"" + files[i]+"\"");
 			}
 		}
+		System.out.println("SE load finish.");
 	}
 
 	//シングルトン
@@ -113,8 +115,9 @@ public class SoundBank {
 					waitTime[i] = baseWaitTime;
 					pitch[i] = DEFAULT_PITCH;
 					volume[i] = DEFAULT_VALUME;
+					//System.out.println("Sound SE ID " + i);
 				}else {
-					System.out.println("Failed to sound ID " + i + ".");
+					System.out.println("Failed to sound SE ID " + i + ".");
 				}
 				playFlag[i] = false;
 			}
@@ -122,7 +125,7 @@ public class SoundBank {
 	}
 
 	/**デフォルトのピッチとボリュームでサウンドの再生をリクエストする*/
-	public void soundRequest(int id) {
+	public static void soundRequest(int id) {
 		soundRequest(id, DEFAULT_PITCH, DEFAULT_VALUME);
 	}
 
@@ -132,24 +135,24 @@ public class SoundBank {
 	 * @param pitch よくわからない
 	 * @param volume 0~1の範囲のフロート
 	 */
-	public void soundRequest(int id, float pitch, float volume) {
-		if (!playFlag[id]){
-			playFlag[id] = true;
-			this.pitch[id] = pitch;
-			this.volume[id] = volume;
+	public static void soundRequest(int id, float pitch, float volume) {
+		if (!sb.playFlag[id]){
+			sb.playFlag[id] = true;
+			sb.pitch[id] = pitch;
+			sb.volume[id] = volume;
 		}else {
-			this.volume[id] = this.volume[id] < volume ? volume : this.volume[id];
+			sb.volume[id] = sb.volume[id] < volume ? volume : sb.volume[id];
 		}
 	}
 
 
 	/**再生中のすべてのサウンドを停止する*/
-	public void stopAllSound() {
+	public static void stopAllSound() {
 		for (int i = 0; i < SE_SIZE; i++) {
-			if (soundList[i] != null &&
-					soundList[i].playing()) {
-				soundList[i].stop();
-				playFlag[i] = false;
+			if (sb.soundList[i] != null &&
+					sb.soundList[i].playing()) {
+				sb.soundList[i].stop();
+				sb.playFlag[i] = false;
 			}
 		}
 	}

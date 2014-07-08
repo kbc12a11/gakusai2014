@@ -5,6 +5,7 @@ import gakusai.kbc12a11.monster.enemy.Bomb;
 import gakusai.kbc12a11.monster.enemy.Ghost;
 import gakusai.kbc12a11.monster.enemy.Magican;
 import gakusai.kbc12a11.monster.enemy.Missile;
+import gakusai.kbc12a11.monster.sys.BgmBank;
 import gakusai.kbc12a11.monster.sys.Main;
 import gakusai.kbc12a11.monster.sys.StageBackground;
 import gakusai.kbc12a11.monster.sys.stage.NoteBackground;
@@ -23,6 +24,12 @@ public class HinoStage extends Stage {
 
 		StageBackground bg = new NoteBackground();
 		this.setBackground(bg);
+	}
+
+	@Override
+	public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {
+		super.enter(gc, sbg);
+		BgmBank.bgmRequest(BgmBank.BGM_STAGE_1, true);
 	}
 
 	@Override

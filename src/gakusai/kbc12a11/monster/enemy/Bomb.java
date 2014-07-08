@@ -121,7 +121,6 @@ public class Bomb extends Enemy {
 					32, 0, 0, 32);
 			break;
 		case STATE_ACTIVE:
-			System.out.println(timer);
 			if(countDown % 16 < 8){
 				g.drawImage(img[2], p.x-size.x/2, p.y-size.y/2, p.x+size.x/2, p.y + size.y/2,
 						flg_isGoLeft?32:0, 0, flg_isGoLeft?0:32, 32);
