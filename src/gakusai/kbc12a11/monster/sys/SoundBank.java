@@ -96,30 +96,30 @@ public class SoundBank {
 
 
 	//更新処理
-	public void update() {
-		for (int i = 0; i < soundList.length; i++) {
+	public static void update() {
+		for (int i = 0; i < sb.soundList.length; i++) {
 
-			waitTime[i]--;
-			if (waitTime[i] < -1) {
-				waitTime[i] = -1;
+			sb.waitTime[i]--;
+			if (sb.waitTime[i] < -1) {
+				sb.waitTime[i] = -1;
 			}else {
-				playFlag[i] = false;
+				sb.playFlag[i] = false;
 			}
 
-			if (playFlag[i]) {
-				if (soundList[i] != null) {
-					if (soundList[i].playing()) {
-						soundList[i].stop();
+			if (sb.playFlag[i]) {
+				if (sb.soundList[i] != null) {
+					if (sb.soundList[i].playing()) {
+						sb.soundList[i].stop();
 					}
-					soundList[i].play(pitch[i], volume[i]);
-					waitTime[i] = baseWaitTime;
-					pitch[i] = DEFAULT_PITCH;
-					volume[i] = DEFAULT_VALUME;
+					sb.soundList[i].play(sb.pitch[i], sb.volume[i]);
+					sb.waitTime[i] = sb.baseWaitTime;
+					sb.pitch[i] = DEFAULT_PITCH;
+					sb.volume[i] = DEFAULT_VALUME;
 					//System.out.println("Sound SE ID " + i);
 				}else {
 					System.out.println("Failed to sound SE ID " + i + ".");
 				}
-				playFlag[i] = false;
+				sb.playFlag[i] = false;
 			}
 		}
 	}

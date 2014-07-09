@@ -1,5 +1,6 @@
 package gakusai.kbc12a11.monster.sys.stage;
 
+import gakusai.kbc12a11.monster.sys.BgmBank;
 import gakusai.kbc12a11.monster.sys.GameInput;
 import gakusai.kbc12a11.monster.sys.Main;
 import gakusai.kbc12a11.monster.util.Util;
@@ -49,6 +50,7 @@ public class StageSelectView extends BasicGameState{
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
+		BgmBank.update();
 		GameInput in = Util.getGameInput(null, gc);
 		Vector2f joy = in.getJoyInput();
 

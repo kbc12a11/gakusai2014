@@ -21,7 +21,7 @@ public class Main extends StateBasedGame {
 	/**スクリーンのサイズ*/
 	//public static final int W_WIDTH = 1366, W_HEIGHT = 768;//画面の解像度によって指定
 	public static final int W_WIDTH = 640, W_HEIGHT = 480;//画面の解像度によって指定
-	public static boolean FLG_FULLSCREEN = true;
+	public static boolean FLG_FULLSCREEN = false;
 	private static final boolean FLG_VSYNC = true;
 	public static final boolean FLG_ANTI_ALIAS = false;
 

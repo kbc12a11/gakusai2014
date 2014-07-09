@@ -63,47 +63,57 @@ public class BgmBank {
 	public static void update() {
 		for (int i = 0; i < bb.bgmList.length; i++) {
 
-			if (bb.playFlag[i]) {
-				if (bb.bgmList[i] != null) {
-					boolean flg = bb.loopFlag[i];
-					stopAllBGM();
-
-					if (flg)
-						bb.bgmList[i].loop(bb.pitch[i], bb.volume[i]);
-					else
-						bb.bgmList[i].play(bb.pitch[i], bb.volume[i]);
-
-					System.out.println("BGM id " + i + " start.");
-					bb.pitch[i] = DEFAULT_PITCH;
-					bb.volume[i] = DEFAULT_VALUME;
+			if (bb.playFlag[i] && !bb.bgmList[i].playing()) {
+				System.out.println("BGM id " + i + " start.");
+				if (bb.loopFlag[i]) {
+					bb.bgmList[i].loop(bb.pitch[i], bb.volume[i]);
 				}else {
-					System.out.println("Failed to play BGM ID " + i + ".");
+					bb.bgmList[i].play(bb.pitch[i], bb.volume[i]);
 				}
-				bb.playFlag[i] = false;
+			}else if (!bb.playFlag[i] && bb.bgmList[i].playing()) {
+				bb.bgmList[i].stop();
 			}
+
+//			if (bb.playFlag[i]) {
+//				if (bb.bgmList[i] != null) {
+//					boolean flg = bb.loopFlag[i];
+//					stopAllBGM();
+//
+//					if (flg)
+//						bb.bgmList[i].loop(bb.pitch[i], bb.volume[i]);
+//					else
+//						bb.bgmList[i].play(bb.pitch[i], bb.volume[i]);
+//
+//					System.out.println("BGM id " + i + " start.");
+//					bb.pitch[i] = DEFAULT_PITCH;
+//					bb.volume[i] = DEFAULT_VALUME;
+//				}else {
+//					System.out.println("Failed to play BGM ID " + i + ".");
+//				}
+//				bb.playFlag[i] = false;
+//			}
 		}
 	}
 
-	/**デフォルトのピッチとボリュームでサウンドの再生をリクエストする*/
+	/**デフォルトのピッチとボリュームでBGMの再生をリクエストする*/
 	public static void bgmRequest(int id, boolean loopFlag) {
 		bgmRequest(id, loopFlag, DEFAULT_PITCH, DEFAULT_VALUME);
 	}
 
-	/**ピッチとボリュームを指定してサウンドの再生をリクエストする
+	/**ピッチとボリュームを指定してBGMの再生をリクエストする
 	 *
 	 * @param id
 	 * @param pitch よくわからない
 	 * @param volume 0~1の範囲のフロート
 	 */
 	public static void bgmRequest(int id, boolean loopFlag, float pitch, float volume) {
-		if (!bb.playFlag[id]){
-			bb.playFlag[id] = true;
-			bb.pitch[id] = pitch;
-			bb.volume[id] = volume;
-			bb.loopFlag[id] = loopFlag;
-		}else {
-			bb.volume[id] = bb.volume[id] < volume ? volume : bb.volume[id];
+		for (int i = 0; i < SISE; i++) {
+			bb.playFlag[i] = false;
 		}
+		bb.playFlag[id] = true;
+		bb.pitch[id] = pitch;
+		bb.volume[id] = volume;
+		bb.loopFlag[id] = loopFlag;
 	}
 
 
