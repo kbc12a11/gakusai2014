@@ -18,6 +18,7 @@ public abstract class Enemy extends Character {
 		super(stg);
 		p.set(x, y);
 		isImmortal = false;
+		System.out.println(this.getClass().getSimpleName() + " generate.");
 	}
 
 	@Override

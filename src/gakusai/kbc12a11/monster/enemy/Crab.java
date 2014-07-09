@@ -31,7 +31,6 @@ public class Crab extends Enemy{
 		img[1] = ImageBank.getInstance().getImage(ImageBank.ENEMY_CRAB_2);
 		img[2] = ImageBank.getInstance().getImage(ImageBank.ENEMY_CRAB_3);
 		size.set(32, 32);
-		System.out.println("createCrab : " + p);
 	}
 
 	@Override

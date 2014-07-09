@@ -28,6 +28,7 @@ public class WiimoteTest implements WiimoteListener{
 	/**ポインタの座標*/
 	private float pointingX, pointingY;
 	private boolean btn_a, btn_b;
+	private boolean isLeft, isUp, isDown, isRight;
 
 	//ハイパスフィルター用
 	private float rate = 0.9f;
@@ -50,6 +51,19 @@ public class WiimoteTest implements WiimoteListener{
 	}
 	public boolean isBtnZPressed() {
 		return btn_z;
+	}
+
+	public boolean isLeft() {
+		return isLeft;
+	}
+	public boolean isUp() {
+		return isUp;
+	}
+	public boolean isDown() {
+		return isDown;
+	}
+	public boolean isRight() {
+		return isRight;
 	}
 
 
@@ -128,6 +142,11 @@ public class WiimoteTest implements WiimoteListener{
 	public void onButtonsEvent(WiimoteButtonsEvent arg0) {
 		btn_a = arg0.isButtonAHeld();
 		btn_b = arg0.isButtonBHeld();
+
+		isDown = arg0.isButtonDownHeld();
+		isRight = arg0.isButtonRightHeld();
+		isLeft = arg0.isButtonLeftHeld();
+		isUp = arg0.isButtonUpHeld();
 	}
 	@Override
 	public void onDisconnectionEvent(DisconnectionEvent arg0) {

@@ -28,7 +28,7 @@ public class LineGroup {
 
 
 	/**デフォルトのhp*/
-	private int defLineHp = 200;
+	private int defLineHp = 400;
 
 	public LineGroup(Stage stg) {
 		lines = new ArrayList<Line>();

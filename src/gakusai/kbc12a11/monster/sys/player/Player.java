@@ -4,6 +4,7 @@ import gakusai.kbc12a08.monster.enemy.Enemy;
 import gakusai.kbc12a11.monster.abst.Character;
 import gakusai.kbc12a11.monster.abst.Object;
 import gakusai.kbc12a11.monster.item.Item;
+import gakusai.kbc12a11.monster.sys.BgmBank;
 import gakusai.kbc12a11.monster.sys.GameInput;
 import gakusai.kbc12a11.monster.sys.ImageBank;
 import gakusai.kbc12a11.monster.sys.SoundBank;
@@ -15,13 +16,13 @@ import gakusai.kbc12a11.monster.sys.line.LineBit;
 import gakusai.kbc12a11.monster.sys.stage.ObjectGroup;
 import gakusai.kbc12a11.monster.sys.stage.Stage;
 import gakusai.kbc12a11.monster.util.Collide;
+import gakusai.kbc12a11.monster.util.Util;
 
 import java.util.ArrayList;
 
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
-import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
@@ -64,8 +65,9 @@ public class Player extends Character{
 	/**死亡エフェクト*/
 	private Effect deadEffect;
 
+	///攻撃関係
 	private ObjectGroup attackBits;
-
+	private float bulletSpeed = 5.0f;
 
 
 	/**状態異常が治るまでのカウント*/
@@ -78,7 +80,9 @@ public class Player extends Character{
 	//線に乗っているかのフラグ
 	public boolean rideLineFlag = false;
 	//最高速度
-	private float maxSpeed = 4;
+	private float maxSpeed = 5;
+	//移動スピード
+	private float moveSpeed = 3;
 
 	/**水中にいるフラグ*/
 	private boolean flg_in_water = false;
@@ -153,13 +157,13 @@ public class Player extends Character{
 			GameInput in = stg.getGameInput();
 			Vector2f joyInput = in.getJoyInput();
 			if (joyInput.x < -0.05 || 0.05 < joyInput.x) {
-				d.x = joyInput.x*delta;
+				d.x = Util.between(joyInput.x*delta, -moveSpeed, moveSpeed);
 			}else {
 				d.x = 0;
 			}
 			if (flg_in_water) {
 				if (joyInput.y < -0.05 || 0.05 < joyInput.y) {
-					d.y = joyInput.y*delta;
+					d.y = Util.between(joyInput.y*delta, -moveSpeed, moveSpeed);
 				}
 			}
 			if ((flg_jump)
@@ -215,12 +219,24 @@ public class Player extends Character{
 
 	//攻撃
 	private void updateAttack(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
-		Input in = gc.getInput();
-		if (in.isKeyDown(Input.KEY_SPACE)) {
-			Vector2f atc = new Vector2f(
-					in.getMouseX() - p.x - stg.getCamera().getTranslateX(),
-					in.getMouseY() - p.y - stg.getCamera().getTranslateY());
-			atc.normalise().scale(10f);
+		GameInput in = stg.getGameInput();
+		float ax = 0, ay = 0;
+		if (in.isUp()) {
+			ay = -bulletSpeed;
+		}
+		if (in.isDown()) {
+			ay = bulletSpeed;
+		}
+		if (in.isLeft()) {
+			ax = -bulletSpeed;
+		}
+		if (in.isRight()) {
+			ax = bulletSpeed;
+		}
+
+		if (ax != 0 || ay != 0 ) {
+			Vector2f atc = new Vector2f(ax, ay);
+			atc.normalise().scale(bulletSpeed);
 			attackBits.add(new PlayerAttackBit(stg, p.x, p.y, atc.x, atc.y));
 		}
 		attackBits.update(gc, sbg, delta);
@@ -417,6 +433,7 @@ public class Player extends Character{
 	public void destroy() {
 		super.destroy();
 		stg.soundRequest(SoundBank.SE_ENDAAAAAAAAAAAAAAAA);
+		BgmBank.stopAllBGM();
 	}
 	@Override
 	public void onBlock(Block b) {
