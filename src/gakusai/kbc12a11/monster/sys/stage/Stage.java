@@ -434,4 +434,9 @@ public abstract class Stage extends BasicGameState{
 	public String toString() {
 		return "Stage " + getID();
 	}
+
+	/**プレイヤーの残機を取得する*/
+	public int getPlayerStock() {
+		return player.getStock();
+	}
 }

@@ -44,9 +44,9 @@ public class StageSelectView extends BasicGameState{
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		// TODO 自動生成されたメソッド・スタブ
 		stageList = new ArrayList<GameState>();
-		stageList.add(sbg.getState(Main.Stage_12a10_HinoStage));
-		stageList.add(sbg.getState(Main.Stage_12a11_MarioStage));
-		stageList.add(sbg.getState(Main.Stage_12a11_SampleStage2));
+		stageList.add(sbg.getState(Main.Stage_12a10_Stage4));
+		stageList.add(sbg.getState(Main.Stage_12a10_Stage5));
+		stageList.add(sbg.getState(Main.Stage_M_Stage6));
 
 		nyanpus = new Image("res/image/stageSelect/nyampus.gif");
 		easy = new Image("res/image/stageSelect/easy.gif");
@@ -119,6 +119,7 @@ public class StageSelectView extends BasicGameState{
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
 		BgmBank.update();
+		SoundBank.update();
 		GameInput in = Util.getGameInput(null, gc);
 		Vector2f joy = in.getJoyInput();
 		stTimer++;
@@ -147,7 +148,10 @@ public class StageSelectView extends BasicGameState{
 			int fadeInTime = 200;
 			Stage stg = (Stage)stageList.get(nowSelectIndex);
 			stg.reset();
-			sbg.enterState(stg.getID(),
+			GameState bef = sbg.getState(Main.Stage_BeforeStartStage);
+			((BeforeStartStage)bef).set(stg.getPlayerStock(),
+					stg.getID(), Stage.STATE_NORMAL);
+			sbg.enterState(bef.getID(),
 					new FadeOutTransition(Color.black, fadeOutTime),
 					new FadeInTransition(Color.black, fadeInTime) );
 		}

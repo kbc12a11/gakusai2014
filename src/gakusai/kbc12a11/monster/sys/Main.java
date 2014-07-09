@@ -1,9 +1,8 @@
 package gakusai.kbc12a11.monster.sys;
 
-import gakusai.kbc12a10.monster.stage.HinoStage;
-import gakusai.kbc12a11.monster.sampleStage.SampleStage2;
-import gakusai.kbc12a11.monster.st1.Stage_1;
-import gakusai.kbc12a11.monster.stage.mario.MarioStage;
+import gakusai.kbc12a10.monster.stage.Stage4;
+import gakusai.kbc12a10.monster.stage.Stage5;
+import gakusai.kbc12a11.monster.sampleStage.MitsuruStage6;
 import gakusai.kbc12a11.monster.sys.stage.BeforeStartStage;
 import gakusai.kbc12a11.monster.sys.stage.StageSelectView;
 import gakusai.kbc12a11.monster.sys.stage.TitleView;
@@ -45,7 +44,11 @@ public class Main extends StateBasedGame {
 	public static final int Stage_12a11_MarioStage = 1211004;
 
 	public static final int Stage_12a10_HinoStage = 1210001;
+	public static final int Stage_12a10_Stage4 = 1210002;
+	public static final int Stage_12a10_Stage5 = 1210003;
 	///ステージIDの登録ここまで
+
+	public static final int Stage_M_Stage6 = 1203001;
 
 	private static WiimoteTest wiimoteListener;
 
@@ -71,13 +74,11 @@ public class Main extends StateBasedGame {
 		//最初に追加されたステージが実行される
 		addState(new TitleView());
 		addState(new StageSelectView());
-		addState(new HinoStage());
-		addState(new MarioStage());
-		addState(new SampleStage2());
-
-		addState(new Stage_1());
-		//addState(new TestStage());
 		addState(new BeforeStartStage());
+
+		addState(new Stage4());
+		addState(new Stage5());
+		addState(new MitsuruStage6());
 
 	}
 

@@ -55,6 +55,9 @@ public class SoundBank {
 	public static final int SE_MOL;
 	private static final String FILE_MOL = "res/se/mol.wav";
 
+	public static final int SE_CUREBOX;
+	private static final String FILE_CUREBOX = "rex/se/curebox.wav";
+
 	/**効果音の数*/
 	private static int SE_SIZE;
 	//IDの設定
@@ -73,6 +76,7 @@ public class SoundBank {
 		SE_MISSILE = SE_SIZE++;
 		SE_GHOST = SE_SIZE++;
 		SE_MOL = SE_SIZE++;
+		SE_CUREBOX = SE_SIZE++;
 	}
 
 	private Sound[] soundList;
@@ -103,6 +107,7 @@ public class SoundBank {
 		files[SE_MISSILE] = FILE_MISSILE;
 		files[SE_GHOST] = FILE_GHOST;
 		files[SE_MOL] = FILE_MOL;
+		files[SE_CUREBOX] = FILE_CUREBOX;
 
 		for (int i = 0; i < SE_SIZE; i++) {
 			pitch[i] = DEFAULT_PITCH;
