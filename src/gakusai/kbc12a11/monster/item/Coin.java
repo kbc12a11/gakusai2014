@@ -15,7 +15,7 @@ public class Coin extends Item{
 
 	private float viewAng = 0;
 	private float rad = 0.01f;
-	private int score = 100;
+	private int score = 10;
 
 	public Coin(Stage stg, float x, float y) {
 		super(stg, x, y);
