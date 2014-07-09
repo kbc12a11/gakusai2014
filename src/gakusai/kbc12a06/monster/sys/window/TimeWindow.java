@@ -25,6 +25,7 @@ public class TimeWindow extends StatusWindow{
 	private Image img, num;
 	private int num01, num02, num03;
 	
+
 	
 	public TimeWindow() {
 		this.imgp = new Vector2f(Main.W_WIDTH  * 15 / 16 - 50, Main.W_HEIGHT / 29 - 4);
@@ -62,9 +63,6 @@ public class TimeWindow extends StatusWindow{
 			num01 = time / 60 % 10;
 			num02 = time / 60 / 10 % 10;
 			num03 = time / 60 / 100;
-//			num1 = new Image("res/image/num/" + time / 60 / 100 + ".gif");
-//			num2 = new Image("res/image/num/" + time / 60 / 10 % 10 + ".gif");
-//			num3 = new Image("res/image/num/" + time / 60 % 10 + ".gif");
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
@@ -86,6 +84,7 @@ public class TimeWindow extends StatusWindow{
 		}
 		
 		
+
 
 	}
 	

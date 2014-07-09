@@ -9,6 +9,7 @@ public class SoundBank {
 	/**爆発音*/
 	public static final int SE_BOMB;
 	private static final String FILE_BOMB = "res/se/bomb.wav";
+
 	/**猫の鳴き声*/
 	public static final int SE_CAT;
 	private static final String FILE_CAT = "res/se/Cat.wav";
@@ -30,6 +31,30 @@ public class SoundBank {
 	public static final int SE_GET_COIN;
 	private static final String FILE_GET_COIN = "res/se/crrect_answer3.wav";
 
+	/**爆発音*/
+	public static final int SE_BURST;
+	private static final String FILE_BURST = "res/se/burst.wav";
+
+	/**爆発音*/
+	public static final int SE_CRUSH;
+	private static final String FILE_CRUSH = "res/se/crush.wav";
+
+	/**爆発音*/
+	public static final int SE_UFO;
+	private static final String FILE_UFO = "res/se/ufo.wav";
+
+	/**爆発音*/
+	public static final int SE_MISSILE;
+	private static final String FILE_MISSILE = "res/se/missile.wav";
+
+	/**爆発音*/
+	public static final int SE_GHOST;
+	private static final String FILE_GHOST = "res/se/ghost.wav";
+
+	/**爆発音*/
+	public static final int SE_MOL;
+	private static final String FILE_MOL = "res/se/mol.wav";
+
 	/**効果音の数*/
 	private static int SE_SIZE;
 	//IDの設定
@@ -42,6 +67,12 @@ public class SoundBank {
 		SE_OBAKE = SE_SIZE++;
 		SE_MAGIC = SE_SIZE++;
 		SE_GET_COIN = SE_SIZE++;
+		SE_BURST = SE_SIZE++;
+		SE_CRUSH = SE_SIZE++;
+		SE_UFO = SE_SIZE++;
+		SE_MISSILE = SE_SIZE++;
+		SE_GHOST = SE_SIZE++;
+		SE_MOL = SE_SIZE++;
 	}
 
 	private Sound[] soundList;
@@ -66,6 +97,12 @@ public class SoundBank {
 		files[SE_OBAKE] = FILE_OBAKE;
 		files[SE_MAGIC] = FILE_MAGIC;
 		files[SE_GET_COIN] = FILE_GET_COIN;
+		files[SE_BURST] = FILE_BURST;
+		files[SE_CRUSH] = FILE_CRUSH;
+		files[SE_UFO] = FILE_UFO;
+		files[SE_MISSILE] = FILE_MISSILE;
+		files[SE_GHOST] = FILE_GHOST;
+		files[SE_MOL] = FILE_MOL;
 
 		for (int i = 0; i < SE_SIZE; i++) {
 			pitch[i] = DEFAULT_PITCH;
@@ -108,9 +145,9 @@ public class SoundBank {
 
 			if (sb.playFlag[i]) {
 				if (sb.soundList[i] != null) {
-					if (sb.soundList[i].playing()) {
-						sb.soundList[i].stop();
-					}
+//					if (sb.soundList[i].playing()) {
+//						sb.soundList[i].stop();
+//					}
 					sb.soundList[i].play(sb.pitch[i], sb.volume[i]);
 					sb.waitTime[i] = sb.baseWaitTime;
 					sb.pitch[i] = DEFAULT_PITCH;

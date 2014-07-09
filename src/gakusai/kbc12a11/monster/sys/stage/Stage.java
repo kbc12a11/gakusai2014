@@ -94,6 +94,11 @@ public abstract class Stage extends BasicGameState{
 		imageBank = ImageBank.getInstance();
 
 		map = XmlParse.getMap(mapName);
+		reset();
+	}
+
+	/**初期化*/
+	public void reset() throws SlickException {
 		player = new Player(this);
 		playerRespawnPoint = new Vector2f(20, 20);//リスポーン地点の設定
 		lg = new LineGroup(this);

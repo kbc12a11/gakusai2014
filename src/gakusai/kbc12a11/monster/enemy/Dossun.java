@@ -3,6 +3,7 @@ package gakusai.kbc12a11.monster.enemy;
 import gakusai.kbc12a08.monster.enemy.Enemy;
 import gakusai.kbc12a11.monster.abst.Object;
 import gakusai.kbc12a11.monster.sys.ImageBank;
+import gakusai.kbc12a11.monster.sys.SoundBank;
 import gakusai.kbc12a11.monster.sys.stage.Stage;
 import gakusai.kbc12a11.monster.util.Collide;
 
@@ -105,12 +106,15 @@ public class Dossun extends Enemy{
 			if((res & Collide.COL_MAP_BLOCK_DOWN) == 0){
 				Vector2f pl = stg.getPlayerPos();//プレイヤーの現在座標を取得
 				//プレイヤーの座標とエネミーの座標が近かったらジャンプする
+
 				if (Math.abs(pl.x - p.x) < 64 && p.y + size.y < pl.y) {
 					jumpFlag = true;
+
 				}
 			}else{
 				d.y = -upturnPower;
 				upturnFlag = true;
+				stg.soundRequest(SoundBank.SE_CRUSH);
 			}
 
 			if(p.y <= startY || (res & Collide.COL_MAP_BLOCK_UP) != 0 || (res & Collide.COL_OUT_OF_MAP_UP) != 0){

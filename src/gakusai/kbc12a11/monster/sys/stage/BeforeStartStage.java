@@ -46,6 +46,8 @@ public class BeforeStartStage extends BasicGameState{
 		if (stock < 0) {
 			isGameOver = true;
 			timer /= 2;
+		}else {
+			isGameOver = false;
 		}
 	}
 

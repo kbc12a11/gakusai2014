@@ -3,6 +3,7 @@ package gakusai.kbc12a11.monster.enemy;
 import gakusai.kbc12a08.monster.enemy.Enemy;
 import gakusai.kbc12a11.monster.abst.Object;
 import gakusai.kbc12a11.monster.sys.ImageBank;
+import gakusai.kbc12a11.monster.sys.SoundBank;
 import gakusai.kbc12a11.monster.sys.stage.Stage;
 
 import org.newdawn.slick.GameContainer;
@@ -21,6 +22,7 @@ public class Missile extends Enemy{
 	public Missile(Stage stg, float x, float y) throws SlickException {
 		super(stg, x, y);
 
+
 		img = ImageBank.getInstance().getImage(ImageBank.ENEMY_MISSILE_1);
 		size.set(64, 64);
 		Vector2f player = stg.getPlayerPos();
@@ -31,6 +33,8 @@ public class Missile extends Enemy{
 		}else {
 
 		}
+
+		stg.soundRequest(SoundBank.SE_MISSILE);
 
 		// TODO 自動生成されたコンストラクター・スタブ
 	}

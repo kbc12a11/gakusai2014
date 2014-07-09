@@ -19,11 +19,13 @@ public class ScoreWindow extends StatusWindow{
 	private Image img, num1, num2, num3, num4, num5, num6, num;
 	private int num01, num02, num03, num04, num05, num06;
 
+
 	
 	public ScoreWindow(Stage stg) {
 		this.stg = stg;
 		this.imgp = new Vector2f(Main.W_WIDTH  * 15 / 16 - 50, Main.W_HEIGHT / 10);
 		this.nump = new Vector2f(imgp.x + 60, imgp.y + 5);
+
 		try {
 			img = new Image("res/image/window/score.gif");
 		} catch (SlickException e) {
@@ -55,6 +57,7 @@ public class ScoreWindow extends StatusWindow{
 //			num4 = new Image("res/image/num/" + score / 100 % 10 + ".gif");
 //			num5 = new Image("res/image/num/" + score / 10 % 10 + ".gif");
 //			num6 = new Image("res/image/num/" + score % 10 + ".gif");
+
 		} catch (SlickException e) {
 			e.printStackTrace();
 		}
@@ -90,6 +93,7 @@ public class ScoreWindow extends StatusWindow{
 			g.drawImage(num, nump.x - 100, nump.y, nump.x - 100 + 27, nump.y + 24, 100 * (num01 - 5), 155, 95 + 100 * (num01 - 5), 285);
 		}
 		
+
 
 	}
 }

@@ -3,6 +3,7 @@ package gakusai.kbc12a11.monster.enemy;
 import gakusai.kbc12a08.monster.enemy.Enemy;
 import gakusai.kbc12a11.monster.abst.Object;
 import gakusai.kbc12a11.monster.sys.ImageBank;
+import gakusai.kbc12a11.monster.sys.SoundBank;
 import gakusai.kbc12a11.monster.sys.stage.Stage;
 
 import org.newdawn.slick.GameContainer;
@@ -41,6 +42,7 @@ public class UFO extends Enemy{
 			stg.addEnemy(enemy[maxStock - stock]);
 			stock--;
 			release = true;
+			stg.soundRequest(SoundBank.SE_UFO);
 		}
 		if(timer % 300 == 75 && release){
 			release = false;
