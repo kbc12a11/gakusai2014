@@ -25,7 +25,11 @@ public class SampleStage2 extends Stage{
 		//基本的には下2行をコピペでok
 		StageBackground bg = new NoteBackground();
 		this.setBackground(bg);
+	}
 
+	@Override
+	public void reset() throws SlickException {
+		super.reset();
 		//マップ上の(1,27)の位置にプレイヤーの初期位置を設定
 		int mx = (int)map.chipSizeOnScreen.x;
 		int my = (int)map.chipSizeOnScreen.y;

@@ -3,6 +3,7 @@ package gakusai.kbc12a11.monster.enemy;
 import gakusai.kbc12a08.monster.enemy.Enemy;
 import gakusai.kbc12a11.monster.abst.Object;
 import gakusai.kbc12a11.monster.sys.ImageBank;
+import gakusai.kbc12a11.monster.sys.SoundBank;
 import gakusai.kbc12a11.monster.sys.stage.Stage;
 import gakusai.kbc12a11.monster.util.Collide;
 
@@ -54,6 +55,7 @@ public class Mol extends Enemy{
 		}else if (state == ST_TO_DIG) {
 			updateStToDig(gc, sbg, delta);
 		}else if (state == ST_DIG) {
+			stg.soundRequest(SoundBank.SE_MOL);
 			updateStDig(gc, sbg, delta);
 		}else if (state == ST_TO_NORMAL) {
 			updateStToNormal(gc, sbg, delta);
