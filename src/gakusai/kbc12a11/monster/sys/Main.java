@@ -38,6 +38,7 @@ public class Main extends StateBasedGame {
 	public static final int Stage_Stage_1 = 2;
 	public static final int Stage_TestStage = 3;
 	public static final int Stage_StageSelectView = 4;
+	public static final int Stage_StageClearView = 5;
 	/**サンプルのステージ*/
 	public static final int Stage_SampleStage = 1211001;
 	public static final int Stage_12a11_TestStage = 1211002;

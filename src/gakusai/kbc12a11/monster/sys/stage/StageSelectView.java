@@ -53,6 +53,7 @@ public class StageSelectView extends BasicGameState{
 		normal = new Image("res/image/stageSelect/normal.gif");
 		hard = new Image("res/image/stageSelect/hard.gif");
 		bg = new Image("res/image/title/PPW_notenikakikomu500.jpg");
+
 		timer = 0;
 	}
 
@@ -71,10 +72,10 @@ public class StageSelectView extends BasicGameState{
 		float lscale = 0.7f;
 		Image[] img = {easy, normal, hard};
 
+		int ww = Main.W_WIDTH*(nowSelectIndex+1)/4, wh = Main.W_HEIGHT/2;
 		if (state != ST_NORMAL) {
 			gscale += dgscale;
 			dgscale += agscale;
-			int ww = Main.W_WIDTH*(nowSelectIndex+1)/4, wh = 200;
 			ww = ww + nyanpus.getWidth()/2 - img[nowSelectIndex].getWidth()/2;
 			wh = wh - 60;
 			g.translate( ww-(ww)*gscale, wh-(wh)*gscale);
@@ -89,7 +90,7 @@ public class StageSelectView extends BasicGameState{
 
 		for (int i = 0; i < 3; i++) {
 			int ofx = (Main.W_WIDTH*(i+1))/4;
-			int ofy = 200;
+			int ofy = Main.W_HEIGHT/2;
 			float scale;
 			if (nowSelectIndex == i) {
 				scale = lscale;
@@ -113,6 +114,8 @@ public class StageSelectView extends BasicGameState{
 					ofx + (nw/2-pdx)*scale, ofy+(-nh/2+ty*fontScale+pdy)*scale,
 					0, 0, tx, ty);
 		}
+
+
 
 	}
 

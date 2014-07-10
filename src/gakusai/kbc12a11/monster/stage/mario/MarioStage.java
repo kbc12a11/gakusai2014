@@ -25,6 +25,13 @@ public class MarioStage extends Stage {
 	}
 
 	@Override
+	public void reset() throws SlickException {
+		// TODO 自動生成されたメソッド・スタブ
+		super.reset();
+		playerRespawnPoint.set(map.calcLocateX(3), map.calcLocateY(10));
+	}
+
+	@Override
 	public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		super.enter(gc, sbg);
 		BgmBank.bgmRequest(BgmBank.BGM_STAGE_1, true);

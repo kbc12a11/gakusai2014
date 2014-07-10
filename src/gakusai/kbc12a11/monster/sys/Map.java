@@ -10,6 +10,7 @@ import gakusai.kbc12a11.monster.enemy.Missile;
 import gakusai.kbc12a11.monster.enemy.Mol;
 import gakusai.kbc12a11.monster.enemy.UFO;
 import gakusai.kbc12a11.monster.item.Coin;
+import gakusai.kbc12a11.monster.item.CureBox;
 import gakusai.kbc12a11.monster.sys.block.Block;
 import gakusai.kbc12a11.monster.sys.stage.Stage;
 
@@ -213,6 +214,8 @@ public class Map {
 
 	/**アイテム：コイン*/
 	public static final int ITEM_COIN = 61;
+	/**回復アイテム*/
+	public static final int ITEM_CUREBOX = 62;
 
 	/**マップ上の敵データとアイテムのデータをステージに追加する。<br>
 	 * このメソッドを呼ぶ前にエネミーグループとアイテムグループをクリアしておく事。*/
@@ -256,6 +259,9 @@ public class Map {
 					break;
 				case ITEM_COIN:
 					stg.addItem(new Coin(stg, calcLocateX(x), calcLocateY(y)));
+					break;
+				case ITEM_CUREBOX:
+					stg.addItem(new CureBox(stg, calcLocateX(x), calcLocateY(y)));
 					break;
 				}
 			}
