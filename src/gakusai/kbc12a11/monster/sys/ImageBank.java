@@ -98,6 +98,9 @@ public class ImageBank {
 	public static final int ENEMY_UFO_2;
 	private static final String FILE_ENEMY_UFO_2 = "res/image/enemy/UFO/UFO2.gif";
 
+	////////////////////////////////////////アイテム
+	public static final int ITEM_CUREBOX;
+	private static final String FILE_ITM_CUREBOX = "res/image/item/curebox.gif";
 
 	////////////////////////////////////////背景素材
 	/**へのへのもへじ*/
@@ -181,6 +184,8 @@ public class ImageBank {
 		ENEMY_UFO_1 = IMAGE_SIZE++;
 		ENEMY_UFO_2 = IMAGE_SIZE++;
 
+		//item
+		ITEM_CUREBOX = IMAGE_SIZE++;
 
 		//background
 		BG_HENOHENO = IMAGE_SIZE++;
@@ -255,6 +260,9 @@ public class ImageBank {
 
 		files[ENEMY_UFO_1] = FILE_ENEMY_UFO_1;
 		files[ENEMY_UFO_2] = FILE_ENEMY_UFO_2;
+
+		//item
+		files[ITEM_CUREBOX] = FILE_ITM_CUREBOX;
 
 		//background
 		files[BG_HENOHENO] = FILE_BG_HENOHENO;

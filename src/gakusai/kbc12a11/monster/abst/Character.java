@@ -1,6 +1,8 @@
 package gakusai.kbc12a11.monster.abst;
 
 import gakusai.kbc12a11.monster.sys.block.Block;
+import gakusai.kbc12a11.monster.sys.effects.Effect;
+import gakusai.kbc12a11.monster.sys.stage.ObjectGroup;
 import gakusai.kbc12a11.monster.sys.stage.Stage;
 
 import org.newdawn.slick.GameContainer;
@@ -10,9 +12,11 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public abstract class Character extends Object{
 
+	ObjectGroup effects;
 
 	public Character(Stage stg) {
 		super(stg);
+		effects = new ObjectGroup(stg);
 	}
 
 	@Override
@@ -22,6 +26,7 @@ public abstract class Character extends Object{
 		}else {
 			updateDestroy(gc, sbg, delta);
 		}
+		effects.update(gc, sbg, delta);
 	}
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) {
@@ -30,6 +35,7 @@ public abstract class Character extends Object{
 		}else {
 			renderDestroy(gc, sbg, g);
 		}
+		effects.render(gc, sbg, g);
 	}
 
 	public abstract void chUpdate(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException;
@@ -67,5 +73,13 @@ public abstract class Character extends Object{
 
 	/**ブロックに触れた時の処理*/
 	public void onBlock(Block b) {
+	}
+
+	public void addEffect(Effect e) {
+		effects.add(e);
+	}
+
+	public void removeEffect(Effect e) {
+		effects.remove(e);
 	}
 }
