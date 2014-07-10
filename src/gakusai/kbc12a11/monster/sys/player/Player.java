@@ -68,6 +68,8 @@ public class Player extends Character{
 	///攻撃関係
 	private ObjectGroup attackBits;
 	private float bulletSpeed = 5.0f;
+	private int attackDefaultInterval = 100;
+	private int attackInterval;
 
 
 	/**状態異常が治るまでのカウント*/
@@ -105,6 +107,7 @@ public class Player extends Character{
 		imgDamaged = stg.getImage(ImageBank.PLAYER_DAMAGED);
 
 		attackBits = new ObjectGroup(stg);
+		attackInterval = 0;
 	}
 
 	/**リスポーン*/
@@ -233,11 +236,12 @@ public class Player extends Character{
 		if (in.isRight()) {
 			ax = bulletSpeed;
 		}
-
-		if (ax != 0 || ay != 0 ) {
+		attackInterval--;
+		if ((ax != 0 || ay != 0 ) && attackInterval < 0) {
 			Vector2f atc = new Vector2f(ax, ay);
 			atc.normalise().scale(bulletSpeed);
 			attackBits.add(new PlayerAttackBit(stg, p.x, p.y, atc.x, atc.y));
+			attackInterval = attackDefaultInterval;
 		}
 		attackBits.update(gc, sbg, delta);
 	}

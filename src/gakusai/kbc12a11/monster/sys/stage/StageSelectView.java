@@ -39,6 +39,7 @@ public class StageSelectView extends BasicGameState{
 	Image bg;
 	Image nyanpus;
 	Image easy, normal, hard;
+	Image title;
 
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
@@ -53,6 +54,7 @@ public class StageSelectView extends BasicGameState{
 		normal = new Image("res/image/stageSelect/normal.gif");
 		hard = new Image("res/image/stageSelect/hard.gif");
 		bg = new Image("res/image/title/PPW_notenikakikomu500.jpg");
+		title = new Image("res/image/window/stageSelect.png");
 		timer = 0;
 	}
 
@@ -70,7 +72,7 @@ public class StageSelectView extends BasicGameState{
 		float sscale = 0.5f;
 		float lscale = 0.7f;
 		Image[] img = {easy, normal, hard};
-
+		
 		if (state != ST_NORMAL) {
 			gscale += dgscale;
 			dgscale += agscale;
@@ -89,7 +91,7 @@ public class StageSelectView extends BasicGameState{
 
 		for (int i = 0; i < 3; i++) {
 			int ofx = (Main.W_WIDTH*(i+1))/4;
-			int ofy = 200;
+			int ofy = 270;
 			float scale;
 			if (nowSelectIndex == i) {
 				scale = lscale;
@@ -112,6 +114,8 @@ public class StageSelectView extends BasicGameState{
 					ofx+(nw/2 - tx*fontScale-pdx)*scale, ofy-(nh/2-pdy)*scale,
 					ofx + (nw/2-pdx)*scale, ofy+(-nh/2+ty*fontScale+pdy)*scale,
 					0, 0, tx, ty);
+			g.drawImage(title, 30, -40, 600, 200, 0, 0, 700,300);
+
 		}
 
 	}
