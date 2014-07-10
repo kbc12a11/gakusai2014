@@ -5,6 +5,7 @@ import gakusai.kbc12a10.monster.stage.Stage5;
 import gakusai.kbc12a11.monster.sampleStage.MitsuruStage6;
 import gakusai.kbc12a11.monster.stage.mario.MarioStage;
 import gakusai.kbc12a11.monster.sys.stage.BeforeStartStage;
+import gakusai.kbc12a11.monster.sys.stage.StageClearView;
 import gakusai.kbc12a11.monster.sys.stage.StageSelectView;
 import gakusai.kbc12a11.monster.sys.stage.TitleView;
 import gakusai.kbc12a11.monster.sys.wiimote.WiimoteTest;
@@ -77,6 +78,7 @@ public class Main extends StateBasedGame {
 		addState(new TitleView());
 		addState(new StageSelectView());
 		addState(new BeforeStartStage());
+		addState(new StageClearView());
 
 		addState(new Stage4());
 		addState(new Stage5());

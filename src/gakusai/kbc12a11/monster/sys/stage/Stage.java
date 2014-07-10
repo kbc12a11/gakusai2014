@@ -214,8 +214,8 @@ public abstract class Stage extends BasicGameState{
 		}
 		//プレイヤーがゲームをクリアした時の処理
 		if (getStageState() == Stage.STATE_CLEAR) {
-			GameState gbs = sbg.getState(Main.Stage_BeforeStartStage);
-			((BeforeStartStage)gbs).set(player.getStock(), this.getID(), getStageState() );
+			GameState gbs = sbg.getState(Main.Stage_StageClearView);
+			((StageClearView)gbs).set(0, score, 0);
 			sbg.enterState(gbs.getID(), new FadeOutTransition(Color.black, 120), new FadeInTransition(Color.black, 120) );
 		}
 
