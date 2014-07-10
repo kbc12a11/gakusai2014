@@ -120,7 +120,28 @@ public class ImageBank {
 	public static final int TX_WATER_1;
 	private static final String FILE_TX_WATER_1 = "res/image/texture/water/tx_water1.gif";
 
+	///////////////////////////////////////ウィンドウ
+	/**スコア*/
+	public static final int WD_SCORE;
+	private static final String FILE_WD_SCORE = "res/image/window/すこあ.gif";
 
+	/**体力*/
+	public static final int WD_LIFE;
+	private static final String FILE_WD_LIFE = "res/image/window/たいりょく.gif";
+
+	/**残機*/
+	public static final int WD_STOCK;
+	private static final String FILE_WD_STOCK = "res/image/window/のこり.gif";
+
+	/**時間*/
+	public static final int WD_TIME;
+	private static final String FILE_WD_TIME = "res/image/window/じかん.gif";
+	
+	/**数字*/
+	public static final int WD_NUM;
+	private static final String FILE_WD_NUM = "res/image/num/num.gif";
+
+	
 	/**イメージの数*/
 	private static int IMAGE_SIZE;
 
@@ -171,6 +192,13 @@ public class ImageBank {
 		TX_BOLLPEN = IMAGE_SIZE++;
 
 		TX_WATER_1 = IMAGE_SIZE++;
+		
+		//window
+		WD_SCORE = IMAGE_SIZE++;
+		WD_LIFE = IMAGE_SIZE++;
+		WD_STOCK = IMAGE_SIZE++;
+		WD_TIME = IMAGE_SIZE++;
+		WD_NUM = IMAGE_SIZE++;
 	}
 
 	private Image[] imageList;
@@ -239,6 +267,13 @@ public class ImageBank {
 
 		files[TX_WATER_1] = FILE_TX_WATER_1;
 
+		//window
+		files[WD_SCORE] = FILE_WD_SCORE;
+		files[WD_LIFE] = FILE_WD_LIFE;
+		files[WD_STOCK] = FILE_WD_STOCK;
+		files[WD_TIME] = FILE_WD_TIME;
+		files[WD_NUM] = FILE_WD_NUM;
+		
 		for (int i = 0; i < IMAGE_SIZE; i++) {
 			try {
 				imageList[i] = new Image(files[i]);
