@@ -48,6 +48,10 @@ public class StageClearView extends BasicGameState{
 	private Image img_time;
 	private NumberView timeView;
 
+	private int vtotaly = 400;
+	private Image img_total;
+	private NumberView totalView;
+
 	private ArrayList<Star> stars;
 	private Color[] colors = {
 			Color.blue,
@@ -69,11 +73,14 @@ public class StageClearView extends BasicGameState{
 
 		stars = new ArrayList<Star>();
 
-		scoreView = new NumberView(550, vscy, 100, 0.6f);
+		scoreView = new NumberView(550, vscy, 100, 1.2f);
 		img_score = new Image("res/image/window/md_score.gif");
 
-		timeView = new NumberView(550, vtmy, 100, 0.6f);
+		timeView = new NumberView(550, vtmy, 100, 1.2f);
 		img_time = new Image("res/image/window/md_time.gif");
+
+		totalView = new NumberView(550, vtotaly, 100, 1.5f);
+		img_total = new Image("res/image/window/md_total.gif");
 	}
 
 	@Override
@@ -82,8 +89,6 @@ public class StageClearView extends BasicGameState{
 		BgmBank.stopAllBGM();
 		setState(ST_INIT);
 		stars.clear();
-		//デバッグ
-		set(10, 22222, 0);
 		for (int i = 0; i < 10; i++) {
 			setStar();
 		}
@@ -97,7 +102,7 @@ public class StageClearView extends BasicGameState{
 		for (Star s : stars) {
 			s.render(gc, sbg, g);
 		}
-		g.setDrawMode(g.MODE_ADD);
+		//g.setDrawMode(g.MODE_ADD);
 
 		g.drawImage(clearImage, Main.W_WIDTH/2 - clearImage.getWidth()/2,
 				20);
@@ -105,29 +110,34 @@ public class StageClearView extends BasicGameState{
 		float sc = 1f;
 		float vw = img_score.getWidth();
 		float vh = img_score.getHeight();
-		float x = 200, y = vscy;
+		float x = 250, y = vscy;
 
 //		g.setDrawMode(g.MODE_COLOR_MULTIPLY_ALPHA);
 
 
 		switch (state) {
 		case ST_VW_TOTALSCORE:
+			sc = 1.0f;
+			vw = img_total.getWidth();
+			vh = img_total.getHeight();
+			y = vtotaly;
+			g.drawImage(img_total, x - vw*sc, y - vh*sc/2, x, y + vh*sc/2,
+					0, 0, vw, vh);
+			totalView.render(gc, sbg, g);
 		case ST_VW_TIME:
-			sc = 1f;
+			sc = 0.9f;
 			vw = img_time.getWidth();
 			vh = img_time.getHeight();
-			x = 200;
 			y = vtmy;
-			g.drawImage(img_time, x - vw*sc/2, y - vh*sc/2, x + vw*sc/2, y + vh*sc/2,
+			g.drawImage(img_time, x - vw*sc, y - vh*sc/2, x, y + vh*sc/2,
 					0, 0, vw, vh);
 			timeView.render(gc, sbg, g);
 		case ST_VW_SCORE:
-			sc = 1f;
+			sc = 0.9f;
 			vw = img_score.getWidth();
 			vh = img_score.getHeight();
-			x = 200;
 			y = vscy;
-			g.drawImage(img_score, x - vw*sc/2, y - vh*sc/2, x + vw*sc/2, y + vh*sc/2,
+			g.drawImage(img_score, x - vw*sc, y - vh*sc/2, x, y + vh*sc/2,
 					0, 0, vw, vh);
 			scoreView.render(gc, sbg, g);
 		case ST_INIT:
@@ -153,7 +163,11 @@ public class StageClearView extends BasicGameState{
 
 		switch (state) {
 		case ST_VW_TOTALSCORE:
+			totalView.update(gc, sbg, delta);
 		case ST_VW_TIME:
+			if (state == ST_VW_TIME && stTimer > 60) {
+				setState(ST_VW_TOTALSCORE);
+			}
 			timeView.update(gc, sbg, delta);
 		case ST_VW_SCORE:
 			if (state == ST_VW_SCORE && stTimer > 30) {
@@ -197,6 +211,7 @@ public class StageClearView extends BasicGameState{
 		this.killEnemy = killenemy;
 		scoreView.set(this.score);
 		timeView.set(this.time);
+		totalView.set(this.time + this.score);
 	}
 
 	@Override

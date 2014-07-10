@@ -21,8 +21,8 @@ public class StockWindow extends StatusWindow {
 
 	public StockWindow(Player player) {
 		this.player = player;
-		imgp = new Vector2f(Main.W_WIDTH / 30, Main.W_HEIGHT / 30);
-		nump = new Vector2f(imgp.x + 70, imgp.y+10);
+		imgp = new Vector2f(Main.W_WIDTH / 7, Main.W_HEIGHT / 20);
+		nump = new Vector2f(imgp.x + 30, imgp.y);
 		img = ImageBank.getImage(ImageBank.WD_STOCK);
 	}
 
@@ -35,11 +35,12 @@ public class StockWindow extends StatusWindow {
 
 	@Override
 	public void render(GameContainer gc, Graphics g) {
-
-		g.drawImage(img, imgp.x, imgp.y, imgp.x + 50, imgp.y + 40, 0, 0, 280,250);
+		float w = img.getWidth(), h = img.getHeight();
+		float sc = 0.2f;
+		g.drawImage(img, imgp.x - w*sc, imgp.y - h*sc/2, imgp.x, imgp.y + h*sc/2, 0, 0, w,h);
 		g.setColor(Color.black);
 		//g.drawImage(num, nump.x, nump.y, nump.x + 40, nump.y + 40, 100 * stock, 0, 95 + 100 * stock,130);
-		Util.drawNumber(g, stock, nump.x, nump.y, 0.3f);
+		Util.drawNumber(g, stock, nump.x, nump.y, 0.6f);
 	}
 
 }

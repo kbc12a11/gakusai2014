@@ -34,8 +34,8 @@ public class TimeWindow extends StatusWindow{
 	 * @param stageTime ステージの制限時間
 	 */
 	public TimeWindow(Stage stage, int stageTime) {
-		this.imgp = new Vector2f(Main.W_WIDTH  * 15 / 16 - 58, Main.W_HEIGHT / 29 - 4);
-		nump = new Vector2f(imgp.x + 40, imgp.y + 10);
+		this.imgp = new Vector2f(Main.W_WIDTH  * 15 / 18, Main.W_HEIGHT / 20);
+		nump = new Vector2f(imgp.x + 60, imgp.y);
 		this.stg = stage;
 		this.stageTime = stageTime;
 
@@ -51,8 +51,10 @@ public class TimeWindow extends StatusWindow{
 
 	@Override
 	public void render(GameContainer gc, Graphics g) {
-		g.drawImage(img, imgp.x - 50, imgp.y, imgp.x, imgp.y + 40, 0, 0, 360,260);
-		Util.drawNumber(g, time, nump.x, nump.y, 0.2f);
+		float w = img.getWidth(), h = img.getHeight();
+		float sc = 0.2f;
+		g.drawImage(img, imgp.x - w*sc, imgp.y - h*sc/2, imgp.x, imgp.y + h*sc/2, 0, 0, w,h);
+		Util.drawNumber(g, time >= 0 ? time : 0, nump.x, nump.y, 0.6f);
 	}
 
 	public int getTime() {

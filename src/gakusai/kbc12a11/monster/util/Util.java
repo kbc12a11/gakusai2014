@@ -18,8 +18,8 @@ public class Util {
 	private static final int NUMIMG_H;
 	static {
 		Image img = ImageBank.getImage(ImageBank.WD_NUM);
-		NUMIMG_W = img.getWidth()/5;
-		NUMIMG_H = img.getHeight()/2;
+		NUMIMG_W = img.getWidth()/10;
+		NUMIMG_H = img.getHeight();
 	}
 	private Util(){
 	}
@@ -190,6 +190,6 @@ public class Util {
 		float sw = w*scale;
 		float sh = h*scale;
 		g.drawImage(img, x - sw/2, y - sh/2, x + sw/2, y + sh/2,
-				w*(index%5), h*(index/5), w*(index%5+1), h*(index/5+1));
+				w*(index), 0, w*(index+1), h);
 	}
 }

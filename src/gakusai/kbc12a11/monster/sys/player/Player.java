@@ -311,16 +311,19 @@ public class Player extends Character{
 			if (!obj.isImmortal() && obj.getP().y > p.y + size.y/3) {
 				obj.destroy();
 				d.set(d.x, -5);
+				stg.soundRequest(SoundBank.SE_CAT);
 			}else {
-				setState(STATE_DAMAGED);
-				int eff = 1;
-				if (obj.getP().x > p.x) {
-					eff = -1;
+				if (playerState != STATE_INVISIBLE){
+					setState(STATE_DAMAGED);
+					int eff = 1;
+					if (obj.getP().x > p.x) {
+						eff = -1;
+					}
+					d.set(eff * 2, -2);
+					damage(1);
+					stg.soundRequest(SoundBank.SE_CAT);
 				}
-				d.set(eff * 2, -2);
-				damage(1);
 			}
-			stg.soundRequest(SoundBank.SE_CAT);
 		}
 	}
 

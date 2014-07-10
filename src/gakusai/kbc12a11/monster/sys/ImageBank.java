@@ -139,12 +139,15 @@ public class ImageBank {
 	/**時間*/
 	public static final int WD_TIME;
 	private static final String FILE_WD_TIME = "res/image/window/じかん.gif";
-	
+
 	/**数字*/
 	public static final int WD_NUM;
 	private static final String FILE_WD_NUM = "res/image/num/num.gif";
 
-	
+	/**タイムアップ*/
+	public static final int WD_TIMEUP;
+	private static final String FILE_WD_TIMEUP = "res/image/window/timeup.gif";
+
 	/**イメージの数*/
 	private static int IMAGE_SIZE;
 
@@ -197,13 +200,14 @@ public class ImageBank {
 		TX_BOLLPEN = IMAGE_SIZE++;
 
 		TX_WATER_1 = IMAGE_SIZE++;
-		
+
 		//window
 		WD_SCORE = IMAGE_SIZE++;
 		WD_LIFE = IMAGE_SIZE++;
 		WD_STOCK = IMAGE_SIZE++;
 		WD_TIME = IMAGE_SIZE++;
 		WD_NUM = IMAGE_SIZE++;
+		WD_TIMEUP = IMAGE_SIZE++;
 	}
 
 	private Image[] imageList;
@@ -281,7 +285,8 @@ public class ImageBank {
 		files[WD_STOCK] = FILE_WD_STOCK;
 		files[WD_TIME] = FILE_WD_TIME;
 		files[WD_NUM] = FILE_WD_NUM;
-		
+		files[WD_TIMEUP] = FILE_WD_TIMEUP;
+
 		for (int i = 0; i < IMAGE_SIZE; i++) {
 			try {
 				imageList[i] = new Image(files[i]);

@@ -5,6 +5,7 @@ import gakusai.kbc12a10.monster.stage.Stage5;
 import gakusai.kbc12a11.monster.sampleStage.MitsuruStage6;
 import gakusai.kbc12a11.monster.stage.mario.MarioStage;
 import gakusai.kbc12a11.monster.sys.stage.BeforeStartStage;
+import gakusai.kbc12a11.monster.sys.stage.GameOverView;
 import gakusai.kbc12a11.monster.sys.stage.StageClearView;
 import gakusai.kbc12a11.monster.sys.stage.StageSelectView;
 import gakusai.kbc12a11.monster.sys.stage.TitleView;
@@ -40,6 +41,7 @@ public class Main extends StateBasedGame {
 	public static final int Stage_TestStage = 3;
 	public static final int Stage_StageSelectView = 4;
 	public static final int Stage_StageClearView = 5;
+	public static final int Stage_GameOverView = 6;
 	/**サンプルのステージ*/
 	public static final int Stage_SampleStage = 1211001;
 	public static final int Stage_12a11_TestStage = 1211002;
@@ -75,15 +77,16 @@ public class Main extends StateBasedGame {
 	/**作ったステージをここで追加する*/
 	public void initStatesList(GameContainer gc) throws SlickException {
 		//最初に追加されたステージが実行される
+		addState(new MarioStage());
 		addState(new StageClearView());
 		addState(new TitleView());
 		addState(new StageSelectView());
 		addState(new BeforeStartStage());
+		addState(new GameOverView());
 
 		addState(new Stage4());
 		addState(new Stage5());
 		addState(new MitsuruStage6());
-		addState(new MarioStage());
 	}
 
 	public static void main(String[] args) throws SlickException {

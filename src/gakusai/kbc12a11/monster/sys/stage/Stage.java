@@ -80,10 +80,17 @@ public abstract class Stage extends BasicGameState{
 	public static final int STATE_CLEAR = 2;
 	/**ポーズ*/
 	public static final int STATE_PAUSE = 3;
+	/**タイムアップ*/
+	public static final int STATE_TIMEUP = 4;
+	/**ゲームオーバー*/
+	public static final int STATE_GAMEOVER = 5;
+	/**プレイヤーの死亡*/
+	public static final int STATE_PLAYER_DEAD = 6;
 
 	/**ステージの特殊状態が継続する時間*/
 	private int timer;
 	private final int stCntClear = 120;
+	private final int stCntTimeup = 120;
 
 	///////////////////////
 	//パラメータ
@@ -143,9 +150,8 @@ public abstract class Stage extends BasicGameState{
 
 		lg.getLines().clear();
 		gc.getGraphics().setBackground(Color.white);
-		setStageState(STATE_NORMAL);
 		BgmBank.stopAllBGM();
-		soundBank.stopAllSound();
+		SoundBank.stopAllSound();
 		enemyGroup.clear();
 		enemyFactorys.clear();//エネミーファクトリーのクリア
 		itemGroup.clear();//アイテムグループのクリア
@@ -161,6 +167,7 @@ public abstract class Stage extends BasicGameState{
 		}
 
 		score = 0;//得点の初期化
+		setStageState(STATE_NORMAL);
 	}
 
 	@Override
@@ -172,7 +179,7 @@ public abstract class Stage extends BasicGameState{
 	@Override
 	public final void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
 		gameInput = Util.getGameInput(gameInput, gc);
-		stageStateCheck();
+
 		if (bg != null) {
 			bg.update(gc, sbg, delta);//背景
 		}
@@ -193,7 +200,8 @@ public abstract class Stage extends BasicGameState{
 		player.update(gc, sbg, delta);//プレイヤー
 		camera.update();
 		//敵とのあたり判定
-		if (player.getState() == Player.STATE_NORMAL) {
+		if (player.getState() == Player.STATE_NORMAL ||
+				player.getState() == Player.STATE_INVISIBLE) {
 			enemyGroup.hitCheck(player);
 		}
 		//アイテムとのあたり判定
@@ -212,22 +220,49 @@ public abstract class Stage extends BasicGameState{
 		timeWindow.update(gc, delta);//タイム
 		stockWindow.update(gc, delta);//残機
 
+		BgmBank.update();
+		SoundBank.update();//効果音
+		stageStateCheck(sbg);
+	}
 
-		//プレイヤーが死んだときの処理
-		if (!player.isLive()) {
-			GameState gbs = sbg.getState(Main.Stage_BeforeStartStage);
+	/**ステージのステータスの更新
+	 * @param sbg TODO*/
+	private void stageStateCheck(StateBasedGame sbg) {
+		timer--;
+		GameState gbs;
+		switch (stageState) {
+		case STATE_NORMAL:
+			if (timer < 0) timer = 0;
+			if (timeWindow.getTime() < 0) {
+				setStageState(STATE_TIMEUP);
+			}
+			if (!player.isLive()) {
+				if (player.getStock() < 0) {
+					setStageState(STATE_GAMEOVER);
+				}else {
+					setStageState(STATE_PLAYER_DEAD);
+				}
+			}
+			break;
+		case STATE_CLEAR:
+			gbs = sbg.getState(Main.Stage_StageClearView);
+			((StageClearView)gbs).set(timeWindow.getTime(), score, 0);
+			sbg.enterState(gbs.getID(), new FadeOutTransition(Color.black, 120), new FadeInTransition(Color.black, 120) );
+			break;
+		case STATE_TIMEUP:
+			if (timer < 0) {
+				setStageState(STATE_GAMEOVER);
+			}
+			break;
+		case STATE_GAMEOVER:
+			sbg.enterState(Main.Stage_GameOverView, new FadeOutTransition(Color.black, 120), new FadeInTransition(Color.black, 120) );
+			break;
+		case STATE_PLAYER_DEAD:
+			gbs = sbg.getState(Main.Stage_BeforeStartStage);
 			((BeforeStartStage)gbs).set(player.getStock(), this.getID(), getStageState());
 			sbg.enterState(gbs.getID(), new FadeOutTransition(Color.black, 120), new FadeInTransition(Color.black, 120) );
+			break;
 		}
-		//プレイヤーがゲームをクリアした時の処理
-		if (getStageState() == Stage.STATE_CLEAR) {
-			GameState gbs = sbg.getState(Main.Stage_StageClearView);
-			((StageClearView)gbs).set(0, score, 0);
-			sbg.enterState(gbs.getID(), new FadeOutTransition(Color.black, 120), new FadeInTransition(Color.black, 120) );
-		}
-
-		BgmBank.update();
-		soundBank.update();//効果音
 	}
 
 	//描画
@@ -266,7 +301,13 @@ public abstract class Stage extends BasicGameState{
 		timeWindow.render(gc, g);
 		stockWindow.render(gc, g);
 
-
+		if (stageState == STATE_TIMEUP) {
+			g.setColor(new Color(0, 0, 0, 150));
+			g.fillRect(0, 0, Main.W_WIDTH, Main.W_HEIGHT);
+			Image img = ImageBank.getImage(ImageBank.WD_TIMEUP);
+			float w = img.getWidth(), h = img.getHeight();
+			g.drawImage(img, Main.W_WIDTH/2 - w/2, Main.W_HEIGHT/2 - h/2);
+		}
 	}
 
 
@@ -379,28 +420,25 @@ public abstract class Stage extends BasicGameState{
 		switch(stageState) {
 		case STATE_CLEAR:
 			this.timer = stCntClear;
+			stopWatch.pause();
 			break;
 		case STATE_PAUSE:
 			this.stopWatch.pause();
 			break;
+		case STATE_TIMEUP:
+			this.timer = stCntTimeup;
+			break;
+		case STATE_GAMEOVER:
+			break;
+		case STATE_PLAYER_DEAD:
+			break;
 		case STATE_NORMAL:
-		default :
 			stopWatch.start();
-			this.stageState = STATE_NORMAL;
-		}
-	}
-
-	/**ステージのステータスの更新*/
-	private void stageStateCheck() {
-		if (stageState == STATE_NORMAL) {
-			return;
-		}
-		timer--;
-		switch (stageState) {
-		case STATE_CLEAR:
 			break;
 		}
 	}
+
+
 
 	/**ステージのステータスを取得*/
 	public int getStageState() {

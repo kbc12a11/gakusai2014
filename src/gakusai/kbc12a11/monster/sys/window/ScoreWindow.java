@@ -4,6 +4,7 @@ import gakusai.kbc12a11.monster.abst.StatusWindow;
 import gakusai.kbc12a11.monster.sys.ImageBank;
 import gakusai.kbc12a11.monster.sys.Main;
 import gakusai.kbc12a11.monster.sys.stage.Stage;
+import gakusai.kbc12a11.monster.util.Util;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
@@ -12,71 +13,33 @@ import org.newdawn.slick.Image;
 import org.newdawn.slick.geom.Vector2f;
 
 public class ScoreWindow extends StatusWindow{
-	
+
 	private int score;
 	private Stage stg;
 	private Vector2f imgp, nump;
-	private int num01, num02, num03, num04, num05, num06;
-	private Image img, num;
+	private Image img;
 
-	
+
 	public ScoreWindow(Stage stg) {
 		this.stg = stg;
-		this.imgp = new Vector2f(Main.W_WIDTH  * 15 / 16 - 40, Main.W_HEIGHT / 10);
-		this.nump = new Vector2f(imgp.x + 50, imgp.y);
+		this.imgp = new Vector2f(Main.W_WIDTH  * 15 / 18, Main.W_HEIGHT / 8);
+		nump = new Vector2f(imgp.x + 60, imgp.y);
 		img = ImageBank.getImage(ImageBank.WD_SCORE);
-		num = ImageBank.getImage(ImageBank.WD_NUM);
 	}
 
 	@Override
 	public void update(GameContainer gc, int delta) {
-		// TODO 自動生成されたメソッド・スタブ
 		this.score = stg.getScore();
 
 	}
 
 	@Override
 	public void render(GameContainer gc, Graphics g) {
-		// TODO 自動生成されたメソッド・スタブ
-		
-			num01 = score / 100000 % 10;
-			num02 = score / 10000 % 10;
-			num03 = score / 1000 % 10;
-			num04 = score / 100 % 10;
-			num05 = score / 10 % 10;
-		
+
 		g.setColor(Color.black);
-		//g.drawString("" + score, p.x, p.y + 3);
-		
-		g.drawImage(img, imgp.x - 100, imgp.y, imgp.x -55, imgp.y + 40, 0, 0, 300,250);
-		g.drawImage(num, nump.x, nump.y, nump.x + 27, nump.y + 24, 0, 0, 95, 130);
-		if(num05 < 5) {
-			g.drawImage(num, nump.x - 20, nump.y, nump.x - 20 + 27, nump.y + 24, 100 * num05, 0, 95 + 100 * num05 ,130);			
-		} else {
-			g.drawImage(num, nump.x - 20, nump.y, nump.x - 20 + 27, nump.y + 24, 100 * (num05 - 5), 155, 95 + 100 * (num05 - 5), 285);
-		}
-		if(num04 < 5) {
-			g.drawImage(num, nump.x - 40, nump.y, nump.x - 40 + 27, nump.y + 24, 100 * num04, 0, 95 + 100 * num04 ,130);			
-		} else {
-			g.drawImage(num, nump.x - 40, nump.y, nump.x - 40 + 27, nump.y + 24, 100 * (num04 - 5), 155, 95 + 100 * (num04 - 5), 285);
-		}
-		if(num03 < 5) {
-			g.drawImage(num, nump.x - 60, nump.y, nump.x - 60 + 27, nump.y + 24, 100 * num03, 0, 95 + 100 * num03 ,130);			
-		} else {
-			g.drawImage(num, nump.x - 60, nump.y, nump.x - 60 + 27, nump.y + 24, 100 * (num03 - 5), 155, 95 + 100 * (num03 - 5), 285);
-		}
-		if(num02 < 5) {
-			g.drawImage(num, nump.x - 80, nump.y, nump.x - 80 + 27, nump.y + 24, 100 * num02, 0, 95 + 100 * num02 ,130);			
-		} else {
-			g.drawImage(num, nump.x - 80, nump.y, nump.x - 80 + 27, nump.y + 24, 100 * (num02 - 5), 155, 95 + 100 * (num02 - 5), 285);
-		}
-		if(num01 < 5) {
-			g.drawImage(num, nump.x - 100, nump.y, nump.x - 100 + 27, nump.y + 24, 100 * num01, 0, 95 + 100 * num01 ,130);			
-		} else {
-			g.drawImage(num, nump.x - 100, nump.y, nump.x - 100 + 27, nump.y + 24, 100 * (num01 - 5), 155, 95 + 100 * (num01 - 5), 285);
-		}
-		
-
-
+		float w = img.getWidth(), h = img.getHeight();
+		float sc = 0.2f;
+		g.drawImage(img, imgp.x- w*sc, imgp.y - h*sc/2, imgp.x, imgp.y + h*sc/2, 0, 0, w,h);
+		Util.drawNumber(g, score, nump.x, nump.y, 0.6f);
 	}
 }
