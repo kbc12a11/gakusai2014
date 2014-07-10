@@ -14,6 +14,7 @@ import gakusai.kbc12a11.monster.sys.Main;
 import gakusai.kbc12a11.monster.sys.Map;
 import gakusai.kbc12a11.monster.sys.SoundBank;
 import gakusai.kbc12a11.monster.sys.StageBackground;
+import gakusai.kbc12a11.monster.sys.StopWatch;
 import gakusai.kbc12a11.monster.sys.decorate.BackgroundObject;
 import gakusai.kbc12a11.monster.sys.eraser.Eraser;
 import gakusai.kbc12a11.monster.sys.line.LineGroup;
@@ -77,6 +78,8 @@ public abstract class Stage extends BasicGameState{
 	public static final int STATE_NORMAL = 1;
 	/**ゲームをクリアした状態*/
 	public static final int STATE_CLEAR = 2;
+	/**ポーズ*/
+	public static final int STATE_PAUSE = 3;
 
 	/**ステージの特殊状態が継続する時間*/
 	private int timer;
@@ -86,6 +89,9 @@ public abstract class Stage extends BasicGameState{
 	//パラメータ
 	/**スコア*/
 	protected int score;
+	protected StopWatch stopWatch;
+	/**ステージの制限時間(デフォルト120秒)*/
+	protected int stageTime = 120;
 	///////////////////////
 
 
@@ -112,11 +118,12 @@ public abstract class Stage extends BasicGameState{
 		map.setCamera(camera);
 
 		eraser = new Eraser(this);
+		stopWatch = new StopWatch();
 
 		leWindow = new LineEnergyWindow(lg, null, null);
 		lifeWindow = new LifeLine(player);
 		scoreWindow = new ScoreWindow(this);
-		timeWindow = new TimeWindow();
+		timeWindow = new TimeWindow(this, stageTime);
 		stockWindow = new StockWindow(player);
 
 		gameInput = new GameInput();
@@ -158,7 +165,7 @@ public abstract class Stage extends BasicGameState{
 
 	@Override
 	public void leave(GameContainer gc, StateBasedGame sbg) throws SlickException {
-
+		setStageState(STATE_PAUSE);
 	}
 
 	//更新
@@ -373,7 +380,12 @@ public abstract class Stage extends BasicGameState{
 		case STATE_CLEAR:
 			this.timer = stCntClear;
 			break;
+		case STATE_PAUSE:
+			this.stopWatch.pause();
+			break;
+		case STATE_NORMAL:
 		default :
+			stopWatch.start();
 			this.stageState = STATE_NORMAL;
 		}
 	}
@@ -438,5 +450,9 @@ public abstract class Stage extends BasicGameState{
 	/**プレイヤーの残機を取得する*/
 	public int getPlayerStock() {
 		return player.getStock();
+	}
+
+	public StopWatch getStopWatch() {
+		return stopWatch;
 	}
 }

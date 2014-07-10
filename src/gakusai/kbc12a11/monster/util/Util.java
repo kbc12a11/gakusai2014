@@ -1,6 +1,7 @@
 package gakusai.kbc12a11.monster.util;
 
 import gakusai.kbc12a11.monster.sys.GameInput;
+import gakusai.kbc12a11.monster.sys.ImageBank;
 import gakusai.kbc12a11.monster.sys.Main;
 import gakusai.kbc12a11.monster.sys.wiimote.WiimoteTest;
 
@@ -11,7 +12,17 @@ import org.newdawn.slick.Input;
 import org.newdawn.slick.geom.Vector2f;
 
 public class Util {
-	private Util(){}
+	/**数字画像の横幅*/
+	private static final int NUMIMG_W;
+	/**数字画像の縦幅*/
+	private static final int NUMIMG_H;
+	static {
+		Image img = ImageBank.getImage(ImageBank.WD_NUM);
+		NUMIMG_W = img.getWidth()/5;
+		NUMIMG_H = img.getHeight()/2;
+	}
+	private Util(){
+	}
 
 	/**数値を範囲内に丸める*/
 	public static float between(float num, float min, float max) {
@@ -146,5 +157,39 @@ public class Util {
 		}
 
 		return in;
+	}
+
+	/**
+	 *数値を描画する
+	 * @param g
+	 * @param num 描画する数値
+	 * @param x 右端の座標
+	 * @param y 中心の座標
+	 * @param scale 各縮率
+	 */
+	public static void drawNumber(Graphics g, int num,
+			float x, float y, float scale){
+
+		int n = num;
+		int i = 0;
+		float w = NUMIMG_W*scale;
+		while (true) {
+			int r = n%10;
+			_drawNumber(g, r, x-i*w, y, scale);
+			i++;
+			n = n/10;
+			if (n == 0)break;
+		}
+ 	}
+
+	private static void _drawNumber(Graphics g, int index, float x, float y,
+			float scale) {
+		Image img = ImageBank.getImage(ImageBank.WD_NUM);
+		float w = NUMIMG_W;
+		float h = NUMIMG_H;
+		float sw = w*scale;
+		float sh = h*scale;
+		g.drawImage(img, x - sw/2, y - sh/2, x + sw/2, y + sh/2,
+				w*(index%5), h*(index/5), w*(index%5+1), h*(index/5+1));
 	}
 }

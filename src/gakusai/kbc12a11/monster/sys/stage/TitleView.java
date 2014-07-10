@@ -81,7 +81,6 @@ public class TitleView extends BasicGameState{
 			index = (timer/5)%2;
 		}
 		g.drawImage(pushAbutton[index], tx - puw/2, ty+tmp, tx + puw/2, ty+tmp+puh, 0, 0, puw, puh);
-
 	}
 
 	@Override
