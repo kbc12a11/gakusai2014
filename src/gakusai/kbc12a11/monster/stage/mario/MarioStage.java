@@ -2,6 +2,7 @@ package gakusai.kbc12a11.monster.stage.mario;
 
 import gakusai.kbc12a08.monster.enemy.EnemyFactory;
 import gakusai.kbc12a11.monster.enemy.Magican;
+import gakusai.kbc12a11.monster.item.CureBox;
 import gakusai.kbc12a11.monster.sys.BgmBank;
 import gakusai.kbc12a11.monster.sys.Main;
 import gakusai.kbc12a11.monster.sys.StageBackground;
@@ -29,6 +30,8 @@ public class MarioStage extends Stage {
 		BgmBank.bgmRequest(BgmBank.BGM_STAGE_1, true);
 	}
 
+
+
 	@Override
 	public void stUpdate(GameContainer gc, StateBasedGame sbg, int delta) {
 		// TODO 自動生成されたメソッド・スタブ
@@ -48,8 +51,7 @@ public class MarioStage extends Stage {
 
 	@Override
 	public void setItems() throws SlickException {
-		// TODO 自動生成されたメソッド・スタブ
-
+		addItem(new CureBox(this, 100, 500));
 	}
 
 	@Override

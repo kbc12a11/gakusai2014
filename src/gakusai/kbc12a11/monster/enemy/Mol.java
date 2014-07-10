@@ -55,7 +55,7 @@ public class Mol extends Enemy{
 		}else if (state == ST_TO_DIG) {
 			updateStToDig(gc, sbg, delta);
 		}else if (state == ST_DIG) {
-			stg.soundRequest(SoundBank.SE_MOL);
+			stg.soundRequest(SoundBank.SE_MOL, 1, 0.4f);
 			updateStDig(gc, sbg, delta);
 		}else if (state == ST_TO_NORMAL) {
 			updateStToNormal(gc, sbg, delta);

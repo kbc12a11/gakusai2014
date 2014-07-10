@@ -3,6 +3,7 @@ package gakusai.kbc12a11.monster.sys;
 import gakusai.kbc12a10.monster.stage.Stage4;
 import gakusai.kbc12a10.monster.stage.Stage5;
 import gakusai.kbc12a11.monster.sampleStage.MitsuruStage6;
+import gakusai.kbc12a11.monster.stage.mario.MarioStage;
 import gakusai.kbc12a11.monster.sys.stage.BeforeStartStage;
 import gakusai.kbc12a11.monster.sys.stage.StageSelectView;
 import gakusai.kbc12a11.monster.sys.stage.TitleView;
@@ -79,7 +80,7 @@ public class Main extends StateBasedGame {
 		addState(new Stage4());
 		addState(new Stage5());
 		addState(new MitsuruStage6());
-
+		addState(new MarioStage());
 	}
 
 	public static void main(String[] args) throws SlickException {

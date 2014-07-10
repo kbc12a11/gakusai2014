@@ -55,8 +55,9 @@ public class SoundBank {
 	public static final int SE_MOL;
 	private static final String FILE_MOL = "res/se/mol.wav";
 
+	/**回復音*/
 	public static final int SE_CUREBOX;
-	private static final String FILE_CUREBOX = "rex/se/curebox.wav";
+	private static final String FILE_CUREBOX = "res/se/curebox.wav";
 
 	/**効果音の数*/
 	private static int SE_SIZE;

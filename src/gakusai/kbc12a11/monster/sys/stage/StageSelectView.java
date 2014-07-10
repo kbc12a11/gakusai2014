@@ -44,7 +44,7 @@ public class StageSelectView extends BasicGameState{
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		// TODO 自動生成されたメソッド・スタブ
 		stageList = new ArrayList<GameState>();
-		stageList.add(sbg.getState(Main.Stage_12a10_Stage4));
+		stageList.add(sbg.getState(Main.Stage_12a11_MarioStage));
 		stageList.add(sbg.getState(Main.Stage_12a10_Stage5));
 		stageList.add(sbg.getState(Main.Stage_M_Stage6));
 
