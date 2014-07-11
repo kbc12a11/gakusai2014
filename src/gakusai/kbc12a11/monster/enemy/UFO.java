@@ -31,7 +31,7 @@ public class UFO extends Enemy{
 
 		img[0] = ImageBank.getInstance().getImage(ImageBank.ENEMY_UFO_1);
 		img[1] = ImageBank.getInstance().getImage(ImageBank.ENEMY_UFO_2);
-		size.set(128, 128);
+		size.set(128, 64);
 	}
 
 	@Override
@@ -56,10 +56,10 @@ public class UFO extends Enemy{
 	@Override
 	public void chRender(GameContainer gc, StateBasedGame sbg, Graphics g) {
 		if(release){
-			g.drawImage(img[1], p.x-size.x/2, p.y-size.y/2, p.x+size.x/2, p.y + size.y/2,
+			g.drawImage(img[1], p.x-size.x/2, p.y-size.x/2, p.x+size.x/2, p.y + size.x/2,
 					0, 0, 32, 32);
 		}else{
-			g.drawImage(img[0], p.x-size.x/2, p.y-size.y/2, p.x+size.x/2, p.y + size.y/2,
+			g.drawImage(img[0], p.x-size.x/2, p.y-size.x/2, p.x+size.x/2, p.y + size.x/2,
 					0, 0, 32, 32);
 		}
 	}
@@ -70,4 +70,17 @@ public class UFO extends Enemy{
 
 	}
 
+	@Override
+	public boolean isHit(Object obj) {
+		float dx = p.x - obj.getP().x;
+		float dy = (p.y-size.y/4) - obj.getP().y;
+
+		boolean flag = false;
+		if (Math.abs(dx) < (size.x+obj.getSize().x)/2 &&
+				Math.abs(dy) < (size.y+obj.getSize().y)/2) {
+			flag = true;
+		}
+
+		return flag;
+	}
 }

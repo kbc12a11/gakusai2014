@@ -4,6 +4,7 @@ package gakusai.kbc12a11.monster.enemy;
 import gakusai.kbc12a08.monster.enemy.Enemy;
 import gakusai.kbc12a11.monster.abst.Object;
 import gakusai.kbc12a11.monster.sys.ImageBank;
+import gakusai.kbc12a11.monster.sys.SoundBank;
 import gakusai.kbc12a11.monster.sys.effects.Effect;
 import gakusai.kbc12a11.monster.sys.stage.Stage;
 import gakusai.kbc12a11.monster.util.Collide;
@@ -156,7 +157,8 @@ public class Bomb extends Enemy {
 			state = STATE_BOMB;
 			effect = new BombBurstEffect(stg, p);
 			isImmortal = true;
-			size.set(400, 400);
+			size.set(360, 360);
+			SoundBank.soundRequest(SoundBank.SE_BURST);
 			break;
 		}
 	}

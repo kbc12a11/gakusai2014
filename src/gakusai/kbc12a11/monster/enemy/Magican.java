@@ -181,7 +181,7 @@ public class Magican extends Enemy{
 		public void destroy() {
 			super.destroy();
 			timer = 0;
-			stg.soundRequest(SoundBank.SE_BOMB, SoundBank.DEFAULT_PITCH, 0.2f);
+			stg.soundRequest(SoundBank.SE_BOMB, SoundBank.DEFAULT_PITCH, 0.5f);
 		}
 
 		@Override

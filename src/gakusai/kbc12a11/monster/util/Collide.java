@@ -196,6 +196,7 @@ public class Collide {
 			dy = 0;
 		}
 
+
 		resD.set(dx, dy);
 		resP.set(px, py);
 		return res;
@@ -336,11 +337,11 @@ public class Collide {
 		float cx = map.chipSizeOnScreen.x;
 		float cy = map.chipSizeOnScreen.y;
 		resBlock[0] = Block.getBlock(map.getMapBlockId(
-				(int)((p.x-sz.x/2-1)/cx), (int)((p.y-sz.y/2-1)/cy)));
+				(int)((p.x-sz.x/2-2)/cx), (int)((p.y-sz.y/2-2)/cy)));
 		resBlock[1] = Block.getBlock(map.getMapBlockId(
-				(int)((p.x+sz.x/2+1)/cx), (int)((p.y-sz.y/2-1)/cy)));
+				(int)((p.x+sz.x/2+1)/cx), (int)((p.y-sz.y/2-2)/cy)));
 		resBlock[2] = Block.getBlock(map.getMapBlockId(
-				(int)((p.x-sz.x/2-1)/cx), (int)((p.y+sz.y/2+1)/cy)));
+				(int)((p.x-sz.x/2-2)/cx), (int)((p.y+sz.y/2+1)/cy)));
 		resBlock[3] = Block.getBlock(map.getMapBlockId(
 				(int)((p.x+sz.x/2+1)/cx), (int)((p.y+sz.y/2+1)/cy)));
 

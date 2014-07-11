@@ -13,6 +13,7 @@ import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Rectangle;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.GameState;
@@ -92,6 +93,8 @@ public class StageSelectView extends BasicGameState{
 		int nw = nyanpus.getWidth(), nh = nyanpus.getHeight();
 		Color[] c = {Color.gray, Color.blue, Color.green};
 
+		int pointIndex = -1;
+
 		for (int i = 0; i < 3; i++) {
 			int ofx = (Main.W_WIDTH*(i+1))/4;
 			int ofy = 270;
@@ -106,8 +109,12 @@ public class StageSelectView extends BasicGameState{
 					0, 0, nw, nh);
 			g.setDrawMode(g.MODE_SCREEN);
 			g.setColor(c[i]);
-			g.fillRect(ofx-(nw/2)*scale, ofy-(nh/2)*scale,
+			Rectangle r = new Rectangle(ofx-(nw/2)*scale, ofy-(nh/2)*scale,
 					nw*scale, nh*scale);
+			if (gameInput != null && r.contains(gameInput.getX(), gameInput.getY())) {
+				pointIndex = i;			}
+			g.fill(r);
+
 			g.setDrawMode(g.MODE_NORMAL);
 			g.setColor(Color.black);
 
@@ -120,7 +127,9 @@ public class StageSelectView extends BasicGameState{
 			g.drawImage(title, 30, -40, 600, 200, 0, 0, 700,300);
 
 		}
-
+		if (pointIndex != -1) {
+			nowSelectIndex = pointIndex;
+		}
 		Util.drawPointer(g, gameInput, gc);
 	}
 
@@ -128,7 +137,7 @@ public class StageSelectView extends BasicGameState{
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
 		BgmBank.update();
 		SoundBank.update();
-		gameInput = Util.getGameInput(null, gc);
+		gameInput = Util.getGameInput(gameInput, gc);
 		Vector2f joy = gameInput.getJoyInput();
 		stTimer++;
 		timer--;
@@ -184,6 +193,34 @@ public class StageSelectView extends BasicGameState{
 			break;
 		case ST_GONEXT:
 			break;
+		}
+	}
+
+	/////////////////ノートクラス
+	private class Note {
+		float px, py, w, h;
+		int id;
+		String text;
+
+		public Note(int id, String text) {
+			this.id = id;
+			this.text = text;
+		}
+
+		public void setPos(float x, float y) {
+			px = x;
+			py = y;
+		}
+
+		public void setSize(float w, float h) {
+			this.w = w;
+			this.h = h;
+		}
+
+		public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
+		}
+
+		public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
 		}
 	}
 }
