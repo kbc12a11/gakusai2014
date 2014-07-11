@@ -4,7 +4,6 @@ package gakusai.kbc12a11.monster.enemy;
 import gakusai.kbc12a08.monster.enemy.Enemy;
 import gakusai.kbc12a11.monster.abst.Object;
 import gakusai.kbc12a11.monster.sys.ImageBank;
-import gakusai.kbc12a11.monster.sys.SoundBank;
 import gakusai.kbc12a11.monster.sys.effects.Effect;
 import gakusai.kbc12a11.monster.sys.stage.Stage;
 import gakusai.kbc12a11.monster.util.Collide;
@@ -46,7 +45,7 @@ public class Bomb extends Enemy {
 	//表示する用の画像
 	Image [] img = new Image[4];
 
-	Image  burst = stg.getImage(ImageBank.EF_BOMB_BURST);
+	//Image  burst = new Image("res/image/enemy/bomb/burst.png");
 
 
 
@@ -122,6 +121,7 @@ public class Bomb extends Enemy {
 					32, 0, 0, 32);
 			break;
 		case STATE_ACTIVE:
+			System.out.println(timer);
 			if(countDown % 16 < 8){
 				g.drawImage(img[2], p.x-size.x/2, p.y-size.y/2, p.x+size.x/2, p.y + size.y/2,
 						flg_isGoLeft?32:0, 0, flg_isGoLeft?0:32, 32);
@@ -156,6 +156,7 @@ public class Bomb extends Enemy {
 			state = STATE_BOMB;
 			effect = new BombBurstEffect(stg, p);
 			isImmortal = true;
+			size.set(400, 400);
 			break;
 		}
 	}
@@ -163,14 +164,15 @@ public class Bomb extends Enemy {
 	public class BombBurstEffect extends Effect {
 		//private int burstSize;
 
-		int x0 = 512, y0 = 512;
 
+		Image burst = ImageBank.getInstance().getImage(ImageBank.EF_BOMB_BURST);
+
+		int x0 = 512, y0 = 512;
 		public BombBurstEffect(Stage stg, Vector2f pos) {
 			super(stg, pos);
 			// TODO 自動生成されたコンストラクター・スタブ
 			//burstSize = 10;
 			stg.getMap().erase(p.x-x0/2, p.y-y0/2, x0, y0);
-			stg.soundRequest(SoundBank.SE_BURST);
 		}
 
 		@Override
@@ -192,6 +194,7 @@ public class Bomb extends Enemy {
 			int burstX = 128;
 			int burstY = 128;
 			g.drawImage(burst, p.x - x0, p.y - y0, p.x+x0, p.y+y0, x * burstX, y * burstY, (x + 1) * burstX, (y + 1) * burstY);
+
 		}
 
 		@Override

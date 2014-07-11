@@ -77,11 +77,11 @@ public class Main extends StateBasedGame {
 	/**作ったステージをここで追加する*/
 	public void initStatesList(GameContainer gc) throws SlickException {
 		//最初に追加されたステージが実行される
-		addState(new StageClearView());
 		addState(new TitleView());
 		addState(new StageSelectView());
 		addState(new BeforeStartStage());
 		addState(new GameOverView());
+		addState(new StageClearView());
 
 		addState(new MarioStage());
 		addState(new Stage4());

@@ -130,9 +130,9 @@ public class Collide {
 								res = res|COL_MAP_BLOCK_RIGHT;
 							}
 							flagx = false;
+							resBlocks[blocksIndex++] = b;
 						}
 						if (hitxx != tx || hitxy != ty) {
-							resBlocks[blocksIndex++] = b;
 						}
 						hitxx = tx;
 						hitxy = ty;
@@ -179,9 +179,9 @@ public class Collide {
 									res = res|COL_MAP_BLOCK_DOWN;
 								}
 								flagy = false;
+								resBlocks[blocksIndex++] = b;
 							}
 							if (hityx != tx || hityy != ty) {
-								resBlocks[blocksIndex++] = b;
 							}
 							hityx = tx;
 							hityy = ty;

@@ -25,7 +25,7 @@ public class UFO extends Enemy{
 		super(stg, x, y);
 
 		for(int i = 0; i < 5; i++){
-			enemy[i] = new Mol(stg, x, y);
+			enemy[i] = new Bomb(stg, x, y);
 		}
 
 

@@ -78,7 +78,7 @@ public class Player extends Character{
 	private int stateCount = 0;
 	private final int stCntInvisible = 180;//インビジブル状態のデフォルト継続時間
 	private final int stCntDead = 120;//死亡状態のデフォルト継続時間
-	private final int stCntCrear = 120;//クリア状態の継続時間
+	private final int stCntCrear = 60;//クリア状態の継続時間
 	private final int stCntDamaged = 60;//ダメージを受けた状態のデフォルト継続時間
 	private final int stCntToStageRightWall = 120;
 	//線に乗っているかのフラグ

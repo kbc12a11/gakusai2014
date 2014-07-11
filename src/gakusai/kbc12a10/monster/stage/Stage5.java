@@ -1,5 +1,6 @@
 package gakusai.kbc12a10.monster.stage;
 
+import gakusai.kbc12a11.monster.sys.BgmBank;
 import gakusai.kbc12a11.monster.sys.Main;
 import gakusai.kbc12a11.monster.sys.StageBackground;
 import gakusai.kbc12a11.monster.sys.stage.NoteBackground;
@@ -8,16 +9,34 @@ import gakusai.kbc12a11.monster.sys.stage.Stage;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.SlickException;
+import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.StateBasedGame;
 
 public class Stage5 extends Stage {
 
+	@Override
+	public void enter(GameContainer gc, StateBasedGame sbg)
+			throws SlickException {
+		// TODO 自動生成されたメソッド・スタブ
+		super.enter(gc, sbg);
+		
+		BgmBank.bgmRequest(BgmBank.BGM_STAGE_2, true);
+	}
+
 	public Stage5() throws SlickException {
-		super("map/hinoStage/Stage5.tmx");
+		super("map/hinoStage/Stage_Normal.tmx");
 		// TODO 自動生成されたコンストラクター・スタブ
 
 		StageBackground bg = new NoteBackground();
 		this.setBackground(bg);
+		this.stageTime = 300;
+	}
+	
+	@Override
+	public void reset() throws SlickException {
+		// TODO 自動生成されたメソッド・スタブ
+		super.reset();
+		playerRespawnPoint = new Vector2f(map.calcLocateX(3), map.calcLocateY(24));
 	}
 
 	@Override

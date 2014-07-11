@@ -14,6 +14,11 @@ public class BgmBank {
 	public static final int BGM_STAGESELECT;
 	private static final String FILE_STAGESELECT = "res/bgm/stageSelect.ogg";
 
+	public static final int BGM_STAGE_2;
+	private static final String FILE_STAGE_2 = "res/bgm/NormalBGM.ogg";
+
+	public static final int BGM_STAGE_3;
+	private static final String FILE_STAGE_3 = "res/bgm/HardBGM.ogg";
 
 	/**効果音の数*/
 	private static int SISE;
@@ -22,6 +27,8 @@ public class BgmBank {
 		SISE = 0;
 		BGM_STAGE_1 = SISE++;
 		BGM_STAGESELECT = SISE++;
+		BGM_STAGE_2 = SISE++;
+		BGM_STAGE_3 = SISE++;
 	}
 
 	private Music[] bgmList;
@@ -41,6 +48,8 @@ public class BgmBank {
 
 		files[BGM_STAGE_1] = FILE_STAGE_1;
 		files[BGM_STAGESELECT] = FILE_STAGESELECT;
+		files[BGM_STAGE_2] = FILE_STAGE_2;
+		files[BGM_STAGE_3] = FILE_STAGE_3;
 
 		for (int i = 0; i < SISE; i++) {
 			pitch[i] = DEFAULT_PITCH;

@@ -96,8 +96,6 @@ public class StageClearView extends BasicGameState{
 			setStar();
 		}
 		setState(ST_INIT);
-
-		set(60, 600, 0);
 	}
 
 	@Override

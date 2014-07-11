@@ -113,6 +113,10 @@ public class ImageBank {
 	public static final int EF_BOMB_BURST;
 	private static final String FILE_EF_BOMB_BURST = "res/image/enemy/bomb/burst.png";
 
+	/**回復*/
+	public static final int EF_CURE;
+	private static final String FILE_EF_CURE = "res/image/cureEffect.png";
+
 
 	//テクスチャ
 	/**ペンで書いてるテクスチャ*/
@@ -195,6 +199,7 @@ public class ImageBank {
 
 		//effect
 		EF_BOMB_BURST = IMAGE_SIZE++;
+		EF_CURE = IMAGE_SIZE++;
 
 		//texture
 		TX_BOLLPEN = IMAGE_SIZE++;
@@ -273,6 +278,7 @@ public class ImageBank {
 
 		//effect
 		files[EF_BOMB_BURST] = FILE_EF_BOMB_BURST;
+		files[EF_CURE] = FILE_EF_CURE;
 
 		//texture
 		files[TX_BOLLPEN] = FILE_TX_BOLLPEN;

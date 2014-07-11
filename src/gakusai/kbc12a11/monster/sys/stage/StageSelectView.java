@@ -81,7 +81,7 @@ public class StageSelectView extends BasicGameState{
 			gscale += dgscale;
 			dgscale += agscale;
 			ww = ww + nyanpus.getWidth()/2 - img[nowSelectIndex].getWidth()/2;
-			wh = wh - 60;
+			wh = wh - 20;
 			g.translate( ww-(ww)*gscale, wh-(wh)*gscale);
 			g.scale(gscale, gscale);
 		}

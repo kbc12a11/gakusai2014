@@ -2,6 +2,7 @@ package gakusai.kbc12a11.monster.sys.stage;
 
 import gakusai.kbc12a11.monster.sys.BgmBank;
 import gakusai.kbc12a11.monster.sys.GameInput;
+import gakusai.kbc12a11.monster.sys.ImageBank;
 import gakusai.kbc12a11.monster.sys.Main;
 import gakusai.kbc12a11.monster.sys.SoundBank;
 import gakusai.kbc12a11.monster.util.Util;
@@ -82,7 +83,10 @@ public class BeforeStartStage extends BasicGameState{
 			}
 		}else if (!isGameOver) {
 			s = "" + stock;
-			g.drawString(s, Main.W_WIDTH/2 - g.getFont().getWidth(s)/2,
+			g.setColor(Color.white);
+			g.drawImage(ImageBank.getImage(ImageBank.PLAYER_1),
+					Main.W_WIDTH/2 - 16 - 30, Main.W_HEIGHT/2-10);
+			g.drawString(" * " + s, Main.W_WIDTH/2 - g.getFont().getWidth(s)/2,
 					Main.W_HEIGHT/2);
 		}else {
 			Font f = g.getFont();

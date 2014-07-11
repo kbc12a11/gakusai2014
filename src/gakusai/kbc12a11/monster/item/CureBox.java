@@ -18,6 +18,8 @@ public class CureBox extends Item {
 
 	private Image img;
 	private int timer;
+	Effect effect = new CureEffect(stg, p);
+	boolean flgGet;
 
 	public CureBox(Stage stg, float x, float y) {
 		super(stg, x, y);
@@ -29,49 +31,91 @@ public class CureBox extends Item {
 	@Override
 	public void effect(Object obj) {
 		if (obj instanceof Player) {
-			((Player)obj).damage(-1);
+	//		((Player)obj).damage(-1);
 			flg_live = false;
 		}
 	}
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
-		timer++;
+
 
 	}
 
 	@Override
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) {
-		g.drawImage(img, p.x - size.x/2, p.y - size.y/2);
+
+		if(flgGet){
+			effect.render(gc, sbg, g);
+		}else{
+			g.drawImage(img, p.x - size.x/2, p.y - size.y/2);
+		}
+
 	}
 
 	@Override
 	public void hit(Object obj) {
 		if (obj instanceof Player) {
-			stg.soundRequest(SoundBank.SE_CUREBOX);
+
+			if(!flgGet){
+				stg.soundRequest(SoundBank.SE_CUREBOX);
+				((Player)obj).damage(-1);
+			}
+
+			flgGet = true;
+
+
+
 		}
-		super.hit(obj);
+		if(timer >= 50){
+			super.hit(obj);
+		}
+
+
+
+
 	}
 
 
 	//回復エフェクト
 	public class CureEffect extends Effect {
 
+		Vector2f player = stg.getPlayerPos();
+
+		private Image cureEffect = ImageBank.getImage(ImageBank.EF_CURE);
+		int x0 = 32, y0 = 32;
 		public CureEffect(Stage stg, Vector2f pos) {
 			super(stg, pos);
-			// TODO 自動生成されたコンストラクター・スタブ
+			stg.getMap().erase(p.x-x0/2, p.y-y0/2, x0, y0);
 		}
 
 		@Override
 		public void update(GameContainer gc, StateBasedGame sbg, int delta)
 				throws SlickException {
-			// TODO 自動生成されたメソッド・スタブ
+			if(flgGet && timer < 50){
+
+
+			}
+
+			System.out.println(timer);
+
 
 		}
 
 		@Override
 		public void render(GameContainer gc, StateBasedGame sbg, Graphics g) {
 			// TODO 自動生成されたメソッド・スタブ
+			player = stg.getPlayerPos();
+
+			if(timer <= 50){
+				timer++;
+				int x = timer / 5;
+				int y = 0;
+				int cureX = 120;
+				int cureY = 120;
+				g.drawImage(cureEffect, player.x - x0, player.y - y0*1.5f, player.x+x0, player.y+y0/2, x * cureX, y * cureY, (x + 1) * cureX, (y + 1) * cureY);
+			}
+
 
 		}
 

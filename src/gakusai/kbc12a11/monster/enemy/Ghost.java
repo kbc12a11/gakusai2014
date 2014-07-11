@@ -3,7 +3,6 @@ package gakusai.kbc12a11.monster.enemy;
 import gakusai.kbc12a08.monster.enemy.Enemy;
 import gakusai.kbc12a11.monster.abst.Object;
 import gakusai.kbc12a11.monster.sys.ImageBank;
-import gakusai.kbc12a11.monster.sys.SoundBank;
 import gakusai.kbc12a11.monster.sys.player.Player;
 import gakusai.kbc12a11.monster.sys.stage.Stage;
 
@@ -16,7 +15,7 @@ import org.newdawn.slick.state.StateBasedGame;
 
 public class Ghost extends Enemy{
 
-	private float speed = 2.0f;
+	private float speed = 1.0f;
 	private boolean flg_isGoLeft = true;
 	private boolean flg_ogling = false;
 	Image [] img = new Image[2];
@@ -39,9 +38,6 @@ public class Ghost extends Enemy{
 		float x0 = player.x - p.x;
 		float y0 = player.y - p.y;
 		if ((x0 < 0 && !true) || (x0 >= 0 && !false)) {
-			if(flg_ogling){
-				stg.soundRequest(SoundBank.SE_GHOST);
-			}
 			flg_ogling = false;
 			if(x0 < 0){
 				d.x = -speed;
@@ -57,14 +53,14 @@ public class Ghost extends Enemy{
 				d.y = speed;
 			}
 
-			size.x++;
-			size.y++;
+			size.x = size.x + 0.5f;
+			size.y = size.y + 0.5f;
 		}else {
 			flg_ogling = true;
 			d.set(0, 0);
 			if(size.x > defaultSize){
-				size.x--;
-				size.y--;
+				size.x = size.x - 0.5f;
+				size.y = size.y - 0.5f;
 			}
 		}
 
