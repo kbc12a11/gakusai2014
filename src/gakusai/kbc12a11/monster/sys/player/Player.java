@@ -162,13 +162,6 @@ public class Player extends Character{
 					onBlock(blocks[i]);
 				}
 			}
-			System.out.println("----------------------------------");
-			for(Block b :blocks) {
-				if (b != null) {
-					System.out.println(b.name());
-				}
-			}
-			System.out.println("----------------------------------");
 			//joystickの入力
 			GameInput in = stg.getGameInput();
 			Vector2f joyInput = in.getJoyInput();
