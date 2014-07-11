@@ -1,8 +1,10 @@
 package gakusai.kbc12a11.monster.sys.stage;
 
 import gakusai.kbc12a11.monster.sys.BgmBank;
+import gakusai.kbc12a11.monster.sys.GameInput;
 import gakusai.kbc12a11.monster.sys.Main;
 import gakusai.kbc12a11.monster.sys.SoundBank;
+import gakusai.kbc12a11.monster.util.Util;
 
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Font;
@@ -37,6 +39,8 @@ public class BeforeStartStage extends BasicGameState{
 	private int stock = -1;
 	/**次のステージ*/
 	private int nextStage = 0;
+
+	GameInput gameInput;
 	@Override
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
 		// TODO 自動生成されたメソッド・スタブ
@@ -89,11 +93,14 @@ public class BeforeStartStage extends BasicGameState{
 						Main.W_HEIGHT/2 + f.getLineHeight());
 			}
 		}
+
+		Util.drawPointer(g, gameInput, gc);
 	}
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
 		timer--;
+		gameInput = Util.getGameInput(gameInput, gc);
 		if (!isGameOver) {
 			if (timer < 0) {
 				sbg.enterState(nextStage,

@@ -86,6 +86,8 @@ public abstract class Stage extends BasicGameState{
 	public static final int STATE_GAMEOVER = 5;
 	/**プレイヤーの死亡*/
 	public static final int STATE_PLAYER_DEAD = 6;
+	/**違うステージから遷移*/
+	public static final int STATE_IN_STAGE = 7;
 
 	/**ステージの特殊状態が継続する時間*/
 	private int timer;
@@ -100,6 +102,9 @@ public abstract class Stage extends BasicGameState{
 	/**ステージの制限時間(デフォルト120秒)*/
 	protected int stageTime = 120;
 	///////////////////////
+
+	///ステージの遷移
+	protected int nextStage = Main.Stage_StageClearView;
 
 
 	public Stage (String mapName) throws SlickException {
@@ -243,11 +248,22 @@ public abstract class Stage extends BasicGameState{
 					setStageState(STATE_PLAYER_DEAD);
 				}
 			}
+			if (player.getState() == Player.STATE_CLEAR) {
+				setStageState(STATE_CLEAR);
+			}
 			break;
 		case STATE_CLEAR:
-			gbs = sbg.getState(Main.Stage_StageClearView);
-			((StageClearView)gbs).set(timeWindow.getTime(), score, 0);
-			sbg.enterState(gbs.getID(), new FadeOutTransition(Color.black, 120), new FadeInTransition(Color.black, 120) );
+			if (timer < 0) {
+				if (nextStage == Main.Stage_StageClearView) {
+					gbs = sbg.getState(Main.Stage_StageClearView);
+					((StageClearView)gbs).set(timeWindow.getTime(), score, 0);
+					sbg.enterState(gbs.getID(), new FadeOutTransition(Color.black, 120), new FadeInTransition(Color.black, 120) );
+				}else {
+
+					gbs = sbg.getState(nextStage);
+					sbg.enterState(gbs.getID(), new FadeOutTransition(Color.black, 120), new FadeInTransition(Color.black, 120) );
+				}
+			}
 			break;
 		case STATE_TIMEUP:
 			if (timer < 0) {
@@ -288,12 +304,7 @@ public abstract class Stage extends BasicGameState{
 		player.render(gc, sbg, g);
 		g.resetTransform();
 
-		//Wiiリモコン確認用
-		g.setColor(Color.white);
-		g.fillOval(gameInput.getX()-5, gameInput.getY()-5, 10, 10);
-		g.setLineWidth(1);
-		g.setColor(Color.black);
-		g.drawOval(gameInput.getX()-5, gameInput.getY()-5, 10, 10);
+		Util.drawPointer(g, gameInput, gc);
 
 		leWindow.render(gc, g);
 		lifeWindow.render(gc, g);
@@ -419,6 +430,9 @@ public abstract class Stage extends BasicGameState{
 
 		switch(stageState) {
 		case STATE_CLEAR:
+			if (nextStage == Main.Stage_StageClearView) {
+				SoundBank.soundRequest(SoundBank.SE_FANFARE, 1.0f, 1);
+			}
 			this.timer = stCntClear;
 			stopWatch.pause();
 			break;
@@ -426,6 +440,7 @@ public abstract class Stage extends BasicGameState{
 			this.stopWatch.pause();
 			break;
 		case STATE_TIMEUP:
+			SoundBank.soundRequest(SoundBank.SE_GONG);
 			this.timer = stCntTimeup;
 			break;
 		case STATE_GAMEOVER:

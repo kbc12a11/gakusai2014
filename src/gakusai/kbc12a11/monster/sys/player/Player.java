@@ -41,6 +41,8 @@ public class Player extends Character{
 	public static final int STATE_CLEAR = 8;
 	/**ダメージを受けた状態*/
 	public static final int STATE_DAMAGED = 16;
+	/**ステージの右端に到達した*/
+	public static final int STATE_TOSTAGERIGHTEWALL = 32;
 
 
 
@@ -78,7 +80,7 @@ public class Player extends Character{
 	private final int stCntDead = 120;//死亡状態のデフォルト継続時間
 	private final int stCntCrear = 120;//クリア状態の継続時間
 	private final int stCntDamaged = 60;//ダメージを受けた状態のデフォルト継続時間
-
+	private final int stCntToStageRightWall = 120;
 	//線に乗っているかのフラグ
 	public boolean rideLineFlag = false;
 	//最高速度
@@ -112,6 +114,10 @@ public class Player extends Character{
 
 	/**リスポーン*/
 	public void respawn(Vector2f playerRespawn) {
+		respawn(playerRespawn, defaultLifePoint);
+	}
+
+	public void respawn(Vector2f playerRespawn, int lifePoint) {
 		stateCount = 0;
 		a.set(0, 0);
 		d.set(0, 0);
@@ -120,7 +126,7 @@ public class Player extends Character{
 		deadEffect = null;
 		flg_live = true;
 		flg_destroy = false;
-		lifePoint = defaultLifePoint;
+		this.lifePoint = lifePoint;
 		attackBits.clear();
 		timer = 0;
 	}
@@ -129,7 +135,7 @@ public class Player extends Character{
 	public void chUpdate(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
 		stateCheck();
 		flg_in_water = false;
-		if (getState() != STATE_CLEAR) {
+		if (getState() != STATE_CLEAR && getState() != STATE_TOSTAGERIGHTEWALL) {
 			a.set(Stage.GRAVITY);
 			//ライン
 			for (Line l : stg.getLineGroup().getLines()) {
@@ -192,14 +198,14 @@ public class Player extends Character{
 			p.set(nextp);
 			d.set(nextd);
 			if ((r&Collide.COL_OUT_OF_MAP_RIGHT) == Collide.COL_OUT_OF_MAP_RIGHT) {
-				setState(STATE_CLEAR);
+				setState(STATE_TOSTAGERIGHTEWALL);
 			}
 			if ((r&Collide.COL_MAP_BLOCK_DOWN) != 0) {
 				flg_jump = true;
 			}else {
 				flg_jump = false;
 			}
-		}else if (getState() == STATE_CLEAR) {
+		}else if (getState() == STATE_TOSTAGERIGHTEWALL || getState() == STATE_CLEAR) {
 			d.set(1, 0);
 		}
 		p.add(d);
@@ -265,11 +271,15 @@ public class Player extends Character{
 				break;
 
 			case STATE_CLEAR:
-				stg.setStageState(Stage.STATE_CLEAR);
+				//stg.setStageState(Stage.STATE_CLEAR);
 				break;
 
 			case STATE_DAMAGED:
 				setState(STATE_INVISIBLE);
+				break;
+
+			case STATE_TOSTAGERIGHTEWALL:
+				setState(STATE_CLEAR);
 				break;
 			}
 		}
@@ -425,6 +435,10 @@ public class Player extends Character{
 
 		case STATE_CLEAR :
 			stateCount = stCntCrear;
+			break;
+
+		case STATE_TOSTAGERIGHTEWALL:
+			stateCount = stCntToStageRightWall;
 			break;
 		default ://定義されていないステータスの場合、通常状態になる
 			playerState = STATE_NORMAL;

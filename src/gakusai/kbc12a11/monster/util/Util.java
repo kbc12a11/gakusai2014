@@ -5,6 +5,7 @@ import gakusai.kbc12a11.monster.sys.ImageBank;
 import gakusai.kbc12a11.monster.sys.Main;
 import gakusai.kbc12a11.monster.sys.wiimote.WiimoteTest;
 
+import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
@@ -180,7 +181,7 @@ public class Util {
 			n = n/10;
 			if (n == 0)break;
 		}
- 	}
+	}
 
 	private static void _drawNumber(Graphics g, int index, float x, float y,
 			float scale) {
@@ -191,5 +192,19 @@ public class Util {
 		float sh = h*scale;
 		g.drawImage(img, x - sw/2, y - sh/2, x + sw/2, y + sh/2,
 				w*(index), 0, w*(index+1), h);
+	}
+
+	/**ポインターを表示する
+	 * @param gc TODO*/
+	public static void drawPointer(Graphics g, GameInput gameInput, GameContainer gc) {
+		if (gameInput == null) {
+			gameInput = Util.getGameInput(null, gc);
+		}
+		//Wiiリモコン確認用
+		g.setColor(Color.white);
+		g.fillOval(gameInput.getX()-5, gameInput.getY()-5, 10, 10);
+		g.setLineWidth(1);
+		g.setColor(Color.black);
+		g.drawOval(gameInput.getX()-5, gameInput.getY()-5, 10, 10);
 	}
 }

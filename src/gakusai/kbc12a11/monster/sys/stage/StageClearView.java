@@ -34,6 +34,7 @@ public class StageClearView extends BasicGameState{
 	public static final int ST_VW_TIME = 2;
 	public static final int ST_VW_KILLENEMY = 3;
 	public static final int ST_VW_TOTALSCORE = 4;
+	public static final int ST_VW_FINISH = 5;//全て表示終わり
 
 	private Image bg;
 	private Image clearImage;
@@ -64,9 +65,12 @@ public class StageClearView extends BasicGameState{
 			Color.gray
 	};
 
+	GameInput gameInput;
+	int interval;
+
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
-//		bg = new Image("res/image/window/clear_bg.gif");
+		//		bg = new Image("res/image/window/clear_bg.gif");
 		bg = new Image("res/image/title/PPW_notenikakikomu500.jpg");
 		clearImage = new Image("res/image/window/stageClear.gif");
 		star = new Image("res/image/window/star.gif");
@@ -87,11 +91,19 @@ public class StageClearView extends BasicGameState{
 	public void enter(GameContainer container, StateBasedGame game) throws SlickException {
 		SoundBank.stopAllSound();
 		BgmBank.stopAllBGM();
-		setState(ST_INIT);
 		stars.clear();
 		for (int i = 0; i < 10; i++) {
 			setStar();
 		}
+		setState(ST_INIT);
+
+		set(60, 600, 0);
+	}
+
+	@Override
+	public void leave(GameContainer container, StateBasedGame game) throws SlickException {
+		SoundBank.stopAllSound();
+		BgmBank.stopAllBGM();
 	}
 
 	@Override
@@ -112,10 +124,11 @@ public class StageClearView extends BasicGameState{
 		float vh = img_score.getHeight();
 		float x = 250, y = vscy;
 
-//		g.setDrawMode(g.MODE_COLOR_MULTIPLY_ALPHA);
+		//		g.setDrawMode(g.MODE_COLOR_MULTIPLY_ALPHA);
 
 
 		switch (state) {
+		case ST_VW_FINISH:
 		case ST_VW_TOTALSCORE:
 			sc = 1.0f;
 			vw = img_total.getWidth();
@@ -151,6 +164,8 @@ public class StageClearView extends BasicGameState{
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
 		timer++;
 		stTimer++;
+		gameInput = Util.getGameInput(gameInput, gc);
+		interval--;
 		if (timer%20 == 0) {
 			setStar();
 		}
@@ -160,39 +175,68 @@ public class StageClearView extends BasicGameState{
 				stars.remove(i);
 			}
 		}
-
+		int intTime = 20;
 		switch (state) {
+		case ST_VW_FINISH:
+			int fadeOutTime = 60;
+			int fadeInTime = 60;
+			if (interval < 0 && gameInput.isA()) {
+				sbg.enterState(Main.Stage_TitleView,
+						new FadeOutTransition(Color.black, fadeOutTime),
+						new FadeInTransition(Color.black, fadeInTime) );
+			}
 		case ST_VW_TOTALSCORE:
+			if (interval < 0 && state == ST_VW_TOTALSCORE) {
+				setState(ST_VW_FINISH);
+				totalView.viewFinish();
+				interval = 120;
+			}
 			totalView.update(gc, sbg, delta);
 		case ST_VW_TIME:
-			if (state == ST_VW_TIME && stTimer > 60) {
-				setState(ST_VW_TOTALSCORE);
+			if (interval < 0 && state == ST_VW_TIME){
+				if (stTimer > 90 || gameInput.isA()) {
+					setState(ST_VW_TOTALSCORE);
+					timeView.viewFinish();
+					interval = intTime;
+				}
 			}
 			timeView.update(gc, sbg, delta);
 		case ST_VW_SCORE:
-			if (state == ST_VW_SCORE && stTimer > 30) {
-				setState(ST_VW_TIME);
+			if (interval < 0 && state == ST_VW_SCORE){
+				if (stTimer > 60 || gameInput.isA()) {
+					setState(ST_VW_TIME);
+					scoreView.viewFinish();
+					interval = intTime;
+				}
 			}
 			scoreView.update(gc, sbg, delta);
 		case ST_INIT:
-			if (state == ST_INIT && stTimer > 30) {
+			if (interval < 0 && state == ST_INIT && stTimer > 30) {
 				setState(ST_VW_SCORE);
 			}
 		}
 
-		GameInput in = Util.getGameInput(null, gc);
-		int fadeOutTime = 60;
-		int fadeInTime = 60;
-		if (in.isA()) {
-			sbg.enterState(Main.Stage_TitleView,
-					new FadeOutTransition(Color.black, fadeOutTime),
-					new FadeInTransition(Color.black, fadeInTime) );
-		}
+		SoundBank.update();
+		BgmBank.update();
 	}
 
 	public void setState(int state) {
 		this.state = state;
 		stTimer = 0;
+		switch (state) {
+		case ST_INIT:
+			break;
+		case ST_VW_SCORE:
+			SoundBank.soundRequest(SoundBank.SE_DANG, 0.5f, 1);
+			break;
+		case ST_VW_TIME:
+			SoundBank.soundRequest(SoundBank.SE_DANG, 0.7491535f, 1);
+			break;
+		case ST_VW_TOTALSCORE:
+			SoundBank.soundRequest(SoundBank.SE_KANSEI, 1, 1);
+			SoundBank.soundRequest(SoundBank.SE_DANG, 1f, 1);
+			break;
+		}
 	}
 
 	private void setStar() {
@@ -266,6 +310,11 @@ public class StageClearView extends BasicGameState{
 
 		public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException {
 			Util.drawNumber(g, (int)vwNum, ofx, ofy, scale);
+		}
+
+		public void viewFinish() {
+			timer = maxFrame;
+			vwNum = num;
 		}
 	}
 

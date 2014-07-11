@@ -41,6 +41,8 @@ public class StageSelectView extends BasicGameState{
 	Image easy, normal, hard;
 	Image title;
 
+	GameInput gameInput;
+
 	@Override
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException {
 		// TODO 自動生成されたメソッド・スタブ
@@ -74,7 +76,7 @@ public class StageSelectView extends BasicGameState{
 		Image[] img = {easy, normal, hard};
 
 		int ww = Main.W_WIDTH*(nowSelectIndex+1)/4, wh = Main.W_HEIGHT/2;
-		
+
 		if (state != ST_NORMAL) {
 			gscale += dgscale;
 			dgscale += agscale;
@@ -119,16 +121,15 @@ public class StageSelectView extends BasicGameState{
 
 		}
 
-
-
+		Util.drawPointer(g, gameInput, gc);
 	}
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
 		BgmBank.update();
 		SoundBank.update();
-		GameInput in = Util.getGameInput(null, gc);
-		Vector2f joy = in.getJoyInput();
+		gameInput = Util.getGameInput(null, gc);
+		Vector2f joy = gameInput.getJoyInput();
 		stTimer++;
 		timer--;
 
@@ -143,7 +144,7 @@ public class StageSelectView extends BasicGameState{
 				timer = wait;
 			}
 
-			if (in.isA()) {
+			if (gameInput.isA()) {
 				setState(ST_SUBMIT);
 			}
 		}else if(state == ST_SUBMIT) {

@@ -18,6 +18,7 @@ import org.newdawn.slick.state.transition.FadeOutTransition;
 
 public class GameOverView extends BasicGameState{
 	int timer;
+	GameInput gameInput;
 	@Override
 	public void init(GameContainer arg0, StateBasedGame arg1) throws SlickException {
 		// TODO 自動生成されたメソッド・スタブ
@@ -49,15 +50,15 @@ public class GameOverView extends BasicGameState{
 			g.drawString(gomess2, Main.W_WIDTH/2 - f.getWidth(gomess2)/2,
 					Main.W_HEIGHT/2 + f.getLineHeight());
 		}
-
+		Util.drawPointer(g, gameInput, gc);
 	}
 
 	@Override
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
 		timer ++;
+		gameInput = Util.getGameInput(gameInput, gc);
 		if (timer > 30) {
-			GameInput in = Util.getGameInput(null, gc);
-			if (in.isA()) {
+			if (gameInput.isA()) {
 				int fadeOutTime = 600;
 				int fadeInTime = 60;
 				sbg.enterState(Main.Stage_TitleView,
