@@ -1,7 +1,5 @@
 package gakusai.kbc12a11.monster.stage.mario;
 
-import gakusai.kbc12a08.monster.enemy.EnemyFactory;
-import gakusai.kbc12a11.monster.enemy.Magican;
 import gakusai.kbc12a11.monster.item.CureBox;
 import gakusai.kbc12a11.monster.sys.BgmBank;
 import gakusai.kbc12a11.monster.sys.Main;
@@ -53,7 +51,6 @@ public class MarioStage extends Stage {
 
 	@Override
 	public void setEnemys() throws SlickException {
-		addEnemyFactory(new EnemyFactory(this, Magican.class, map.calcLocateX(10), 60));
 	}
 
 	@Override

@@ -32,6 +32,7 @@ import org.newdawn.slick.Color;
 import org.newdawn.slick.GameContainer;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Image;
+import org.newdawn.slick.Input;
 import org.newdawn.slick.SlickException;
 import org.newdawn.slick.geom.Vector2f;
 import org.newdawn.slick.state.BasicGameState;
@@ -184,6 +185,10 @@ public abstract class Stage extends BasicGameState{
 	@Override
 	public final void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException {
 		gameInput = Util.getGameInput(gameInput, gc);
+		Input in = gc.getInput();
+		if (in.isKeyDown(Input.KEY_ESCAPE)) {
+			setStageState(STATE_GAMEOVER);
+		}
 
 		if (bg != null) {
 			bg.update(gc, sbg, delta);//背景
@@ -242,7 +247,7 @@ public abstract class Stage extends BasicGameState{
 				setStageState(STATE_TIMEUP);
 			}
 			if (!player.isLive()) {
-				if (player.getStock() < 0) {
+				if (player.getStock() <= 0) {
 					setStageState(STATE_GAMEOVER);
 				}else {
 					setStageState(STATE_PLAYER_DEAD);

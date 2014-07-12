@@ -111,7 +111,7 @@ public class StageSelectView extends BasicGameState{
 			g.setColor(c[i]);
 			Rectangle r = new Rectangle(ofx-(nw/2)*scale, ofy-(nh/2)*scale,
 					nw*scale, nh*scale);
-			if (gameInput != null && r.contains(gameInput.getX(), gameInput.getY())) {
+			if (state == ST_NORMAL && gameInput != null && r.contains(gameInput.getX(), gameInput.getY())) {
 				pointIndex = i;			}
 			g.fill(r);
 
